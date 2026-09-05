@@ -1,0 +1,247 @@
+# 2026 Artistic Gymnastics (MAG/WAG) Competition Calendar
+
+Source: [gym-scores.github.io — 2026 calendar](https://gym-scores.github.io/docs/2026/) (the site's "All Meets" tab, MAG + WAG entries; Rhythmic excluded). A few late-2025 meets are included because Top 12/US National Team Camp results carry into 2026 season classification, per the site's own note.
+
+| Date | Event | Location | Format | Disciplines | Organizer | Event Type | Results |
+|---|---|---|---|---|---|---|---|
+| Oct 17, 2025 | French National Review | Saint Etienne, FRA | All Around | WAG Sr, WAG Jr | France | National Team Test | |
+| Nov 8, 2025 | Top 12 Match 1 [WAG] | [Multiple Locations], FRA | Team | WAG Sr, WAG Jr | France | Club League | |
+| Dec 6, 2025 | Top 12 Match 2 [WAG] | [Multiple Locations], FRA | Team | WAG Sr, WAG Jr | France | Club League | |
+| Dec 13, 2025 | Top 12 Match 3 [WAG] | [Multiple Locations], FRA | Team | WAG Sr, WAG Jr | France | Club League | |
+| Jan 5, 2026 | January US National Team Camp | Crossville, TN, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | National Team Camp | |
+| Jan 9, 2026 | NCAA Week 1: Stanford @ California | Berkley, CA, USA | Team | MAG Sr | NCAA | Club League | |
+| Jan 10, 2026 | NCAA Week 1: Greenville, Simpson @ Michigan | Ann Arbor, MI, USA | Team | MAG Sr | NCAA | Club League | |
+| Jan 10, 2026 | NCAA Week 1: Springfield College @ Navy | Annapolis, MD, USA | Team | MAG Sr | NCAA | Club League | |
+| Jan 11, 2026 | NCAA Week 1: Army @ Penn State | State College, PA, USA | Team | MAG Sr | NCAA | Club League | |
+| Jan 16, 2026 | Vegas Cup National Qualifier | Las Vegas, NV, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | USAG Elite Qualifier | |
+| Jan 16, 2026 | West Point Open [NCAA Week 2] | West Point, NY, USA | Team, All Around | MAG Sr, MAG Jr | United States | Domestic Meet | |
+| Jan 17, 2026 | Rocky Mountain Open [NCAA Week 2] | Colorado Springs, CO, USA | Team, All Around | MAG Sr, MAG Jr | United States | Domestic Meet | |
+| Jan 18, 2026 | Ohio State Open [NCAA Week 2] | Columbus, OH, USA | Team, All Around | MAG Sr | United States | Domestic Meet | |
+| Jan 23, 2026 | Biles Invitational National Qualifier | Houston, TX, USA | All Around | WAG Sr, WAG Jr | United States | USAG Elite Qualifier | |
+| Jan 24, 2026 | Navy Open [NCAA Week 3] | Annapolis, MD, USA | Team | MAG Sr | NCAA | Domestic Meet | |
+| Jan 24, 2026 | NCAA Week 3: Oklahoma @ Michigan | Ann Arbor, MI, USA | Team | MAG Sr | NCAA | Club League | |
+| Jan 24, 2026 | Sam Mikulak Invitational [NCAA Week 3] | Sarasota, FL, USA | Team | MAG Sr | United States | Domestic Meet | |
+| Jan 24, 2026 | Stanford Open [NCAA Week 3] | Stanford, CA, USA | Team | MAG Sr | United States | Domestic Meet | |
+| Jan 30, 2026 | Houston National Invitational | Galveston, TX, USA | All Around | MAG Sr | United States | Domestic Meet | |
+| Jan 30, 2026 | Next Era National Qualifier | Seattle, WA, USA | All Around | WAG Sr, WAG Jr | United States | USAG Elite Qualifier | |
+| Jan 31, 2026 | Top 12 Match 1 [MAG] | [Multiple Locations], FRA | Team | MAG Sr, MAG Jr | France | Club League | |
+| Jan 31, 2026 | Mexican Internal Selection | Tijuana, Baja California, MEX | All Around | MAG Sr, MAG Jr | Mexico | Internal Test | |
+| Jan 31, 2026 | NCAA Week 4: Nebraska @ Ohio State | Columbus, OH, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 1, 2026 | NCAA Week 4: Greenville @ Oklahoma | Norman, OK, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 1, 2026 | NCAA Week 4: Illinois @ Penn State | State College, PA, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 1, 2026 | NCAA Week 4: William & Mary @ Springfield College | Springfield, MA, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 2, 2026 | February US National Team Camp | Crossville, TN, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | National Team Camp | |
+| Feb 6, 2026 | Elite Canada | Calgary, Alberta, CAN | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Canada | Domestic Meet | |
+| Feb 7, 2026 | Tokushukai Apparatus Championships | Kamakura, Kanagawa Prefecture, JPN | Apparatus Finals | MAG Sr | Japan | Domestic Meet | |
+| Feb 7, 2026 | NCAA Week 5: Air Force, Ohio State @ Oklahoma | Norman, OK, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 7, 2026 | NCAA Week 5: Army @ Navy | Annapolis, MD, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 7, 2026 | NCAA Week 5: California, Simpson @ Greenville | Greenville, IL, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 7, 2026 | NCAA Week 5: Michigan @ Illinois | Urbana, IL, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 7, 2026 | NCAA Week 5: Penn State @ Nebraska | Lincoln, NE, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 12, 2026 | Welsh Championships | Cardiff, Wales, GBR | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Great Britain | Home Country Championships | |
+| Feb 13, 2026 | All-Academy Championships | Fort Worth, TX, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 13, 2026 | Rochester Classic National Qualifier | Rochester, NY, USA | All Around | WAG Sr, WAG Jr | United States | USAG Elite Qualifier | |
+| Feb 14, 2026 | Croatian Control | Zagreb, CRO | — | MAG Sr, WAG Sr | Croatia | Internal Test | |
+| Feb 14, 2026 | Top 12 Match 2 [MAG] | [Multiple Locations], FRA | Team | MAG Sr, MAG Jr | France | Club League | |
+| Feb 14, 2026 | Japanese Video Review | Online Competition | All Around | MAG Sr, WAG Sr | Japan | Internal Test | |
+| Feb 14, 2026 | NCAA Week 6: Greenville, Simpson, William & Mary @ Nebraska | Lincoln, NE, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 14, 2026 | NCAA Week 6: Springfield College @ Michigan | Ann Arbor, MI, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 17, 2026 | Central Federal District Championships | Vladimir, RUS | All Around, Apparatus Finals | MAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Central Federal District Championships | Bryansk, RUS | All Around, Apparatus Finals | WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Far Eastern Federal District Championships | Chita, Zabaykalsky Krai, RUS | All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | North Caucasus Federal District Championships | Krasnodar, RUS | All Around, Apparatus Finals | MAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | North Caucasus Federal District Championships | Rostov-on-Don, RUS | All Around, Apparatus Finals | WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Northwestern Federal District Championships | Petrozavodsk, Karelia, RUS | All Around, Apparatus Finals | MAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Northwestern Federal District Championships | Veliky Novgorod, RUS | All Around, Apparatus Finals | WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Saint Petersburg Championships | Saint Petersburg, RUS | All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Siberian Federal District Championships | Chelyabinsk, RUS | All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Southern Federal District Championships | Krasnodar, RUS | All Around, Apparatus Finals | MAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Southern Federal District Championships | Rostov-on-Don, RUS | All Around, Apparatus Finals | WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Ural Federal District Championships | Chelyabinsk, RUS | All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Volga Federal District Championships | Kazan, Tatarstan, RUS | All Around, Apparatus Finals | MAG Sr | Russia | Federal District Championships | |
+| Feb 17, 2026 | Volga Federal District Championships | Samara, RUS | All Around, Apparatus Finals | WAG Sr | Russia | Federal District Championships | |
+| Feb 19, 2026 | FIG Cottbus World Cup | Cottbus, Brandenburg, GER | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG World Cup | |
+| Feb 19, 2026 | Winter Classic National Qualifier | Louisville, KY, USA | All Around | WAG Sr, WAG Jr | United States | USAG Elite Qualifier | |
+| Feb 20, 2026 | Scottish Championships | Glasgow, Scotland, GBR | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Great Britain | Home Country Championships | |
+| Feb 20, 2026 | Liga Iberdrola Match 1 [WAG] | Palma de Mallorca, ESP | Team | WAG Sr, WAG Jr | Spain | Club League | |
+| Feb 20, 2026 | Winter Cup | Louisville, KY, USA | All Around [2 Day for MAG] | MAG Sr, MAG Jr, WAG Sr, WAG Jr | United States | Domestic Meet | |
+| Feb 21, 2026 | NCAA Week 7: Army @ Simpson | Indianola, IA, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 21, 2026 | Liukin Invitational | Frisco, TX, USA | All Around | MAG Sr, MAG Jr | United States | International Club Invitational | |
+| Feb 21, 2026 | WOGA Classic | Frisco, TX, USA | All Around | WAG Sr, WAG Jr | United States | International Club Invitational | |
+| Feb 27, 2026 | English Championships | Telford, England, GBR | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Great Britain | Home Country Championships | |
+| Feb 27, 2026 | Serie A Match 1 [MAG/WAG] | Modena, Emilia-Romagna, ITA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Italy | Club League | |
+| Feb 28, 2026 | Top 12 Match 3 [MAG] | [Multiple Locations], FRA | Team | MAG Sr, MAG Jr | France | Club League | |
+| Feb 28, 2026 | NCAA Week 8: Army, William & Mary @ Ohio State | Columbus, OH, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 28, 2026 | NCAA Week 8: California @ Stanford | Stanford, CA, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 28, 2026 | NCAA Week 8: Greenville, Navy @ Illinois | Urbana, IL, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 28, 2026 | NCAA Week 8: Nebraska @ Oklahoma | Norman, OK, USA | Team | MAG Sr | NCAA | Club League | |
+| Feb 28, 2026 | NCAA Week 8: Mavericks @ Air Force | Norman, OK, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 1, 2026 | NCAA Week 8: Springfield College @ Penn State | State College, PA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 5, 2026 | FIG Baku World Cup | Baku, AZE | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG World Cup | |
+| Mar 5, 2026 | Tiger's Cup | Riga, LAT | All Around | MAG Jr, WAG Jr | Latvia | International Invitational | |
+| Mar 6, 2026 | International Gymnix | Montreal, Quebec, CAN | Team, All Around, Apparatus Finals | WAG Sr, WAG Jr | Canada | International Invitational | |
+| Mar 6, 2026 | International Gymnix Challenge | Montreal, Quebec, CAN | Team, All Around, Apparatus Finals | WAG Sr, WAG Jr | Canada | International Club Invitational | |
+| Mar 6, 2026 | Iceland Classic | Kopavogur, ISL | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Iceland | International Club Invitational | |
+| Mar 6, 2026 | Singapore Championships | Singapore, SGP | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Singapore | National Championships | |
+| Mar 7, 2026 | NCAA Week 9: California @ Oklahoma | Norman, OK, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 7, 2026 | NCAA Week 9: Greenville, Nebraska @ Simpson | Indianola, IA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 7, 2026 | NCAA Week 9: Navy @ William & Mary | Williamsburg, VA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 7, 2026 | NCAA Week 9: Ohio State @ Illinois | Urbana, IL, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 7, 2026 | NCAA Week 9: Penn State @ Michigan | Ann Arbor, MI, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 7, 2026 | NCAA Week 9: Springfield College, Greenville @ Army | West Point, NY, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 7, 2026 | American Cup | Henderson, NV, USA | Mixed Team | MAG Sr, WAG Sr | United States | International Invitational | |
+| Mar 12, 2026 | FIG Antalya Artistic World Cup | Antalya, TUR | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG World Cup | |
+| Mar 13, 2026 | Serie A Match 2 [MAG/WAG] | Biella, Piedmont, ITA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Italy | Club League | |
+| Mar 14, 2026 | NCAA Week 10: Navy @ Springfield College | Springfield, MA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 14, 2026 | NCAA Week 10: Simpson @ William & Mary | Williamsburg, VA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 14, 2026 | NCAA Week 10: Air Force, Oklahoma @ Stanford | Stanford, CA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 14, 2026 | NCAA Week 10: Illinois @ Nebraska | Lincoln, NE, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 15, 2026 | Russian WAG Junior Championships | Moscow, RUS | All Around, Apparatus Finals | WAG Jr | Russia | National Championships | |
+| Mar 16, 2026 | Chinese Taipei MAG Asian Championships Trials | Kaohsiung City, TPE | All Around | MAG Sr | Chinese Taipei | Asian Championships Selection | |
+| Mar 16, 2026 | NCAA Week 11: Michigan @ Ohio State | Columbus, OH, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 19, 2026 | Grizzly Classic | Calgary, Alberta, CAN | Team, Apparatus Finals | MAG Jr | Canada | International Invitational | |
+| Mar 19, 2026 | British Championships | Liverpool, England, GBR | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Great Britain | National Championships | |
+| Mar 20, 2026 | Unni og Haralds Pokaler | Oslo, NOR | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Norway | International Invitational | |
+| Mar 20, 2026 | USAG Collegiate Championships | Colorado Springs, CO, USA | Team | MAG Sr | United States | Club League | |
+| Mar 21, 2026 | NCAA Week 11: Oklahoma @ California | Berkley, CA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 22, 2026 | NCAA Week 11: Nebraska @ Michigan | Ann Arbor, MI, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 22, 2026 | NCAA Week 11: Ohio State @ Penn State | State College, PA, USA | Team | MAG Sr | NCAA | Club League | |
+| Mar 22, 2026 | Russian MAG Junior Championships | Moscow, RUS | All Around, Apparatus Finals | MAG Jr | Russia | National Championships | |
+| Mar 28, 2026 | 1st Bundesliga Match 1 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Mar 28, 2026 | Trofeo Città Di Jesolo | Jesolo, Venice, ITA | Team, All Around, Apparatus Finals | WAG Sr, WAG Jr | Italy | International Invitational | |
+| Apr 2, 2026 | Luxembourg Open | Luxembourg City, LUX | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Luxembourg | International Invitational | |
+| Apr 2, 2026 | Luxembourg Championships | Luxembourg City, LUX | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Luxembourg | National Championships | |
+| Apr 3, 2026 | Big Ten Conference Championships | Lincoln, NE, USA | Team | MAG Sr | NCAA | Club League | |
+| Apr 4, 2026 | FIG Cairo Artistic World Cup | Cairo, EGY | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG World Cup | |
+| Apr 4, 2026 | Top 12 Classification Matches | [Multiple Locations], FRA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | France | Club League | |
+| Apr 4, 2026 | Top 12 Semi-Finals | [Multiple Locations], FRA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | France | Club League | |
+| Apr 4, 2026 | ECAC Conference Championships | West Point, NY, USA | Team | MAG Sr | NCAA | Club League | |
+| Apr 4, 2026 | MPSF Conference Championships | Berkley, CA, USA | Team | MAG Sr | NCAA | Club League | |
+| Apr 5, 2026 | Mexican Pan Am Championships Trials | MEX | All Around | MAG Sr, MAG Jr | Mexico | Pan Am Championships Selection | |
+| Apr 9, 2026 | FIG Osijek Artistic World Cup | Osijek, CRO | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG World Cup | |
+| Apr 10, 2026 | Algerian Championships | ALG | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Algeria | National Championships | |
+| Apr 11, 2026 | 1st Bundesliga Match 2 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Apr 12, 2026 | April US National Team Camp | Crossville, TN, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | National Team Camp | |
+| Apr 15, 2026 | FIG Doha Artistic World Cup | Doha, QAT | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG World Cup | |
+| Apr 16, 2026 | All Japan Championships | Takasaki, Gunma Prefecture, JPN | All Around | MAG Sr, WAG Sr | Japan | National Championships | |
+| Apr 17, 2026 | Serie A Match 3 [MAG/WAG] | Terni, Umbria, ITA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Italy | Club League | |
+| Apr 17, 2026 | NCAA Championships | Champaign, IL, USA | Team | MAG Sr | NCAA | Club League | |
+| Apr 17, 2026 | Juegos Sudamericanos de la Juventud | Panama City, PAN | Team, All Around, Apparatus Finals | MAG Jr, WAG Jr | Organización Deportiva Suramericana | Regional Games | |
+| Apr 18, 2026 | Hanspeter Demetz Memorial | Innsbruck, AUT | All Around | MAG Jr, WAG Jr | Austria | International Invitational | |
+| Apr 18, 2026 | 1st Bundesliga Match 3 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Apr 18, 2026 | Artisic Russian Cup | Sirius, Russia | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | Domestic Meet | |
+| Apr 18, 2026 | Icelandic Championships | Armann, ISL | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Iceland | National Championships | |
+| Apr 21, 2026 | Artistic African Championships | Yaounde, CMR | Qualification, Team, All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Union Africaine de Gymnastique | Continental Championships | |
+| Apr 25, 2026 | 1st Bundesliga Match 4 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Apr 25, 2026 | Ifact Norgescup 1 | Ålesund, NOR | All Around | MAG Sr | Norway | Domestic Meet | |
+| Apr 25, 2026 | TK FIG 1 | Bergen, NOR | All Around | WAG Sr | Norway | Domestic Meet | |
+| Apr 25, 2026 | International Gymsport | Porto, POR | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Portugal | International Invitational | |
+| May 1, 2026 | Finnish Artistic Championships | Helsinki, FIN | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Finland | National Championships | |
+| May 6, 2026 | Mexican Artistic Championships | Aguascalientes, MEX | All Around | MAG Sr, WAG Sr | Mexico | National Championships | |
+| May 6, 2026 | Troféu Brasil | Natal, Rio Grande do Norte, BRA | All Around, Apparatus Finals | MAG Sr, WAG Sr | Brazil | Domestic Meet | |
+| May 7, 2026 | FIG Varna Artistic WCC | Varna, BUL | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG WCC | |
+| May 8, 2026 | Artistic Oceania Championships | Brisbane, Queensland, AUS | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Oceania Gymnastics Union | Continental Championships | |
+| May 11, 2026 | Chinese Championships | Xiamen, CHN | Qualification, Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | China | National Championships | |
+| May 13, 2026 | AGF Trophy | Baku, AZE | All Around, Apparatus Finals | MAG Sr, WAG Sr | Azerbaijan | International Invitational | |
+| May 15, 2026 | Top 12 Finale | FRA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | France | Club League | |
+| May 15, 2026 | Serie A Final [MAG/WAG] | Bergamo, Lombardy, ITA | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Italy | Club League | |
+| May 15, 2026 | NHK Trophy | Tokyo, JPN | All Around | MAG Sr, WAG Sr | Japan | Domestic Meet | |
+| May 15, 2026 | Polish Championships | Orzysz, HUN* | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Poland | National Championships | |
+| May 15, 2026 | May US National Team Camp | Crossville, TN, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | National Team Camp | |
+| May 16, 2026 | 1st Bundestliga Match 1 [WAG] | TBD, GER | Team | WAG Sr, WAG Jr | Germany | Club League | |
+| May 16, 2026 | Liga Iberdrola Match 2 [WAG] | TBD, ESP | Team | WAG Sr, WAG Jr | Spain | Club League | |
+| May 21, 2026 | FIG Tashkent Artistic WCC | Tashkent, UZB | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG WCC | |
+| May 23, 2026 | Portuguese Championships | TBD, POR | All Around | MAG Sr, WAG Sr | Portugal | National Championships | |
+| May 23, 2026 | Belgian Championships | Ghent, BEL | All Around | MAG Sr, WAG Sr | Belgium | National Championships | |
+| May 25, 2026 | Canadian Championships | Oshawa, Ontario, CAN | All Around, Apparatus Finals | MAG Sr, WAG Sr | Canada | National Championships | |
+| May 28, 2026 | FIG Koper Artistic WCC | Koper, SLO | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG WCC | |
+| May 29, 2026 | Fuzion National Qualifier | Kansas City, MO, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | USAG Elite Qualifier | |
+| Jun 3, 2026 | Singapore Open | Singapore, SGP | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Singapore | International Invitational | |
+| Jun 4, 2026 | Austrian Championships | Dornbirn, AUT | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Austria | National Championships | |
+| Jun 5, 2026 | French Championships | Mulhouse, FRA | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | France | National Championships | |
+| Jun 6, 2026 | British Team Championships | Basildon, England, GBR | Team | MAG Sr, MAG Jr | Great Britain | Domestic Meet | |
+| Jun 12, 2026 | Czech MAG Championships | Trinec, CZE | All Around | MAG Sr, MAG Jr | Czechia | National Championships | |
+| Jun 12, 2026 | Parkettes National Qualifier | Allentown, PA, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | USAG Elite Qualifier | |
+| Jun 17, 2026 | Artistic Pan American Championships | Rio de Janeiro, BRA | Team, All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Unión Panamericana de Gimnasia | Continental Championships | |
+| Jun 18, 2026 | MAG Asian Championships | Zunyi, Guizhou, CHN | Qualification, Team, All Around, Apparatus Finals | MAG Sr, MAG Jr | Asian Gymnastics Union | Continental Championships | |
+| Jun 19, 2026 | Elek Matolay Memorial | Budapest, HUN | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Hungary | International Invitational | |
+| Jun 20, 2026 | Czech WAG Championships | Prague, CZE | All Around | WAG Sr, WAG Jr | Czechia | National Championships | |
+| Jun 20, 2026 | Norwegian Championshiops | Kabelvåg, NOR | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Norway | National Championships | |
+| Jun 22, 2026 | Liga Iberdrola Final [WAG] | TBD, ESP | Team | WAG Sr, WAG Jr | Spain | Club League | |
+| Jun 25, 2026 | WAG Asian Championships | Zunyi, Guizhou, CHN | Qualification, Team, All Around, Apparatus Finals | WAG Sr, WAG Jr | Asian Gymnastics Union | Continental Championships | |
+| Jun 25, 2026 | American Classic | Minneapolis, MN, USA | All Around | WAG Sr, WAG Jr | United States | Domestic Meet | |
+| Jun 25, 2026 | Hopes Classic | TBD | All Around | WAG Jr, WAG Espoir | United States | Domestic Meet | |
+| Jun 26, 2026 | German MAG Junior Championships | Schwäbisch Gmünd, GER | All Around, Apparatus Finals | MAG Jr | Germany | National Championships | |
+| Jun 26, 2026 | Russian Artistic Championships | Kaluga, Russia | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | National Championships | |
+| Jun 27, 2026 | Dutch Championships | Rotterdam, NED | All Around, Apparatus Finals | MAG Sr, WAG Sr | Netherlands | National Championships | |
+| Jun 27, 2026 | 1st Bundesliga Alternate Match Day [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Jun 28, 2026 | Australian Artistic Championships | Sydney, NSW, AUS | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Australia | National Championships | |
+| Jul 2, 2026 | Internationaler Junior Team Cup | Berlin, GER | Team | MAG Jr | Germany | International Invitational | |
+| Jul 4, 2026 | German WAG Junior Championships | Backnang, GER | All Around, Apparatus Finals | WAG Jr | Germany | National Championships | |
+| Jul 10, 2026 | Chinese Junior Championships | Huangshi, CHN | Qualification, Team, All Around, Apparatus Finals | MAG Jr, WAG Jr | China | National Championships | |
+| Jul 11, 2026 | 1st Bundestliga Match 2 [WAG] | TBD, GER | Team | WAG Sr, WAG Jr | Germany | Club League | |
+| Jul 13, 2026 | Spanish Artistic Championships | TBD, ESP | All Around, Apparatus Finals | MAG Sr, WAG Sr | Spain | National Championships | |
+| Jul 15, 2026 | WAG ECH Online Preparation Competition | Online Competition | All Around, Apparatus Finals | WAG Sr, WAG Jr | Elevien | Online Competition | |
+| Jul 16, 2026 | U.S. Classic | Hartford, CT, USA | All Around | WAG Sr, WAG Jr | United States | Domestic Meet | |
+| Jul 16, 2026 | Hopes Championships | Hartford, CT, USA | All Around | WAG Jr | United States | Domestic Meet | |
+| Jul 18, 2026 | Friendly Match: Dortmund | Dortmund, Germany | Team | WAG Jr | Germany | Friendly Match | |
+| Jul 21, 2026 | Nordic Championships | Åland, FIN | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Finland | Regional Championships | |
+| Jul 23, 2026 | German Championships | Hanover, GER | All Around, Apparatus Finals | MAG Sr, WAG Sr | Germany | National Championships | |
+| Jul 24, 2026 | XXIII Commonwealth Games | Glasgow, Scotland, GBR | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Commonwealth Games Federation | Commonwealth Games | |
+| Jul 24, 2026 | Friendly Match: GER-GBR-SUI-FRA-ITA | TBA | Team | MAG Jr | Germany (?) | Friendly Match | |
+| Jul 24, 2026 | Central American and Caribbean Games | Santo Domingo, DOM | Team, All Around, Apparatus Final | MAG Sr, WAG Sr | Organización Deportiva Centroamericana y del Caribe | Regional Championships | |
+| Jul 25, 2026 | Hungarian Artistic Championships | Budapest, HUN | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Hungary | National Championships | |
+| Jul 25, 2026 | Italian Artistic Absolute Championships | Meda, ITA | All Around | MAG Sr, WAG Sr | Italy | National Championships | |
+| Aug 1, 2026 | All Japan Team Championships | JPN | Team, Apparatus Finals | MAG Sr, WAG Sr | Japan | National Championships | |
+| Aug 4, 2026 | U.S. Artisic Championships | Phoenix, AZ, USA | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | United States | National Championships | |
+| Aug 5, 2026 | Brazilian Championshiops | Brasília, BRA | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Brazil | National Championships | |
+| Aug 5, 2026 | MAG ECH Online Preparation Competition | Online Competition | All Around, Apparatus Finals | MAG Sr, MAG Jr | Elevien | Online Competition | |
+| Aug 12, 2026 | Brazilian Junior Championshiops | Brasília, BRA | Team, All Around, Apparatus Finals | MAG Jr, WAG Jr | Brazil | National Championships | |
+| Aug 13, 2026 | WAG European Championships | Zagreb, CRO | Team, Mixed Team, All Around, Apparatus Finals | WAG Sr, WAG Jr | European Gymnastics | Continental Championships | [Results PDF](https://backend.europeangymnastics.com/sites/default/files/paragraph/age-group-competition-info/competition-results/36TH%20EUROPEAN%20WOMEN%E2%80%99S%20ARTISTIC%20GYMNASTICS%20CHAMPIONSHIPS%20Media_compressed.pdf) |
+| Aug 19, 2026 | MAG European Championships | Zagreb, CRO | Team, Mixed Team, All Around, Apparatus Finals | MAG Sr, MAG Jr | European Gymnastics | Continental Championships | [Results PDF](https://backend.europeangymnastics.com/sites/default/files/paragraph/age-group-competition-info/competition-results/37TH%20EUROPEAN%20MEN%E2%80%99S%20ARTISTIC%20GYMNASTICS%20Media.pdf) |
+| Aug 22, 2026 | XX Mediterranean Games | Taranto, ITA | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Int'l Committee of Mediterranean Games | Regional Games | |
+| Sep 1, 2026 | Japan Open | JPN | All Around | MAG Sr, WAG Sr | Japan | Domestic Meet | |
+| Sep 12, 2026 | South American Games | ARG | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Organización Deportiva Suramericana | Regional Games | |
+| Sep 17, 2026 | Pharaohs Cup | Cairo, EGY | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Egypt | International Invitational | |
+| Sep 18, 2026 | FIG Szombathely Artistic WCC | Szombathely, HUN | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG WCC | |
+| Sep 20, 2026 | Asian Games | Nagoya, JPN | Qualification, Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Olympic Council of Asia | Continental Games | |
+| Sep 21, 2026 | Russian Junior Championships | Ufa, Russia | Team, All Around, Apparatus Finals | MAG Jr, WAG Jr | Russia | National Championships | |
+| Sep 26, 2026 | FIG Paris Artistic WCC | Paris, FRA | Qualification, Apparatus Finals | MAG Sr, WAG Sr | FIG | FIG WCC | |
+| Sep 26, 2026 | 1st Bundestliga Match 3 [WAG] | TBD, GER | Team | WAG Sr, WAG Jr | Germany | Club League | |
+| Sep 26, 2026 | Hungarian Masters Championships | Győr, HUN | All Around, Apparatus Finals | MAG Sr, WAG Sr | Hungary | National Championships | |
+| Sep 29, 2026 | US World Selection Camp | Crossville, TN, USA | All Around | WAG Sr | United States | WCH Trials | |
+| Oct 3, 2026 | WCH Online Preparation Competition | Online Competition | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Elevien | Online Competition | |
+| Oct 3, 2026 | European Gymnastics League | CZE | All Around | MAG Sr | Czechia | International Invitational | |
+| Oct 3, 2026 | Jiri Matucha Grand Prix | CZE | All Around | MAG Sr | Czechia | International Invitational | |
+| Oct 3, 2026 | Internationaler Leverkusen Cup | Leverkusen, North Rhine-Westphalia, GER | — | WAG Sr | Germany | International Invitational | |
+| Oct 10, 2026 | British Team Championships | Stoke-on-Trent, England, GBR | Team | WAG Sr, WAG Jr | Great Britain | Domestic Meet | |
+| Oct 10, 2026 | British Team Championships | Stoke-on-Trent, England, GBR | Team | WAG Sr | Great Britain | Domestic Meet | |
+| Oct 17, 2026 | Artistic World Championships | Rotterdam, NED | Qualification, All Around, Apparatus Finals | MAG Sr, WAG Sr | FIG | World Championships | |
+| Oct 17, 2026 | Deutschland-Pokal [WAG] | Frankfurt, GER | Team, All Around | WAG Jr | Germany | Domestic Meet | |
+| Oct 24, 2026 | Friendly Match (U12/13) | TBA | Team | WAG Jr | Germany (?) | Friendly Match | |
+| Oct 31, 2026 | 1st Bundesliga Alternate Match Day [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Oct 31, 2026 | Deutschland-Pokal [MAG] | Herbolzheim, GER | Team, All Around | MAG Jr | Germany | Domestic Meet | |
+| Nov 1, 2026 | Youth Olympic Games | Dakar, SEN | All Around, Apparatus Finals | MAG Jr, WAG Jr | IOC | Youth Olympic Games | |
+| Nov 5, 2026 | Chinese Taipei Artistic Championships | New Taipei City, TPE | All Around | MAG Sr, WAG Sr | Chinese Taipei | National Championships | |
+| Nov 5, 2026 | Memorial Arturo Gander | Chiasso, SUI | All Around | MAG Sr, MAG Jr | Switzerland | International Invitational | |
+| Nov 6, 2026 | Tournoi International Combs-La-Ville | Combs-La-Ville, FRA | All Around | WAG Jr, WAG Espoir | France | International Invitational | |
+| Nov 7, 2026 | 1st Bundesliga Match 5 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Nov 7, 2026 | Swiss Cup | Zurich, SUI | Mixed Pairs | MAG Sr, WAG Sr | Switzerland | International Invitational | |
+| Nov 12, 2026 | Northern European Championships | Aalborg, DEN | Team, All Around, Apparatus Finals | MAG Sr, WAG Sr | Denmark | Regional Championships | |
+| Nov 14, 2026 | 1st Bundesliga Match 6 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Nov 14, 2026 | 1st Bundestliga Match 4 [WAG] | TBD, GER | Team | WAG Sr, WAG Jr | Germany | Club League | |
+| Nov 15, 2026 | November US National Team Camp | Crossville, TN, USA | All Around | WAG Sr, WAG Jr, WAG Espoir | United States | National Team Camp | |
+| Nov 21, 2026 | 1st Bundesliga Match 7 [MAG] | [Multiple Locations], GER | Team | MAG Sr, MAG Jr | Germany | Club League | |
+| Nov 21, 2026 | Irish National Series | IRL | All Around, Apparatus Finals | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Ireland | National Championships | |
+| Nov 22, 2026 | Voronin Cup | Krasnoyarsk, RUS | All Around, Apparatus Finals | MAG Sr, WAG Sr | Russia | Domestic Meet | |
+| Nov 27, 2026 | Věra Čáslavská Olympic Hopes Cup | Brno, CZE | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Czechia | International Invitational | |
+| Nov 28, 2026 | Věra Čáslavská Sokol Grand Prix | Brno, CZE | All Around | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Czechia | International Invitational | |
+| Nov 28, 2026 | 1st Bundesliga Final [MAG/WAG] | Heidelberg, GER | Team | MAG Sr, MAG Jr, WAG Sr, WAG Jr | Germany | Club League | |
+
+\* Source lists "Orzysz, HUN" as the location for the Polish Championships — the country code doesn't match "Poland" as organizer; flagging as a likely site data error rather than silently correcting it.
+
+**Notes on source data as scraped:**
+- "—" in the Format column means the source listed no Format value for that entry.
+- A few entries (Austrian Championships, Friendly Match: GER-GBR-SUI-FRA-ITA, Friendly Match (U12/13)) had ambiguous or missing Organizer text in the source; reasonable values are given with a "(?)" flag where uncertain.
+- Two "British Team Championships" entries on Oct 10, 2026 both appear in the source (Stoke-on-Trent) — likely separate age-group/division events, kept as separate rows since the site lists them separately.
+- Rhythmic Gymnastics (RG) events and the site's separate "Admin" tab (FIG Technical Committee/Executive Committee meetings) were excluded, since those aren't artistic gymnastics competitions.
