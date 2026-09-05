@@ -1,9 +1,27 @@
 .DS_Store
 
-# Compiled class file
 *.class
 
+bin/
+.settings/
+
+# Eclipse files
+.project
+.classpath
+.metadata/
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
+
+# Maven files
+target/
+
 # Log file
+logs/
 *.log
 
 # BlueJ files

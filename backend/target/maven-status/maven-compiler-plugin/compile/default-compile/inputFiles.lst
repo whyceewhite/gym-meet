@@ -1,4 +1,6 @@
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/Application.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/advice/GlobalExceptionHandler.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/controller/EventController.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/AgeCategory.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/AllAroundResult.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Apparatus.java
@@ -16,3 +18,15 @@
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/ScoreStatus.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Session.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/TeamResult.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/dto/EventRequest.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/dto/EventResponse.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/exception/ConflictException.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/AllAroundResultRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/AthleteNameVariantRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/AthleteRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/EventRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/ParticipantRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/ScoreRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/SessionRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/TeamResultRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/service/EventService.java

@@ -161,6 +161,7 @@ Additional names by which the athlete has had.
 | disciplines | Discipline[] | No | Which program(s) this event includes. Most events are single-discipline; a combined championship can host both. |
 | level | EventLevel | No | The competitive tier of this event. Always set — `UNKNOWN` is used instead of leaving this null when the tier can't be confidently classified. |
 
+
 ### `Session`
 
 | Field | Type | Nullable | Description |
