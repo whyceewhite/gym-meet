@@ -15,8 +15,8 @@ Refer to [Development Setup](development-setup.md) for prerequisite software, da
 
 ## Installing
 ```text
-git clone git@github.com:doubletuck/gym-roster.git
-cd gym-roster
+git clone git@github.com:doubletuck/gym-meet.git
+cd gym-meet
 ```
 
 ## Configuring
@@ -37,7 +37,7 @@ The database schema will automatically be created using Flyway when the applicat
 ### Optional: Clear database
 If you want to start with a clean database, then running the following command will drop all schema objects in the database.
 ```shell
-mvn flyway:clean -Dspring.profiles.active=local -Dflyway.url=jdbc:postgresql://localhost:5432/gymroster -Dflyway.user=postgres -Dflyway.password=gympass -Dflyway.cleanDisabled=false
+mvn flyway:clean -Dspring.profiles.active=local -Dflyway.url=jdbc:postgresql://localhost:5432/gymmeet -Dflyway.user=postgres -Dflyway.password=gympass -Dflyway.cleanDisabled=false
 ```
 
 ### Optional: Run migration
@@ -49,7 +49,7 @@ mvn clean compile
 
 After clearing the database, run the migration script(s).
 ```shell
-mvn flyway:migrate -Dspring.profiles.active=local -Dflyway.url=jdbc:postgresql://localhost:5432/gymroster -Dflyway.user=postgres -Dflyway.password=gympass
+mvn flyway:migrate -Dspring.profiles.active=local -Dflyway.url=jdbc:postgresql://localhost:5432/gymmeet -Dflyway.user=postgres -Dflyway.password=gympass
 ```
 
 NOTE: Whenever new migration scripts are created, run the above command to have them applied to the database.
@@ -80,7 +80,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 or 
 
 ```shell
-java -jar target/gym-roster.jar --spring.profiles.active=local
+java -jar target/gym-meet.jar --spring.profiles.active=local
 ```
 
 The app will be accessible via http://localhost:8080. Do http://localhost:8080/actuator to test.
@@ -96,7 +96,7 @@ Using this docker compose option is good when doing local development on other s
 #### Initiate docker compose
 
 ```shell
-cd gym-roster
+cd gym-meet
 docker compose up
 ```
 

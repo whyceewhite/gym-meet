@@ -11,7 +11,6 @@ This document provides information for a developer to get their local developmen
 * [Install PostgreSQL](#install-postgresql)
 * [Install psql](#install-psql)
 * [Create database](#create-database)
-* [Setup GitHub personal access token](#setup-github-personal-access-token)
 
 ## Required Software
 * Homebrew - A package manager for installing software libraries and packages.
@@ -90,27 +89,27 @@ docker pull postgres:18-alpine
 
 ### 2. Create and start a container from the PostgreSQL image
 ```shell
-docker run --name gym-roster-postgres -p 5432:5432 \
+docker run --name gym-meet-postgres -p 5432:5432 \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=gympass \
-  -e POSTGRES_DB=gymroster \
-  -v gym-roster-data:/var/lib/postgresql \
+  -e POSTGRES_DB=gymmeet \
+  -v gym-meet-data:/var/lib/postgresql \
   -d postgres:18-alpine
 ```
 Where:
 * `docker run`
    * The docker command used to run a container based on an image.
-* `--name gym-roster-postgres`
-   * Assigns the name "gym-roster-postgres" to the container that's being created from the `run` command.
+* `--name gym-meet-postgres`
+   * Assigns the name "gym-meet-postgres" to the container that's being created from the `run` command.
 * `-e POSTGRES_USER=postgres`
    * The `-e` flag sets an environment variable inside the container.
    * The superuser. Note, the absence of this environment variable will default to a superuser name called `postgres`.
 * `-e POSTGRES_PASSWORD=gympass`
    * The Postgres server will use this password for the superuser in `POSTGRES_USER`.
-* `-e POSTGRES_DB=gymroster`
+* `-e POSTGRES_DB=gymmeet`
    * The database that will be created on startup and owned by the superuser.
-* `-v gym-roster-data:/var/lib/postgresql/data`
-   * Maps a Docker-managed volume named `gym-roster-data`to the director inside the container where Postgres actually stores its files. If the container is removed, the volume with your data will remain and can be reattached.
+* `-v gym-meet-data:/var/lib/postgresql/data`
+   * Maps a Docker-managed volume named `gym-meet-data`to the director inside the container where Postgres actually stores its files. If the container is removed, the volume with your data will remain and can be reattached.
 * `-d`
    * The `-d` flag tells docker to run the container in detached mode which means it will run in the background. 
 * `postgres:18-alpine`
@@ -135,42 +134,3 @@ To connect to psql, run the command below. You will be prompted for your passwor
 ```shell
 psql -h localhost -p 5432 -U postgres
 ```
-
-## Setup GitHub personal access token
-
-This project uses the [gym-common](https://github.com/doubletuck/gym-common) library which is hosted as a GitHub package. This project's [pom.xml](../pom.xml) has a repository setting that refers to the this package repository. Because GitHub packages require authentication to access the artifacts, you will need to have a token that allows your account to access packages. This will be needed for fetching libraries locally as well as running workflow actions used by this project.
-
-#### Generate GitHub token
-
-1. Go to `Settings` in your GitHub developer account
-1. Click the `Credentials` menu option
-1. Click the `Personal access tokens (classix)` menu option
-1. Click on the `Generate new token` button to view the create page
-1. The values below are guidelines, but do not have to what is provided **except** for the `Select scopes`:
-   - **Note**: `Package registry reader token`
-   - **Expiration**: No expiration
-   - **Select scopes**: Select `read:packages`
-1. Press the `Generate token` button
-1. *Copy the personal access token* **immediately** as it will not be accessible again
-
-
-#### Update local maven settings.xml file
-
-If you don't already have a `~/.m2/settings.xml` file then create one and copy the block below into the file.
-
-```xml
-<settings>
-    <servers>
-        <server>
-            <id>github</id>
-            <username>your-github-username</username>
-            <password>your-github-access-token</password>
-        </server>
-    </servers>
-</settings>
-```
-
-Replace `your-github-username` with the username of your GitHub developer account where you generated the personal access token.
-
-Replace `your-github-access-token` with the generated token value that you copied in the steps above.
-

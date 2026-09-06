@@ -1,0 +1,19 @@
+{
+    "event" : {
+        "title" : "37th Senior European Championships",
+        "disciplines" : ["MAG"],
+        "ageCategory" : "SR",
+        "level" : "CONTINENTAL_CHAMPIONSHIPS",
+        "startDate" : "2026-08-19",
+        "endDate" : "2026-08-23",
+        "city" : "Zagreb",
+        "country" : "CRO",
+        "figEventNumber" : "18235",
+        "apparatusSuppliers" : "Spieth"
+    },
+    "participantsFile" : "2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR-PARTICIPANTS.csv",
+    "judgesFile" : "2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR-JUDGES.csv",
+    "scoreFiles" : [
+        "2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR-xxx.csv"
+    ]
+}
