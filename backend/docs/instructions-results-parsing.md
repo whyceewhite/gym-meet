@@ -32,8 +32,10 @@ results, team compositions, etc.), each with its own footer stamp like:
 GARM1APFX-------------QUAL--------_C73I 1.0        Wed, 19 Aug 2026 21:26:04   Page 1 / 5
 ```
 
-That footer string is a **stable, unique identifier** for one report — use it,
-not eyeballed page numbers, to locate content. Rules:
+That footer string is usually a **stable, unique identifier** for one
+report — use it, not eyeballed page numbers, to locate content. It is not
+*always* unique, though — see rule 5 below before assuming a single grep
+hit is the whole story. Rules:
 
 1. Run `pdftotext -layout` once on the whole PDF and split the result on the
    form-feed character (`\f`) to get a physical-page-indexed list
@@ -53,6 +55,21 @@ not eyeballed page numbers, to locate content. Rules:
    physically adjacent pages of the same round. Always check where a footer
    string changes rather than assuming a whole logical section (e.g. "all of
    Qualification/SENIORS") shares one footer.
+5. **The same footer code can legitimately appear more than once, for
+   genuinely different reports.** Found parsing Junior Men: the Apparatus
+   Final and All-Around Final "Results By Apparatus" pages for FX, PH, SR,
+   and HB all use the *identical* footer code (e.g.
+   `GARM1APFX---JNR-------FNL---------_C73I`) — it's a report-template ID,
+   not a per-generation unique key. Two things disambiguate them: the
+   **date/time stamp** printed next to "Page X / Y" (each generation gets
+   its own timestamp even when the code is reused), and — more
+   reliably — the **round title actually printed on the page**
+   ("Apparatus Final" vs. "All-Around Final"). Never trust the footer code
+   alone to mean "one report": grep it, then check how many distinct
+   physical-page groups it maps to and read each one's title before
+   assuming they're the same data. (VT and PB happened to get distinct
+   codes for their two Junior reports in this PDF — don't count on that
+   holding for every apparatus; check each one.)
 
 ## 3. Parsing the table itself
 
@@ -78,7 +95,7 @@ separate columns; a single space only ever occurs inside a multi-word value
 (a name like `IANEZ RAMOS Miguel Angel`).
 
 **Gotcha — trailing one-character markers break this.** The qualification
-marker (§4.4) is right-aligned in its own column, so a one-character marker
+marker (§5.5) is right-aligned in its own column, so a one-character marker
 (`Q`) ends up with *more* leading spaces than a two-character marker (`R1`,
 `NR`):
 
@@ -108,7 +125,7 @@ protocol, produce rows with fewer populated fields than a normal result row.
 normal column mapping.** For example, a full DNS row on a 5-column apparatus
 table tokenizes to just `[Bib, Name, NOC, E-value-of-0.000, 'DNS']` — Rank,
 D, B, Penalty are simply absent, and the literal `0.000` in the E slot is a
-placeholder, not a real score (clear it back to blank — see §4.5).
+placeholder, not a real score (clear it back to blank — see §5.5).
 
 ### 3.4 When a column is an icon, not text
 
@@ -137,6 +154,24 @@ Before trusting a parse, independently verify it against the source text:
 This check caught a real bug in this session: a first pass at Pommel Horse
 (which has a different column order, per §3.1) produced 2 rows instead of
 125 — the mismatch was invisible without an independent count.
+
+### 3.6 Name truncation isn't just a Vault thing
+
+§4 already covers the narrow Name column on the two-vault listing. The same
+failure mode shows up anywhere a name is unusually long relative to a fixed
+column width — found in a Junior Qualification table (a normal-width
+apparatus results table, not Vault) where `BORDELAIS-MAISONNABLE Ruddly`
+printed as just `BORDELAIS-MAISONNABLE`, given name silently dropped,
+because the 22-character surname alone nearly filled the column. This
+wasn't a one-off: it recurred on four different apparatus tables for the
+same athlete. **Don't rely on "does this table have a narrow Name column"
+as the trigger for checking** — instead, after parsing any results file,
+diff every `(Bib, Name)` pair against `PARTICIPANTS.csv` (the master name
+source, §5.10) and fix any mismatch from there, regardless of which report
+or column width it came from. A single-word-name heuristic isn't
+sufficient either — a truncated multi-word surname (e.g. `VAN DER AA`
+losing its given name) would still look like a plausible multi-word value
+and pass a naive "is this suspiciously short" check.
 
 ## 4. Vault: two separate listings
 
@@ -193,12 +228,13 @@ and `LEVEL` ∈ `SR`/`JR` (matching the `Discipline`/`AgeCategory` enums in
 | `QUALS-<APP>` | Results By Apparatus, Qualification round | One apparatus, one round |
 | `TEAM-<APP>` | Results By Apparatus, Team Final round (per-athlete detail feeding the team score) | One apparatus, one round |
 | `FINALS-<APP>` | Results By Apparatus, (individual) Apparatus Final round | One apparatus, one round |
+| `AA-<APP>` | Results By Apparatus, All-Around Final round | One apparatus, one round |
 | `QUALS-TEAM` | Team Results, top-line team totals only, Qualification round | Every team, one round |
 | `FINALS-TEAM` | Team Final Results, top-line team totals only, Team Final round | Every qualified team, one round |
 
 The first segment is not a literal round name — it tracks whether the file
 is **plain per-round detail** (`QUALS`, `TEAM`) or a **decisive placement
-summary** (`FINALS`), and the second segment is always the content: an
+summary** (`FINALS`, `AA`), and the second segment is always the content: an
 apparatus code, or the literal word `TEAM` meaning "team-standings
 summary." A team standings summary is always a placement summary, in both
 rounds it exists for — hence `QUALS-TEAM` *and* `FINALS-TEAM`, never
@@ -208,6 +244,19 @@ that file is per-athlete detail, not a summary — see §5.8 for the full
 reasoning and the report each of these three actually comes from. This is
 the same kind of position-disambiguated collision as the `SR`/`SR` one
 described just below, not a naming mistake.
+
+`AA-<APP>` exists because Junior competitions (unlike Senior, in this PDF)
+have *both* an Apparatus Final and an All-Around Final round, and both
+produce a full six-apparatus results-by-apparatus breakdown — so
+`FINALS-<APP>` alone would be ambiguous for Juniors (which final?). `AA`
+was picked as the second placement-summary prefix, alongside `FINALS`,
+rather than spelling out the round in the filename (`ALLAROUND-<APP>` or
+similar) — it's also the short form `data-model.md` already uses for this
+round (`AA_FINAL`). See §5.6/§5.7 for the two files' actual column
+differences, which turn out to matter more than the naming: Junior's Vault
+is the two-attempt shape (§4) in `FINALS-VT` but a single-attempt shape in
+`AA-VT` — the reverse of what the file *names* alone would suggest, so
+don't assume based on the suffix; check the page.
 
 `<APP>` is the two-letter `Apparatus` enum code from `data-model.md`: `FX`,
 `PH`, `SR` (Still Rings), `PB`, `HB`, `VT` (MAG); `UB`, `BB` (WAG, plus
@@ -274,7 +323,7 @@ One row per athlete entry. Columns:
 | Bib Number | |
 | FIG License | |
 | Name | Combined "SURNAME Given Name" exactly as printed |
-| Surname | **Derived, see §5.9.** This file is the *master* record for an athlete's name — derive it once here. |
+| Surname | **Derived, see §5.10.** This file is the *master* record for an athlete's name — derive it once here. |
 | Given Name | Derived, same rule |
 | Birth Year | The PDF entry list gives only a birth **year**, not a full date — see §6 for the gap against `Athlete.birthDate`. |
 
@@ -288,7 +337,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Apparatus | One of the six two-letter codes, or **blank** for a Superior Jury row (President/Member — not tied to one apparatus) |
 | Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`, `L1`, `L2`, `RES 1`–`RES 3`, `L`, `President`, `Member` — copy exactly as printed, don't normalize |
 | Name | Combined name as printed |
-| Surname | **Derived, every time.** There is no separate master file for judges (unlike athletes), so this file derives the split itself using the rule in §5.9. |
+| Surname | **Derived, every time.** There is no separate master file for judges (unlike athletes), so this file derives the split itself using the rule in §5.10. |
 | Given Name | Derived, same rule |
 | NOC Code | |
 
@@ -302,7 +351,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Apparatus | Two-letter code |
 | Rank | Blank for a DNS row |
 | Bib | |
-| Name | As printed — **do not derive Surname/Given Name here** (§5.9) |
+| Name | As printed — **do not derive Surname/Given Name here** (§5.10) |
 | NOC Code | |
 | Status | Blank = completed. `DNS` if the athlete didn't start this apparatus. |
 | D | Blank on PH's absent-Bonus rows is *not* a thing — PH just never has a `B` value; leave `D`/`E` populated normally |
@@ -371,36 +420,67 @@ printed as `SPONEVIK` with no given name) — cross-check against
 `PARTICIPANTS.csv` by Bib and use its `Name` instead of trusting this
 table's version verbatim.
 
-### 5.7 Results-by-apparatus, Team Final round (`TEAM-<APP>`)
+### 5.7 Results-by-apparatus, All-Around Final round (`AA-<APP>`)
+
+Only seen so far for Junior Men, which — unlike the Senior data this
+standard was first built from — has a separate All-Around Final round in
+addition to the Apparatus Final, each with its own full six-apparatus
+results-by-apparatus breakdown. See §5.1 for why this gets a distinct
+`AA-<APP>` filename rather than colliding with `FINALS-<APP>`.
+
+Columns and conventions are otherwise identical to §5.6 — same trimmed-down
+shape (no `Status`, no `Qualification`), same per-apparatus header-order
+quirks — with one value changed and one structural surprise:
+
+| Column | Notes |
+|---|---|
+| Round | `ALL_AROUND_FINAL` (§5.2) — the one column that actually differs from §5.6 |
+| Apparatus, Rank, Bib, Name, NOC Code, D, E, B, Penalty, Total | As in §5.6 |
+
+**Vault is the single-attempt shape here** — `D`/`E`/`B`/`Penalty`/`Total`,
+not the `D1`/`D2` split. This is the opposite of what the filenames alone
+would suggest (`FINALS-VT` is the two-attempt shape, per §5.6; `AA-VT` is
+the plain one), and it makes sense once you think about what each round is
+actually for: the Apparatus Final's vault specialists are being judged on
+vault specifically, so they get two attempts; an All-Around finalist's
+vault score is just one contributor to a six-apparatus total, so it's a
+single attempt like every other apparatus in their all-around routine. The
+takeaway isn't "AA is always single-attempt" so much as **check the actual
+page's header before assuming either shape carries over** — the same
+caution as §3.1 and the `TEAM-VT` note in §5.8.
+
+### 5.8 Results-by-apparatus, Team Final round (`TEAM-<APP>`)
 
 In the Team Final, the qualified teams' athletes perform each apparatus
-again — this is the per-athlete result feeding into the team score (§5.8
+again — this is the per-athlete result feeding into the team score (§5.9
 covers the team-level summary those add up to). Structurally this report is
 just like Qualification (§5.5) with the qualification-tracking columns
-removed, same as the individual Apparatus Final (§5.6):
+removed, same as the individual Apparatus Final (§5.6) and All-Around
+Final (§5.7):
 
 | Column | Notes |
 |---|---|
 | Round | `TEAM_FINAL` (§5.2) |
-| Apparatus | Two-letter code. Like Judges Assignment (§3.4) and the `QUALS-TEAM` top-line report (§5.8), the apparatus is an **icon** in the page header, not text — confirmed here by rendering all six pages, same FX/PH/SR/VT/PB/HB order as everywhere else. |
-| Rank, Bib, Name, NOC Code | As in §5.5/§5.6. Ties are common here (the field size is fixed at "qualified teams × roster count on that apparatus," not a ranked cut, so more ties survive than in Qualification/individual Finals) — copy duplicate ranks as printed. |
-| D, E, B, Penalty, Total | As in §5.5/§5.6. PH again has no `B` column and prints `E` before `D`. |
+| Apparatus | Two-letter code. Like Judges Assignment (§3.4) and the `QUALS-TEAM` top-line report (§5.9), the apparatus is an **icon** in the page header, not text — confirmed here by rendering all six pages, same FX/PH/SR/VT/PB/HB order as everywhere else. |
+| Rank, Bib, Name, NOC Code | As in §5.5/§5.6/§5.7. Ties are common here (the field size is fixed at "qualified teams × roster count on that apparatus," not a ranked cut, so more ties survive than in Qualification/individual Finals) — copy duplicate ranks as printed. |
+| D, E, B, Penalty, Total | As in §5.5/§5.6/§5.7. PH again has no `B` column and prints `E` before `D`. |
 
 No `Status`, `Qualification`, or `Qualification Rank` columns — same
-reasoning as §5.6 (nothing to put in them; no further round to qualify
+reasoning as §5.6/§5.7 (nothing to put in them; no further round to qualify
 into, and no DNS was observed in this data set).
 
 **Vault is a single-attempt table here** — unlike both Qualification's
-double-vault list and the individual Vault Final (§5.6), a team-final
-vault routine is only performed once per athlete, so `TEAM-VT.csv` uses the
+double-vault list and the individual Vault Final (§5.6, though *not*
+Junior's All-Around Final, §5.7 — check the page), a team-final vault
+routine is only performed once per athlete, so `TEAM-VT.csv` uses the
 same plain `D`/`E`/`B`/`Penalty`/`Total` shape as every other apparatus in
 this section, **not** the `D1`/`D2`-style split. Don't assume "Vault" always
 means the two-attempt shape — check the actual page, the same way §3.1 says
 to check the header row before assuming a column layout carries over.
 
-### 5.8 Team Results, top-line only (`QUALS-TEAM`, `FINALS-TEAM`)
+### 5.9 Team Results, top-line only (`QUALS-TEAM`, `FINALS-TEAM`)
 
-A separate report from the individual apparatus results (§5.5, §5.6, §5.7) — the
+A separate report from the individual apparatus results (§5.5, §5.6, §5.7, §5.8) — the
 "Team Results" report shows, per NOC, a summary row (rank, six apparatus
 totals, penalty, grand total, qualification marker where applicable)
 followed by every team member's individual per-apparatus scores underneath
@@ -416,10 +496,18 @@ If a future task needs the per-athlete team scores, that's a different,
 larger parse of the same report and should get its own file/section here
 when it's actually built; don't assume the summary-row columns below cover
 it. (That per-athlete detail is a *different* report from `TEAM-<APP>`,
-§5.7, too — §5.7 is the official per-apparatus results feeding into
+§5.8, too — §5.8 is the official per-apparatus results feeding into
 scoring, individually paginated per apparatus; the breakdown embedded in
 *this* report is the same underlying scores laid out per-team instead, with
 the drop-lowest score marked in italics.)
+
+Juniors, at least in this PDF, have no Team Final at all — `QUALS-TEAM`
+exists for them but there's no `FINALS-TEAM` counterpart, and the
+Qualification-round summary carries no `Qualification` marker for any team
+(confirmed: the letter `Q` doesn't appear anywhere in that report) since
+there's no team round to qualify into. Don't treat a missing `FINALS-TEAM`
+file as a parsing gap for a level/discipline that turns out not to have
+the round at all.
 
 Like Judges Assignment (§3.4), the six apparatus columns are headed by an
 **icon**, not text — confirmed by rendering the page. The order was the same
@@ -436,7 +524,7 @@ athlete's already-parsed `QUALS-FX.csv` row).
 | FX Total, PH Total, SR Total, VT Total, PB Total, HB Total | Each apparatus's counting team total (already the sum/drop-lowest result printed by the source — not recomputed) |
 | SJ Penalty | Superior Jury penalty applied to the team, distinct from an individual routine's `Penalty`. Blank when none was applied — every team in both rounds had a blank value here, so this column is unverified against a real example; watch for one in a future PDF and confirm the parsing still holds. |
 | Total | Team's grand total |
-| Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank, same vocabulary as everywhere else. **`FINALS-TEAM` omits this column entirely** — there's no further round to qualify into once the Team Final is done, same reasoning as §5.6/§5.7 dropping it. |
+| Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank, same vocabulary as everywhere else. **`FINALS-TEAM` omits this column entirely** — there's no further round to qualify into once the Team Final is done, same reasoning as §5.6/§5.7/§5.8 dropping it. |
 
 **Naming note, correcting an earlier guess in this doc:** a previous
 revision of §5.1 speculated a Team-Final top-line file would be named
@@ -447,12 +535,12 @@ round, and a team standings summary is a placement summary either way,
 Qualification included. So the two `TEAM`-content files are
 `QUALS-TEAM` (Qualification round) and `FINALS-TEAM` (Team Final round) —
 `TEAM` never appears as the first segment paired with a `TEAM` second
-segment. Contrast this with `TEAM-<APP>` (§5.7), where `TEAM` *is* the first
+segment. Contrast this with `TEAM-<APP>` (§5.8), where `TEAM` *is* the first
 segment, but paired with an apparatus code — that file is per-athlete
 apparatus detail from the Team Final, not a placement summary, which is
 exactly the distinction the first segment is encoding.
 
-### 5.9 Name splitting (Surname / Given Name)
+### 5.10 Name splitting (Surname / Given Name)
 
 Rule: split `Name` on spaces; every **leading** word that is entirely
 uppercase is part of the surname (handles multi-word family names like
