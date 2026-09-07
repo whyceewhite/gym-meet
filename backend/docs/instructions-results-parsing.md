@@ -647,3 +647,245 @@ process:
    §5.9 documenting the actual report shape (unverified: does the AA
    ranking table look like the Team one — a summary row followed by a
    per-apparatus breakdown — or something else entirely?).
+
+## 7. WAG-specific differences
+
+Everything above was written against the MAG PDF. Parsing WAG for the first
+time (`2026-EUROPEAN-CHAMPIONSHIPS-WAG-RESULTS.pdf`) confirmed the naming
+standard (§5.1) and most of the CSV standard (§5) carry over unchanged —
+`<EVENT-PREFIX>-SCORES-<ROUND>-<APP>.csv` with `DISCIPLINE=WAG` and
+`<APP>` ∈ `FX`/`BB`/`UB`/`VT` needed no new suffix types. These are the
+real deltas found:
+
+### 7.1 E-before-D is the WAG default, not an exception
+
+MAG had exactly one apparatus (PH) that printed `E` before `D`. In WAG,
+**every** apparatus — `FX`, `BB`, `UB`, and both attempts of `VT` — prints
+`E` before `D`. Don't carry over "assume `D` before `E` unless it's the
+PH-like exception" as a mental shortcut for a new discipline; re-check the
+header per §3.1 regardless of what discipline you're on. The CSV's own
+`D`/`E` column *names* and order stay fixed the way §5.5 already
+established (parse from wherever the source actually put them, write to
+the fixed-name columns) — this is a parsing-input difference, not an
+output-schema change.
+
+### 7.2 No `B`/Bonus column on non-vault apparatus
+
+Like MAG's PH, none of WAG's `FX`/`BB`/`UB` tables have a bonus column at
+all — but for WAG this is true of every non-vault apparatus, not one
+exception. Their `SCORES-QUAL-<APP>`/`SCORES-EVENT-<APP>`/`SCORES-TEAM-<APP>`
+column set is `Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,Penalty,Total[,Qualification]`
+— §5.5/§5.6/§5.8's tables, minus the `B` column entirely (not just left
+blank).
+
+### 7.3 WAG Vault has two extra concepts MAG's schema doesn't need
+
+Confirmed directly from the PDF (not inherited from the pre-existing
+ad-hoc WAG files, which got both of these wrong — see §7.6):
+
+- **A real `SJ Pen.` (Superior Jury Penalty) column, per vault attempt.**
+  Distinct from the ordinary `Penalty` column. Add `SJ Penalty1`/
+  `SJ Penalty2` columns to Vault's schema, positioned after each attempt's
+  `Penalty`.
+- **Bonus is a `*` printed on the combined `Total`, not a per-attempt
+  numeric column.** The source's own NOTE spells it out: *"Asterisk (*) at
+  Vt Score informs that Bonus(+0.2) was applied."* Decoded into a single
+  `Bonus` column (`0.2` or blank) sitting just before `Total`, with `Total`
+  itself holding the clean number (asterisk stripped) — chosen over
+  preserving the `*` inline, unlike the `!` inquiry marker (§5.2), because
+  this value is immediately needed as a number downstream and the
+  legacy WAG files already established that shape as reasonable.
+
+Full `SCORES-QUAL-VT` column set:
+
+```
+Round,Apparatus,Rank,Bib,Name,NOC Code,
+Status1,D1,E1,Penalty1,SJ Penalty1,Total1,
+Status2,D2,E2,Penalty2,SJ Penalty2,Total2,
+Bonus,Total,Qualification,Qualification Rank
+```
+
+`SCORES-EVENT-VT` is the same shape minus `Status1`/`Status2`/
+`Qualification`/`Qualification Rank` (no DNS observed in a Final, no
+further round to qualify into — same reasoning as §5.6). Both are built by
+joining a single-vault list and a double-vault list exactly per §4 — WAG
+has the identical two-listing structure, DNF/DNS conventions included.
+
+**`SCORES-TEAM-VT` has neither column.** Confirmed by rendering the actual
+page: Team Final vault is single-attempt or WAG (matching MAG, §5.8), with
+plain `D,E,Penalty,Total` and no `SJ Pen.`/`*` at all. Don't assume Vault
+always carries these two extra concepts — they showed up on the two
+double-attempt reports and nowhere else.
+
+### 7.4 The shared-footer-code trap bit again — verify by title, not just by grep count
+
+§2 rule 5 already documents that a footer code can cover more than one
+report. WAG's Vault Qualification section is a sharper version of this:
+the single-vault list, the double-vault list, *and* two separate Tie Break
+sections all share variations of the same handful of footer codes, with
+the double-vault list sandwiched between two Tie-Break blocks under
+codes that look superficially distinguishable but aren't reliably so.
+A first pass at this mis-identified the double-vault list as a
+differently-coded block based on where a `grep` hit landed, and only
+caught the error by re-deriving the physical page from a unique string
+match and checking its printed title. **Always print the title line for
+every physical page in a `grep` hit's range before writing the parser** —
+don't infer a block's identity from occurrence-counting the footer code
+alone, even when it looks like a clean pattern.
+
+### 7.5 Long-surname truncation recurred, with no master name file to fall back on
+
+§3.6 already covers a long surname overflowing a fixed column width. It
+recurred here for three WAG athletes (`CHRISTODOULOU Mariantrea`,
+`ADALSTEINSDOTTIR Thelma`, `THORBJARNARDOTTIR Audur Anna`, each truncated
+to just the surname on every apparatus table, not only Vault's narrow
+one). §3.6's fix assumes a `PARTICIPANTS.csv` master to diff against —
+**WAG has no `PARTICIPANTS.csv` yet**, so the fallback used instead was
+building a Bib → full-name lookup out of every other apparatus/round table
+already being parsed in the same batch (a truncated name on one table is
+reliably full-width on at least one other), then applying it everywhere.
+This works as a stopgap but isn't a substitute for the real fix: build
+`PARTICIPANTS.csv` (entry list) for WAG as its own task, then switch to
+diffing against it per §3.6 once it exists.
+
+**Update: `PARTICIPANTS.csv` now exists for WAG** (§7.8), and re-diffing
+every already-built `SCORES-*` file against it caught four *more*
+truncations the cross-file lookup above had missed — this time a
+multi-word **given name** cut off (`HWANG Filippa Hailey` →
+`HWANG Filippa Hailey Hogberg`, `GUTIERREZ MAYORDOMO` →
+`GUTIERREZ MAYORDOMO Lucia`, two more like it), not just a long surname.
+The lookup-of-convenience approach only catches a truncation if *some*
+other table in the batch happened to print that Bib's name in full; a
+name that's long enough to get clipped everywhere it appears will pass
+that check silently. Now that a master file exists, always diff every
+`SCORES-*`/`SUMMARY-*` file's `(Bib, Name)` pairs against it directly
+(§3.6) rather than relying on cross-file agreement.
+
+### 7.6 The pre-existing ad-hoc WAG files had real bugs, not just non-standard naming
+
+Before this pass, WAG had 20 CSVs already parsed under an earlier, informal
+naming scheme (`QUALS-<APP>`, `FINALS-<APP>`, `TEAM-<APP>`, no `Round`/
+`Apparatus` columns). Aligning them turned into a full re-parse rather than
+a rename, because the old files had actual data bugs, confirmed against
+the source PDF:
+
+- Names truncated in places a full re-parse fixed (§7.5's cases plus
+  ordinary narrow-column Vault truncation, §3.6).
+- A `DNS` value found sitting in the wrong column for at least one row
+  (misaligned during whatever ad-hoc process produced the file).
+- An `Inquiry` Yes/No column standing in for the `!` inquiry marker (§5.2
+  says to keep `!` inline on the D score — the ad-hoc files instead added a
+  side column, and inconsistently: present on some apparatus files,
+  missing on others for no apparent reason).
+- Column naming drift *within* the same file family — the qualification
+  round's Vault file used `E1`/`D1`.../`E2`/`D2`, while that same
+  competition's Finals/Team Vault files used `Vault 1 E`/`Vault 1 D`...
+  for the identical concept.
+
+The lesson generalizes: if a future data set turns up already
+partially parsed by an earlier, informal process, don't assume the only
+gap is naming — diff a sample of its values against the actual PDF before
+deciding a rename is sufficient.
+
+### 7.7 `PARTICIPANTS.csv` and `JUDGES.csv` for WAG
+
+Both now exist (`WAG-SR`/`WAG-JR`, each), built exactly per §5.3/§5.4 — the
+entry list and Judges Assignment reports have the same shape as MAG's, one
+real difference aside:
+
+- The entry list's own footer code differs (`WAG_SEN_000234`/
+  `WAG_JUN_000234` vs. MAG's `MAG_SEN_...`/`MAG_JUN_...`), and the page
+  title reads **"Entry List By BIB"** (all-caps `BIB`) rather than MAG's
+  "By Bib" — cosmetic, but don't pattern-match the title string literally
+  when hunting for this report in a new PDF.
+- Judges Assignment is a **2×2 icon grid** (`Vault`/`Uneven Bars` top row,
+  `Balance Beam`/`Floor Exercise` bottom row), not MAG's 3×2 — because WAG
+  has four apparatus, not six. Confirmed by rendering all five
+  Judges Assignment pages (`QUAL`/`EVENT`/`TEAM` for `SR`, `QUAL`/`EVENT`
+  for `JR` — no `TEAM` for `JR`, §7.10) rather than assuming the grid
+  shape carries over from MAG. The parsing code itself (Superior Jury
+  block, then N panel-pair blocks split by the second `Function` column
+  position) needed no changes beyond swapping the apparatus list and
+  panel-pair count from 3 to 2 — see §3.4's Judges Assignment guidance.
+
+### 7.8 Team/All-Around Results: icon order confirmed, and it doesn't match the printed LEGEND text order
+
+Both the `SUMMARY-QUAL-TEAM`/`SUMMARY-FINAL-TEAM` "Team Results" report and
+the `SUMMARY-QUAL-AA` "All-Around Results" report head their apparatus
+columns with icons, same as Judges Assignment (§3.4). Rendering confirmed
+the actual column order is **Vault, Uneven Bars, Balance Beam, Floor
+Exercise** — but the page's own printed `LEGEND` text below the table lists
+them in a *different* order ("Floor exercise, Balance beam, Uneven bars,
+Vault"). The legend is correct as a glossary (which icon means which
+apparatus) but wrong as a guide to column order — **always confirm column
+order from the rendered table header itself, never from the legend's
+listing order**, even when the legend is right there on the same page.
+
+### 7.9 All-Around Results: a four-line-per-athlete layout, and a regex gotcha
+
+Unlike Team Results (one athlete per data row, apparatus sub-columns
+inline), the individual All-Around Results report spreads **one athlete
+across four physical text lines**: a line of `D`/`Total`/`Rk` triples (one
+per apparatus) *above* the identity line, the `Rank`/`Bib`/`Name`/`NOC`
+identity line itself, a line of `E`/`Pen` values *below* that, and the
+combined all-around `Total` sitting alone on a further line after that.
+Parsing this means locating the identity line first, then reading
+backwards one line for the per-apparatus totals and forwards past the E/Pen
+line for the overall total — not a per-row tokenize like every other
+report in this document.
+
+Extracting just the `Total` from each apparatus's `D Total Rk` triple used
+a regex over the D/Total/Rk line rather than whitespace-splitting it (the
+triples run together with only one space in places, the same
+marker-spacing problem as §3.2, here between `Rk` and the next apparatus's
+`D`). First pass at that regex used a character class of `[\d.\s]` to
+recognize the E/Pen line while scanning forward for the overall total, and
+silently produced blank totals for every row with a negative penalty on
+that line — a plain minus sign isn't in `[\d.\s]`, so the scan mistook a
+penalized row's E/Pen line for the end of the block and gave up early.
+Fixed by adding `-` to the class. Generalizes: a whitespace/digit-only
+character class over one column of a results table is never actually safe
+to assume, because a penalty column can always turn negative on the exact
+row you use to write it.
+
+### 7.10 What the schedule says exists and what the results PDF actually contains can disagree
+
+The competition schedule pages (front of the PDF) list a **"Women's Junior
+Team Final"** and both a **"Women's Senior/Junior Individual All-Around
+Final"** as scheduled sessions. Neither has any corresponding results in
+this PDF:
+
+- No `GARWTEAM----JNR-------FNL---------` footer code exists anywhere, and
+  no page anywhere titles itself "Team Final"/"JUNIORS" outside the
+  schedule. Junior WAG genuinely has no `SCORES-TEAM-<APP>` or
+  `SUMMARY-FINAL-TEAM` files in this data set — matches the MAG Junior
+  gap, now confirmed for a second discipline.
+- "All-Around Final" never appears as a page title outside the schedule
+  either, for *either* age level. The only individual all-around ranking
+  in the whole document is `GARW1AA...QUAL...` (§7.9), which prints
+  **"All-Around Medallists" directly on the Qualification-round page** —
+  meaning for WAG, at least in this event, there is no separate All-Around
+  Final round at all. The Qualification round's combined score *is* the
+  final all-around result. Consequently there is a `SUMMARY-QUAL-AA` file
+  for both `SR` and `JR`, but **no `SUMMARY-FINAL-AA`** — not an oversight,
+  there is nothing to parse.
+
+The general lesson: the schedule describes what was *planned*, not what
+the results document *contains*. Confirm a round's results actually exist
+as their own report (a real footer code, a real page title) before
+building a file for it — don't infer a file should exist just because the
+schedule names the round.
+
+### 7.11 A team can be missing an entire apparatus
+
+One Junior team (Kosovo, `SUMMARY-QUAL-TEAM`) competed on only 3 of the 4
+apparatus — the source prints a blank in that apparatus's column entirely
+(not a `0.000`) and `DNF` in the `Total` position, the same
+incomplete-team-result idea as an individual `DNF` (§4) but at the team
+level. This one row didn't fit the normal 5-or-6-token parse (a genuinely
+missing column shifts every token after it), and rather than generalize
+the parser for an `n=1` case, it was corrected by hand after generation,
+using the source's own column *positions* (not token count) to confirm
+which specific apparatus was blank. If this recurs, worth generalizing;
+for one row, hand-verification against the rendered/positional source was
+faster and just as reliable.
