@@ -353,7 +353,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Column | Notes |
 |---|---|
 | Round | `QUAL` / `EVENT` / `TEAM` / `AA` |
-| Apparatus | One of the six two-letter codes, or **blank** for a Superior Jury row (President/Member — not tied to one apparatus) |
+| Apparatus | The two-letter code (`FX`/`PH`/`SR`/`PB`/`HB`/`VT` for MAG, `FX`/`BB`/`UB`/`VT` for WAG), or **blank** for a Superior Jury row (President/Member — not tied to one apparatus). **Not** the spelled-out name the icon stands for (`Floor Exercise`, `Rings`, ...) — identifying the panel's apparatus by icon (§3.4) is a separate step from writing the column value, and the first pass at this file wrote the spelled-out label straight through for all four MAG/WAG `JUDGES.csv` files before it was caught and fixed. Map to the short code explicitly; don't let the icon lookup's own label leak into the output. |
 | Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`, `L1`, `L2`, `RES 1`–`RES 3`, `L`, `President`, `Member` — copy exactly as printed, don't normalize |
 | Name | Combined name as printed |
 | Surname | **Derived, every time.** There is no separate master file for judges (unlike athletes), so this file derives the split itself using the rule in §5.10. |
