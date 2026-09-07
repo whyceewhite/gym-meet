@@ -208,70 +208,87 @@ blank. See §5.5 for how this is represented in the CSV.
 
 ### 5.1 File naming
 
+Score-bearing files use two patterns, both anchored on the same event
+prefix:
+
 ```
-<EVENT-PREFIX>-<SUFFIX>.csv
+<EVENT-PREFIX>-SCORES-<ROUND>-<APPARATUS>.csv
+<EVENT-PREFIX>-SUMMARY-<ROUND>-<TEAM-OR-AA>.csv
 ```
 
 `<EVENT-PREFIX>` is exactly the `Prefix` column value in
 `data/<year>/<event>/<EVENT>-EVENT.csv` (e.g.
 `2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR`) — i.e.
-`<YEAR>-<EVENT-NAME>-<DISCIPLINE>-<LEVEL>`, where `DISCIPLINE` ∈ `MAG`/`WAG`
-and `LEVEL` ∈ `SR`/`JR` (matching the `Discipline`/`AgeCategory` enums in
-`data-model.md`).
+`<YEAR>-<EVENT-NAME>-<DISCIPLINE>-<AGE-LEVEL>`, where `DISCIPLINE` ∈
+`MAG`/`WAG` and `AGE-LEVEL` ∈ `SR`/`JR`/`JR16`/`JR17` (matching the
+`Discipline`/`AgeCategory` enums in `data-model.md`).
 
-`<SUFFIX>` is one of:
+`SCORES` is per-athlete (or per-team-on-one-apparatus) detail — one row per
+competitor. `SUMMARY` is a rolled-up, one-row-per-team-or-athlete total —
+derivable from the `SCORES` files in principle, but published as its own
+table in the source PDF, so captured as its own file rather than computed.
+This split replaces an earlier scheme (still visible in git history) that
+folded both into one ambiguous first segment — see the note at the end of
+this section if you're working from an older mental model of the naming.
+
+`<ROUND>` is one of:
+
+| Round token | Meaning |
+|---|---|
+| `QUAL` | Qualification |
+| `EVENT` | Apparatus Final (also called "Event Finals") |
+| `AA` | All-Around Final |
+| `TEAM` | Team Final |
+
+`<APPARATUS>` is the two-letter `Apparatus` enum code from `data-model.md`:
+`FX`, `PH`, `SR` (Still Rings), `PB`, `HB`, `VT` (MAG); `UB`, `BB` (WAG,
+plus shared `FX`/`VT`). `<TEAM-OR-AA>` (summary files only) is the literal
+word `TEAM` or `AA`, naming which roll-up the row belongs to.
+
+Full suffix reference:
 
 | Suffix | Contents | One file covers |
 |---|---|---|
 | `PARTICIPANTS` | Entry list (one row per athlete) | Every round, all apparatus |
 | `JUDGES` | Judges Assignment (one row per judge per panel) | Every round in one file, distinguished by a `Round` column |
-| `QUALS-<APP>` | Results By Apparatus, Qualification round | One apparatus, one round |
-| `TEAM-<APP>` | Results By Apparatus, Team Final round (per-athlete detail feeding the team score) | One apparatus, one round |
-| `FINALS-<APP>` | Results By Apparatus, (individual) Apparatus Final round | One apparatus, one round |
-| `AA-<APP>` | Results By Apparatus, All-Around Final round | One apparatus, one round |
-| `QUALS-TEAM` | Team Results, top-line team totals only, Qualification round | Every team, one round |
-| `FINALS-TEAM` | Team Final Results, top-line team totals only, Team Final round | Every qualified team, one round |
+| `SCORES-QUAL-<APP>` | Results By Apparatus, Qualification round | One apparatus, one round |
+| `SCORES-EVENT-<APP>` | Results By Apparatus, (individual) Apparatus Final round | One apparatus, one round |
+| `SCORES-AA-<APP>` | Results By Apparatus, All-Around Final round | One apparatus, one round |
+| `SCORES-TEAM-<APP>` | Results By Apparatus, Team Final round (per-athlete detail feeding the team score) | One apparatus, one round |
+| `SUMMARY-QUAL-TEAM` | Team Results, top-line team totals only, Qualification round | Every team, one round |
+| `SUMMARY-FINAL-TEAM` | Team Final Results, top-line team totals only, Team Final round | Every qualified team, one round |
 
-The first segment is not a literal round name — it tracks whether the file
-is **plain per-round detail** (`QUALS`, `TEAM`) or a **decisive placement
-summary** (`FINALS`, `AA`), and the second segment is always the content: an
-apparatus code, or the literal word `TEAM` meaning "team-standings
-summary." A team standings summary is always a placement summary, in both
-rounds it exists for — hence `QUALS-TEAM` *and* `FINALS-TEAM`, never
-`TEAM-TEAM`. `TEAM-<APP>` is the one place `TEAM` names the first (round)
-segment instead, and it pairs with an apparatus code precisely because
-that file is per-athlete detail, not a summary — see §5.8 for the full
-reasoning and the report each of these three actually comes from. This is
-the same kind of position-disambiguated collision as the `SR`/`SR` one
-described just below, not a naming mistake.
-
-`AA-<APP>` exists because Junior competitions (unlike Senior, in this PDF)
-have *both* an Apparatus Final and an All-Around Final round, and both
-produce a full six-apparatus results-by-apparatus breakdown — so
-`FINALS-<APP>` alone would be ambiguous for Juniors (which final?). `AA`
-was picked as the second placement-summary prefix, alongside `FINALS`,
-rather than spelling out the round in the filename (`ALLAROUND-<APP>` or
-similar) — it's also the short form `data-model.md` already uses for this
-round (`AA_FINAL`). See §5.6/§5.7 for the two files' actual column
-differences, which turn out to matter more than the naming: Junior's Vault
-is the two-attempt shape (§4) in `FINALS-VT` but a single-attempt shape in
-`AA-VT` — the reverse of what the file *names* alone would suggest, so
-don't assume based on the suffix; check the page.
-
-`<APP>` is the two-letter `Apparatus` enum code from `data-model.md`: `FX`,
-`PH`, `SR` (Still Rings), `PB`, `HB`, `VT` (MAG); `UB`, `BB` (WAG, plus
-shared `FX`/`VT`).
+`SUMMARY-QUAL-TEAM`/`SUMMARY-FINAL-TEAM` use `QUAL`/`FINAL` rather than the
+`SCORES`-side `QUAL`/`TEAM` vocabulary for the *first* `<ROUND>` segment —
+Qualification and Team Final are the two rounds a team summary exists for,
+and "Final" here reads as "the summary is finalized"/"decisive," matching
+how an eventual All-Around summary would be `SUMMARY-QUAL-AA` (who
+qualifies to the All-Around Final) and `SUMMARY-FINAL-AA` (final
+all-around standings) — not yet built; see §6 note 6 for the mapping this
+implies once they are.
 
 > **Known ambiguity, accepted deliberately:** `SR` means Still Rings as an
-> apparatus code but Senior as a level code, so a filename can contain `SR`
-> twice with different meanings, e.g.
-> `2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR-QUALS-SR.csv` (Seniors, Rings). This
-> mirrors FIG's own source codes (`GARM1APSR...`) rather than inventing a
-> non-standard apparatus code — position in the filename disambiguates it
-> (4th segment = level, 6th = apparatus).
+> apparatus code but Senior as an age-level code, so a filename can contain
+> `SR` twice with different meanings, e.g.
+> `2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR-SCORES-QUAL-SR.csv` (Seniors, Rings).
+> This mirrors FIG's own source codes (`GARM1APSR...`) rather than
+> inventing a non-standard apparatus code — position in the filename
+> disambiguates it (4th segment = age level, 7th = apparatus).
 
 Files not covered by a results PDF at all (`EVENT.csv`) are out of scope
 here — see the existing file for its shape.
+
+**Superseded scheme, for reading old commits:** files were previously named
+`QUALS-<APP>`, `FINALS-<APP>`, `TEAM-<APP>`, `AA-<APP>`, `QUALS-TEAM`, and
+`FINALS-TEAM`. All were renamed 1:1 to the table above (`QUALS-<APP>` →
+`SCORES-QUAL-<APP>`, `FINALS-<APP>` → `SCORES-EVENT-<APP>`, `TEAM-<APP>` →
+`SCORES-TEAM-<APP>`, `AA-<APP>` → `SCORES-AA-<APP>`, `QUALS-TEAM` →
+`SUMMARY-QUAL-TEAM`, `FINALS-TEAM` → `SUMMARY-FINAL-TEAM`); no column
+content changed. The old scheme's first segment conflated "which round"
+with "is this a summary," which needed a fair amount of this document to
+explain away — the `SCORES`/`SUMMARY` split exists specifically to remove
+that ambiguity, so don't reintroduce a similar collision when adding a new
+file type.
 
 ### 5.2 Universal conventions
 
@@ -291,21 +308,30 @@ here — see the existing file for its shape.
   don't invent a tiebreaker.
 - `Round` values are **UPPER_SNAKE_CASE**, but the exact vocabulary depends
   on whether the file mixes rounds or is already round-scoped by its own
-  filename:
+  filename. **This vocabulary is intentionally not the same as the
+  `<ROUND>` filename segment from §5.1** (`QUAL`/`EVENT`/`AA`/`TEAM`) — the
+  filename segment was designed fresh against the source PDF's own
+  language, while this column vocabulary predates it and was built to
+  track `data-model.md`'s `Round` enum more closely. Reconciling the two
+  (and `data-model.md`/`Round.java` themselves, which already agree with
+  each other) is an open, deliberately deferred discussion — see §6 note 1.
+  For now:
   - `JUDGES.csv` bundles every round into one file (distinguished by this
     column), so it needs one value per round: `QUALIFICATION`,
     `APPARATUS_FINAL`, `TEAM_FINAL`, `ALL_AROUND_FINAL`.
-  - A `QUALS-<APP>`/`QUALS-TEAM` file is already scoped to the Qualification
-    round by its filename — use `QUALIFICATION`.
-  - A `FINALS-<APP>` file is already scoped to one specific apparatus final
-    by its filename (the `<APP>` segment) — use the plain `FINAL`, not
-    `APPARATUS_FINAL`. Repeating "apparatus" would be redundant with the
-    `Apparatus` column and the filename both already saying which one.
-  - A `TEAM-<APP>` file is scoped to the Team Final round by its filename —
-    use `TEAM_FINAL` (this one *does* match `JUDGES.csv`'s vocabulary,
-    unlike `FINAL` above, since "Team Final" isn't apparatus-specific the
-    way "Apparatus Final" is — the round has one name regardless of which
-    of the six apparatus files you're looking at).
+  - A `SCORES-QUAL-<APP>`/`SUMMARY-QUAL-TEAM` file is already scoped to the
+    Qualification round by its filename — use `QUALIFICATION`.
+  - A `SCORES-EVENT-<APP>` file is already scoped to one specific apparatus
+    final by its filename (the `<APP>` segment) — use the plain `FINAL`,
+    not `APPARATUS_FINAL`. Repeating "apparatus" would be redundant with
+    the `Apparatus` column and the filename both already saying which one.
+  - A `SCORES-AA-<APP>` file — use `ALL_AROUND_FINAL`.
+  - A `SCORES-TEAM-<APP>` file is scoped to the Team Final round by its
+    filename — use `TEAM_FINAL` (this one *does* match `JUDGES.csv`'s
+    vocabulary, unlike `FINAL` above, since "Team Final" isn't
+    apparatus-specific the way "Apparatus Final" is — the round has one
+    name regardless of which of the six apparatus files you're looking at).
+  - A `SUMMARY-FINAL-TEAM` file — use `TEAM_FINAL`.
   - This is a *simpler* vocabulary than `data-model.md`'s `Round` enum
     (which has a separate `FX_FINAL`/`PH_FINAL`/etc. per apparatus, and
     `AA_FINAL` instead of `ALL_AROUND_FINAL`) — see §6 for the exact
@@ -341,7 +367,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Given Name | Derived, same rule |
 | NOC Code | |
 
-### 5.5 Results-by-apparatus, Qualification round (`QUALS-<APP>`)
+### 5.5 Results-by-apparatus, Qualification round (`SCORES-QUAL-<APP>`)
 
 **Non-vault apparatus** (`FX`, `PH`, `SR`, `PB`, `HB`, `UB`, `BB`):
 
@@ -375,7 +401,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank — only ever set from the double-vault list; always blank for single-vault-only athletes |
 | Qualification Rank | This athlete's rank **within the double-vault list specifically** (i.e. among just the Vault-final hopefuls) — distinct from `Rank`. Blank for single-vault-only athletes. See §6 for the open question of how this maps to `data-model.md`. |
 
-### 5.6 Results-by-apparatus, Apparatus Final round (`FINALS-<APP>`)
+### 5.6 Results-by-apparatus, Apparatus Final round (`SCORES-EVENT-<APP>`)
 
 The Apparatus Final report is much simpler than Qualification's — one flat
 8-row table (the field is already cut down to the 8 finalists), a single
@@ -420,13 +446,13 @@ printed as `SPONEVIK` with no given name) — cross-check against
 `PARTICIPANTS.csv` by Bib and use its `Name` instead of trusting this
 table's version verbatim.
 
-### 5.7 Results-by-apparatus, All-Around Final round (`AA-<APP>`)
+### 5.7 Results-by-apparatus, All-Around Final round (`SCORES-AA-<APP>`)
 
 Only seen so far for Junior Men, which — unlike the Senior data this
 standard was first built from — has a separate All-Around Final round in
 addition to the Apparatus Final, each with its own full six-apparatus
 results-by-apparatus breakdown. See §5.1 for why this gets a distinct
-`AA-<APP>` filename rather than colliding with `FINALS-<APP>`.
+`SCORES-AA-<APP>` filename rather than colliding with `SCORES-EVENT-<APP>`.
 
 Columns and conventions are otherwise identical to §5.6 — same trimmed-down
 shape (no `Status`, no `Qualification`), same per-apparatus header-order
@@ -439,17 +465,18 @@ quirks — with one value changed and one structural surprise:
 
 **Vault is the single-attempt shape here** — `D`/`E`/`B`/`Penalty`/`Total`,
 not the `D1`/`D2` split. This is the opposite of what the filenames alone
-would suggest (`FINALS-VT` is the two-attempt shape, per §5.6; `AA-VT` is
-the plain one), and it makes sense once you think about what each round is
-actually for: the Apparatus Final's vault specialists are being judged on
-vault specifically, so they get two attempts; an All-Around finalist's
-vault score is just one contributor to a six-apparatus total, so it's a
-single attempt like every other apparatus in their all-around routine. The
-takeaway isn't "AA is always single-attempt" so much as **check the actual
-page's header before assuming either shape carries over** — the same
-caution as §3.1 and the `TEAM-VT` note in §5.8.
+would suggest (`SCORES-EVENT-VT` is the two-attempt shape, per §5.6;
+`SCORES-AA-VT` is the plain one), and it makes sense once you think about
+what each round is actually for: the Apparatus Final's vault specialists
+are being judged on vault specifically, so they get two attempts; an
+All-Around finalist's vault score is just one contributor to a
+six-apparatus total, so it's a single attempt like every other apparatus in
+their all-around routine. The takeaway isn't "AA is always single-attempt"
+so much as **check the actual page's header before assuming either shape
+carries over** — the same caution as §3.1 and the `SCORES-TEAM-VT` note in
+§5.8.
 
-### 5.8 Results-by-apparatus, Team Final round (`TEAM-<APP>`)
+### 5.8 Results-by-apparatus, Team Final round (`SCORES-TEAM-<APP>`)
 
 In the Team Final, the qualified teams' athletes perform each apparatus
 again — this is the per-athlete result feeding into the team score (§5.9
@@ -461,7 +488,7 @@ Final (§5.7):
 | Column | Notes |
 |---|---|
 | Round | `TEAM_FINAL` (§5.2) |
-| Apparatus | Two-letter code. Like Judges Assignment (§3.4) and the `QUALS-TEAM` top-line report (§5.9), the apparatus is an **icon** in the page header, not text — confirmed here by rendering all six pages, same FX/PH/SR/VT/PB/HB order as everywhere else. |
+| Apparatus | Two-letter code. Like Judges Assignment (§3.4) and the `SUMMARY-QUAL-TEAM` top-line report (§5.9), the apparatus is an **icon** in the page header, not text — confirmed here by rendering all six pages, same FX/PH/SR/VT/PB/HB order as everywhere else. |
 | Rank, Bib, Name, NOC Code | As in §5.5/§5.6/§5.7. Ties are common here (the field size is fixed at "qualified teams × roster count on that apparatus," not a ranked cut, so more ties survive than in Qualification/individual Finals) — copy duplicate ranks as printed. |
 | D, E, B, Penalty, Total | As in §5.5/§5.6/§5.7. PH again has no `B` column and prints `E` before `D`. |
 
@@ -472,13 +499,13 @@ into, and no DNS was observed in this data set).
 **Vault is a single-attempt table here** — unlike both Qualification's
 double-vault list and the individual Vault Final (§5.6, though *not*
 Junior's All-Around Final, §5.7 — check the page), a team-final vault
-routine is only performed once per athlete, so `TEAM-VT.csv` uses the
-same plain `D`/`E`/`B`/`Penalty`/`Total` shape as every other apparatus in
+routine is only performed once per athlete, so `SCORES-TEAM-VT.csv` uses
+the same plain `D`/`E`/`B`/`Penalty`/`Total` shape as every other apparatus in
 this section, **not** the `D1`/`D2`-style split. Don't assume "Vault" always
 means the two-attempt shape — check the actual page, the same way §3.1 says
 to check the header row before assuming a column layout carries over.
 
-### 5.9 Team Results, top-line only (`QUALS-TEAM`, `FINALS-TEAM`)
+### 5.9 Team Results, top-line only (`SUMMARY-QUAL-TEAM`, `SUMMARY-FINAL-TEAM`)
 
 A separate report from the individual apparatus results (§5.5, §5.6, §5.7, §5.8) — the
 "Team Results" report shows, per NOC, a summary row (rank, six apparatus
@@ -495,50 +522,36 @@ report.
 If a future task needs the per-athlete team scores, that's a different,
 larger parse of the same report and should get its own file/section here
 when it's actually built; don't assume the summary-row columns below cover
-it. (That per-athlete detail is a *different* report from `TEAM-<APP>`,
+it. (That per-athlete detail is a *different* report from `SCORES-TEAM-<APP>`,
 §5.8, too — §5.8 is the official per-apparatus results feeding into
 scoring, individually paginated per apparatus; the breakdown embedded in
 *this* report is the same underlying scores laid out per-team instead, with
 the drop-lowest score marked in italics.)
 
-Juniors, at least in this PDF, have no Team Final at all — `QUALS-TEAM`
-exists for them but there's no `FINALS-TEAM` counterpart, and the
-Qualification-round summary carries no `Qualification` marker for any team
-(confirmed: the letter `Q` doesn't appear anywhere in that report) since
-there's no team round to qualify into. Don't treat a missing `FINALS-TEAM`
-file as a parsing gap for a level/discipline that turns out not to have
-the round at all.
+Juniors, at least in this PDF, have no Team Final at all —
+`SUMMARY-QUAL-TEAM` exists for them but there's no `SUMMARY-FINAL-TEAM`
+counterpart, and the Qualification-round summary carries no `Qualification`
+marker for any team (confirmed: the letter `Q` doesn't appear anywhere in
+that report) since there's no team round to qualify into. Don't treat a
+missing `SUMMARY-FINAL-TEAM` file as a parsing gap for a level/discipline
+that turns out not to have the round at all.
 
 Like Judges Assignment (§3.4), the six apparatus columns are headed by an
 **icon**, not text — confirmed by rendering the page. The order was the same
 FX, PH, SR, VT, PB, HB used everywhere else in this document, cross-checked
 against an athlete's individual apparatus score elsewhere in the same PDF
 (e.g. a team's first column total included a `14.833` matching that
-athlete's already-parsed `QUALS-FX.csv` row).
+athlete's already-parsed `SCORES-QUAL-FX.csv` row).
 
 | Column | Notes |
 |---|---|
-| Round | `QUALIFICATION` for `QUALS-TEAM`, `TEAM_FINAL` for `FINALS-TEAM` — see the naming note below for why the file segment doesn't literally match this value for the Final |
+| Round | `QUALIFICATION` for `SUMMARY-QUAL-TEAM`, `TEAM_FINAL` for `SUMMARY-FINAL-TEAM` — note the column value doesn't literally match either the `<ROUND>` filename segment (`QUAL`/`FINAL`) or `data-model.md`'s own `TEAM_FINAL`/`QUALIFICATION`, another symptom of the deferred Round-vocabulary reconciliation, §6 note 1 |
 | Rank | Team placement. Ties/no ties as printed. |
 | NOC Code | The report also prints a full team/federation name (e.g. `World Gymnastics 2`, `Great Britain`) — **not captured**, since `NOC Code` is enough to join back to `PARTICIPANTS.csv`/`Athlete.country` and the standard doesn't otherwise carry a display name column. |
 | FX Total, PH Total, SR Total, VT Total, PB Total, HB Total | Each apparatus's counting team total (already the sum/drop-lowest result printed by the source — not recomputed) |
 | SJ Penalty | Superior Jury penalty applied to the team, distinct from an individual routine's `Penalty`. Blank when none was applied — every team in both rounds had a blank value here, so this column is unverified against a real example; watch for one in a future PDF and confirm the parsing still holds. |
 | Total | Team's grand total |
-| Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank, same vocabulary as everywhere else. **`FINALS-TEAM` omits this column entirely** — there's no further round to qualify into once the Team Final is done, same reasoning as §5.6/§5.7/§5.8 dropping it. |
-
-**Naming note, correcting an earlier guess in this doc:** a previous
-revision of §5.1 speculated a Team-Final top-line file would be named
-`TEAM-TEAM.csv`. It's actually `FINALS-TEAM` — the filename's first segment
-tracks "is this a plain per-round detail file (`QUALS`/`TEAM`) or a
-decisive placement summary (`FINALS`)" rather than literally naming the
-round, and a team standings summary is a placement summary either way,
-Qualification included. So the two `TEAM`-content files are
-`QUALS-TEAM` (Qualification round) and `FINALS-TEAM` (Team Final round) —
-`TEAM` never appears as the first segment paired with a `TEAM` second
-segment. Contrast this with `TEAM-<APP>` (§5.8), where `TEAM` *is* the first
-segment, but paired with an apparatus code — that file is per-athlete
-apparatus detail from the Team Final, not a placement summary, which is
-exactly the distinction the first segment is encoding.
+| Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank, same vocabulary as everywhere else. **`SUMMARY-FINAL-TEAM` omits this column entirely** — there's no further round to qualify into once the Team Final is done, same reasoning as §5.6/§5.7/§5.8 dropping it. |
 
 ### 5.10 Name splitting (Surname / Given Name)
 
@@ -579,22 +592,31 @@ These were noticed while writing this doc and are flagged rather than
 silently resolved, since they affect the schema, not just this parsing
 process:
 
-1. **`Round` granularity.** This CSV standard uses a flat
-   `QUALIFICATION` / `FINAL` / `APPARATUS_FINAL` / `TEAM_FINAL` /
-   `ALL_AROUND_FINAL` vocabulary (§5.2), because a results-by-apparatus file
-   is already scoped to one apparatus by its filename and `Apparatus`
-   column. `data-model.md`'s `Round` enum is more granular (`FX_FINAL`,
-   `PH_FINAL`, ... one per apparatus, and `AA_FINAL` rather than
-   `ALL_AROUND_FINAL`). The intended translation at import time:
+1. **`Round` granularity — three vocabularies now in play, deliberately not
+   yet reconciled.** There's (a) the filename `<ROUND>` segment from §5.1
+   (`QUAL`/`EVENT`/`AA`/`TEAM`), (b) the CSV `Round` **column** vocabulary
+   from §5.2 (`QUALIFICATION`/`FINAL`/`APPARATUS_FINAL`/`TEAM_FINAL`/
+   `ALL_AROUND_FINAL`), and (c) `data-model.md`'s `Round` enum, which is
+   more granular still (`FX_FINAL`, `PH_FINAL`, ... one per apparatus, and
+   `AA_FINAL` rather than `ALL_AROUND_FINAL`) — and, confirmed this
+   session, is an exact match for the actual `Round` enum in code
+   (`backend/src/main/java/doubletuck/meet/domain/Round.java`), so (c) is
+   settled and authoritative; it's (a) and (b) that need to converge on it
+   or on each other. The filename segment (a) was designed fresh against
+   the source PDF's own language when the `SCORES`/`SUMMARY` naming was
+   introduced; the column vocabulary (b) predates it and was built to
+   track (c) more closely, which is why it's closer but still not equal.
+   Revisit deliberately rather than drifting into a fourth vocabulary by
+   accident. The column-vocabulary-to-(c) translation as it stands today:
    - `QUALIFICATION` → `QUALIFICATION`
    - `TEAM_FINAL` → `TEAM_FINAL`
    - `ALL_AROUND_FINAL` → `AA_FINAL`
-   - `FINAL` + `Apparatus=<APP>` (a `FINALS-<APP>` file) → `<APP>_FINAL`
-     (e.g. `FX_FINAL`)
+   - `FINAL` + `Apparatus=<APP>` (a `SCORES-EVENT-<APP>` file) →
+     `<APP>_FINAL` (e.g. `FX_FINAL`)
    - `APPARATUS_FINAL` + `Apparatus=<APP>` (a `JUDGES.csv` row) →
      `<APP>_FINAL` — same target as above, just arriving with a different
      source value because `JUDGES.csv` mixes rounds in one file while a
-     `FINALS-<APP>` file doesn't need to
+     `SCORES-EVENT-<APP>` file doesn't need to
 2. **No `DNF` in `ScoreStatus`.** The vault DNF case (§4) is deliberately
    *not* represented as a `DNF` status value anywhere in the CSV standard —
    `data-model.md`'s `ScoreStatus` enum only has `COMPLETED` / `DNS` /
@@ -623,3 +645,12 @@ process:
    simply doesn't publish more precision than a year. Decide at import time
    whether to store a placeholder date (e.g. Jan 1 of that year) with a
    precision caveat, or to leave `birthDate` null when only a year is known.
+6. **`SUMMARY-QUAL-AA` and `SUMMARY-FINAL-AA` not yet built.** §5.1's naming
+   table has room for an all-around top-line summary (who qualifies to the
+   All-Around Final; final all-around standings) at both rounds, mirroring
+   `SUMMARY-QUAL-TEAM`/`SUMMARY-FINAL-TEAM`. Both exist as their own pages
+   in the source PDF — noticed while designing the naming, deliberately
+   *not* parsed yet. When they are, they'll need their own subsection near
+   §5.9 documenting the actual report shape (unverified: does the AA
+   ranking table look like the Team one — a summary row followed by a
+   per-apparatus breakdown — or something else entirely?).
