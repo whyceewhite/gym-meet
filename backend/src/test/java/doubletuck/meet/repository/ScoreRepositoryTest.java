@@ -57,7 +57,7 @@ class ScoreRepositoryTest {
         testSession = new Session();
         testSession.setEvent(testEvent);
         testSession.setDate(LocalDate.of(2026, 4, 21));
-        testSession.setRound(Round.QUALIFICATION);
+        testSession.setRound(Round.QUAL);
         testSession.setDiscipline(Discipline.WAG);
         testSession.setAgeCategory(AgeCategory.SR);
         testSession = sessionRepository.save(testSession);
@@ -163,7 +163,7 @@ class ScoreRepositoryTest {
         Session aaFinal = new Session();
         aaFinal.setEvent(testEvent);
         aaFinal.setDate(LocalDate.of(2026, 4, 23));
-        aaFinal.setRound(Round.AA_FINAL);
+        aaFinal.setRound(Round.AA);
         aaFinal.setDiscipline(Discipline.WAG);
         aaFinal.setAgeCategory(AgeCategory.SR);
         aaFinal = sessionRepository.save(aaFinal);

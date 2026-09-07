@@ -53,7 +53,7 @@ class TeamResultRepositoryTest {
         testSession = new Session();
         testSession.setEvent(event);
         testSession.setDate(LocalDate.of(2026, 4, 22));
-        testSession.setRound(Round.TEAM_FINAL);
+        testSession.setRound(Round.TEAM);
         testSession.setDiscipline(Discipline.WAG);
         testSession.setAgeCategory(AgeCategory.SR);
         testSession = sessionRepository.save(testSession);

@@ -5,6 +5,7 @@ doubletuck/meet/Application.class
 doubletuck/meet/domain/Athlete.class
 doubletuck/meet/domain/AgeCategory.class
 doubletuck/meet/domain/TeamResult.class
+doubletuck/meet/service/SessionService.class
 doubletuck/meet/controller/EventController.class
 doubletuck/meet/domain/BonusDetail.class
 doubletuck/meet/domain/BaseEntity.class

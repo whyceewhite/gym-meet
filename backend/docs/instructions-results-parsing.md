@@ -306,37 +306,30 @@ file type.
   a separate column.
 - Duplicate `Rank` values for ties are legitimate — copy them as printed,
   don't invent a tiebreaker.
-- `Round` values are **UPPER_SNAKE_CASE**, but the exact vocabulary depends
-  on whether the file mixes rounds or is already round-scoped by its own
-  filename. **This vocabulary is intentionally not the same as the
-  `<ROUND>` filename segment from §5.1** (`QUAL`/`EVENT`/`AA`/`TEAM`) — the
-  filename segment was designed fresh against the source PDF's own
-  language, while this column vocabulary predates it and was built to
-  track `data-model.md`'s `Round` enum more closely. Reconciling the two
-  (and `data-model.md`/`Round.java` themselves, which already agree with
-  each other) is an open, deliberately deferred discussion — see §6 note 1.
-  For now:
+- `Round` values are exactly the four `Round` enum constants —
+  `QUAL`/`EVENT`/`AA`/`TEAM` — the same vocabulary as the `<ROUND>` filename
+  segment from §5.1 and `data-model.md`'s `Round` enum (and, in turn,
+  `Round.java` in code). All three used to disagree (a longer
+  `QUALIFICATION`/`APPARATUS_FINAL`/`TEAM_FINAL`/`ALL_AROUND_FINAL`
+  vocabulary in this column and in `data-model.md`'s enum, one apparatus
+  final per apparatus rather than one shared `EVENT` value, and a `Round`
+  column value that wasn't even the same string as the filename's `<ROUND>`
+  segment) — reconciled in one pass; see `data-model.md`'s `Round` and
+  `Session` sections for the full reasoning, including why collapsing the
+  per-apparatus final values into one `EVENT` needed a new
+  `Session.apparatus` field to avoid losing precision.
   - `JUDGES.csv` bundles every round into one file (distinguished by this
-    column), so it needs one value per round: `QUALIFICATION`,
-    `APPARATUS_FINAL`, `TEAM_FINAL`, `ALL_AROUND_FINAL`.
-  - A `SCORES-QUAL-<APP>`/`SUMMARY-QUAL-TEAM` file is already scoped to the
-    Qualification round by its filename — use `QUALIFICATION`.
-  - A `SCORES-EVENT-<APP>` file is already scoped to one specific apparatus
-    final by its filename (the `<APP>` segment) — use the plain `FINAL`,
-    not `APPARATUS_FINAL`. Repeating "apparatus" would be redundant with
-    the `Apparatus` column and the filename both already saying which one.
-  - A `SCORES-AA-<APP>` file — use `ALL_AROUND_FINAL`.
-  - A `SCORES-TEAM-<APP>` file is scoped to the Team Final round by its
-    filename — use `TEAM_FINAL` (this one *does* match `JUDGES.csv`'s
-    vocabulary, unlike `FINAL` above, since "Team Final" isn't
-    apparatus-specific the way "Apparatus Final" is — the round has one
-    name regardless of which of the six apparatus files you're looking at).
-  - A `SUMMARY-FINAL-TEAM` file — use `TEAM_FINAL`.
-  - This is a *simpler* vocabulary than `data-model.md`'s `Round` enum
-    (which has a separate `FX_FINAL`/`PH_FINAL`/etc. per apparatus, and
-    `AA_FINAL` instead of `ALL_AROUND_FINAL`) — see §6 for the exact
-    translation to use at import time, now covering `FINAL` +
-    `Apparatus=<APP>` → `<APP>_FINAL` too.
+    column), so every value shows up somewhere in it: `QUAL`, `EVENT`,
+    `TEAM`, `AA`.
+  - Every other file is already scoped to one round by its filename, so its
+    `Round` column is constant for every row — but still write the real
+    value rather than leaving it blank, since a downstream import shouldn't
+    have to infer it from the filename.
+  - `EVENT` is shared by every apparatus's Apparatus Final — the `Apparatus`
+    column (or, for `SCORES-AA-<APP>`, `Round=AA` with the apparatus
+    likewise in the `Apparatus` column) is what disambiguates which one,
+    matching how `data-model.md`'s `Score.apparatus` already carried this
+    independently of `Round`.
 
 ### 5.3 `PARTICIPANTS.csv`
 
@@ -359,7 +352,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 
 | Column | Notes |
 |---|---|
-| Round | `QUALIFICATION` / `APPARATUS_FINAL` / `TEAM_FINAL` / `ALL_AROUND_FINAL` |
+| Round | `QUAL` / `EVENT` / `TEAM` / `AA` |
 | Apparatus | One of the six two-letter codes, or **blank** for a Superior Jury row (President/Member — not tied to one apparatus) |
 | Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`, `L1`, `L2`, `RES 1`–`RES 3`, `L`, `President`, `Member` — copy exactly as printed, don't normalize |
 | Name | Combined name as printed |
@@ -414,7 +407,7 @@ track qualification/DNS status:
 
 | Column | Notes |
 |---|---|
-| Round | `FINAL` (§5.2) |
+| Round | `EVENT` (§5.2) |
 | Apparatus | Two-letter code |
 | Rank, Bib, Name, NOC Code | As in §5.5, minus any DNS handling — none seen yet in a Final; if one ever shows up, extend this file the same way §5.5/§3.3 do rather than force it into a full row |
 | D, E, B, Penalty, Total | As in §5.5. PH again has no `B` column and prints `E` before `D` in the source — same header-order check from §3.1 applies |
@@ -460,7 +453,7 @@ quirks — with one value changed and one structural surprise:
 
 | Column | Notes |
 |---|---|
-| Round | `ALL_AROUND_FINAL` (§5.2) — the one column that actually differs from §5.6 |
+| Round | `AA` (§5.2) — the one column that actually differs from §5.6 |
 | Apparatus, Rank, Bib, Name, NOC Code, D, E, B, Penalty, Total | As in §5.6 |
 
 **Vault is the single-attempt shape here** — `D`/`E`/`B`/`Penalty`/`Total`,
@@ -487,7 +480,7 @@ Final (§5.7):
 
 | Column | Notes |
 |---|---|
-| Round | `TEAM_FINAL` (§5.2) |
+| Round | `TEAM` (§5.2) |
 | Apparatus | Two-letter code. Like Judges Assignment (§3.4) and the `SUMMARY-QUAL-TEAM` top-line report (§5.9), the apparatus is an **icon** in the page header, not text — confirmed here by rendering all six pages, same FX/PH/SR/VT/PB/HB order as everywhere else. |
 | Rank, Bib, Name, NOC Code | As in §5.5/§5.6/§5.7. Ties are common here (the field size is fixed at "qualified teams × roster count on that apparatus," not a ranked cut, so more ties survive than in Qualification/individual Finals) — copy duplicate ranks as printed. |
 | D, E, B, Penalty, Total | As in §5.5/§5.6/§5.7. PH again has no `B` column and prints `E` before `D`. |
@@ -545,7 +538,7 @@ athlete's already-parsed `SCORES-QUAL-FX.csv` row).
 
 | Column | Notes |
 |---|---|
-| Round | `QUALIFICATION` for `SUMMARY-QUAL-TEAM`, `TEAM_FINAL` for `SUMMARY-FINAL-TEAM` — note the column value doesn't literally match either the `<ROUND>` filename segment (`QUAL`/`FINAL`) or `data-model.md`'s own `TEAM_FINAL`/`QUALIFICATION`, another symptom of the deferred Round-vocabulary reconciliation, §6 note 1 |
+| Round | `QUAL` for `SUMMARY-QUAL-TEAM`, `TEAM` for `SUMMARY-FINAL-TEAM` — note the second one doesn't literally match its own file's `<ROUND>` filename segment (`FINAL`, not `TEAM`); that's expected for `SUMMARY-FINAL-TEAM` specifically, since §5.1 deliberately names the *file* after "this is the decisive/final version of the team summary" while the `Round` *column* still names the actual round (`TEAM` — the Team Final) that produced it |
 | Rank | Team placement. Ties/no ties as printed. |
 | NOC Code | The report also prints a full team/federation name (e.g. `World Gymnastics 2`, `Great Britain`) — **not captured**, since `NOC Code` is enough to join back to `PARTICIPANTS.csv`/`Athlete.country` and the standard doesn't otherwise carry a display name column. |
 | FX Total, PH Total, SR Total, VT Total, PB Total, HB Total | Each apparatus's counting team total (already the sum/drop-lowest result printed by the source — not recomputed) |
@@ -592,31 +585,31 @@ These were noticed while writing this doc and are flagged rather than
 silently resolved, since they affect the schema, not just this parsing
 process:
 
-1. **`Round` granularity — three vocabularies now in play, deliberately not
-   yet reconciled.** There's (a) the filename `<ROUND>` segment from §5.1
-   (`QUAL`/`EVENT`/`AA`/`TEAM`), (b) the CSV `Round` **column** vocabulary
-   from §5.2 (`QUALIFICATION`/`FINAL`/`APPARATUS_FINAL`/`TEAM_FINAL`/
-   `ALL_AROUND_FINAL`), and (c) `data-model.md`'s `Round` enum, which is
-   more granular still (`FX_FINAL`, `PH_FINAL`, ... one per apparatus, and
-   `AA_FINAL` rather than `ALL_AROUND_FINAL`) — and, confirmed this
-   session, is an exact match for the actual `Round` enum in code
-   (`backend/src/main/java/doubletuck/meet/domain/Round.java`), so (c) is
-   settled and authoritative; it's (a) and (b) that need to converge on it
-   or on each other. The filename segment (a) was designed fresh against
-   the source PDF's own language when the `SCORES`/`SUMMARY` naming was
-   introduced; the column vocabulary (b) predates it and was built to
-   track (c) more closely, which is why it's closer but still not equal.
-   Revisit deliberately rather than drifting into a fourth vocabulary by
-   accident. The column-vocabulary-to-(c) translation as it stands today:
-   - `QUALIFICATION` → `QUALIFICATION`
-   - `TEAM_FINAL` → `TEAM_FINAL`
-   - `ALL_AROUND_FINAL` → `AA_FINAL`
-   - `FINAL` + `Apparatus=<APP>` (a `SCORES-EVENT-<APP>` file) →
-     `<APP>_FINAL` (e.g. `FX_FINAL`)
-   - `APPARATUS_FINAL` + `Apparatus=<APP>` (a `JUDGES.csv` row) →
-     `<APP>_FINAL` — same target as above, just arriving with a different
-     source value because `JUDGES.csv` mixes rounds in one file while a
-     `SCORES-EVENT-<APP>` file doesn't need to
+1. ~~**`Round` granularity.**~~ **Resolved.** The filename `<ROUND>`
+   segment (§5.1), the CSV `Round` column (§5.2), `data-model.md`'s `Round`
+   enum, and `Round.java` in code all now use the same four values —
+   `QUAL`/`EVENT`/`AA`/`TEAM` — with no translation step needed between
+   them. This replaced an earlier three-vocabulary mismatch (a longer
+   `QUALIFICATION`/`APPARATUS_FINAL`/`TEAM_FINAL`/`ALL_AROUND_FINAL` column
+   vocabulary, and a `Round` enum with one value per apparatus final —
+   `FX_FINAL`, `PH_FINAL`, etc.). Collapsing the per-apparatus final values
+   into one `EVENT` meant `Session` needed a new `apparatus` field (nullable,
+   set only for `EVENT` rounds) to keep the "each apparatus final is its
+   own session" precision the old per-apparatus enum values used to carry —
+   see `data-model.md`'s `Round`/`Session` sections. One residual, expected
+   asymmetry: `SUMMARY-FINAL-TEAM`'s filename segment is `FINAL` (naming
+   convention: "this is the decisive team summary") while its `Round`
+   column is `TEAM` (the actual round) — see §5.9.
+
+   This also surfaced a real, separate gap worth flagging on its own: once
+   `apparatus` joined `Session`'s unique constraint, the constraint no
+   longer catches a duplicate `QUAL`/`AA`/`TEAM` session at the database
+   level (standard SQL: two nulls in a unique constraint aren't considered
+   equal), since `apparatus` is null for those rounds. That protection now
+   lives in application code (`SessionService.createSession`) instead of
+   being fully DB-enforced — revisit with a Postgres partial unique index
+   once real Flyway migrations exist (none do yet; schema is currently
+   test-only via Hibernate `ddl-auto`).
 2. **No `DNF` in `ScoreStatus`.** The vault DNF case (§4) is deliberately
    *not* represented as a `DNF` status value anywhere in the CSV standard —
    `data-model.md`'s `ScoreStatus` enum only has `COMPLETED` / `DNS` /

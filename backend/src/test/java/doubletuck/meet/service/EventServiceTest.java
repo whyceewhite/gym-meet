@@ -195,7 +195,7 @@ class EventServiceTest {
         Session session = new Session();
         session.setEvent(testEvent);
         session.setDate(testEvent.getStartDate());
-        session.setRound(Round.QUALIFICATION);
+        session.setRound(Round.QUAL);
         session.setDiscipline(Discipline.WAG);
         session.setAgeCategory(AgeCategory.SR);
         sessionRepository.save(session);

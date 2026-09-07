@@ -57,21 +57,20 @@ tables, rather than spelled out inline at each use.
 
 | Value | Description |
 |---|---|
-| QUALIFICATION | |
-| TEAM_FINAL | |
-| AA_FINAL | All-around final |
-| VT_FINAL | Vault final |
-| UB_FINAL | Uneven bars final (WAG) |
-| BB_FINAL | Balance beam final (WAG) |
-| FX_FINAL | Floor exercise final |
-| PH_FINAL | Pommel horse final (MAG) |
-| SR_FINAL | Still rings final (MAG) |
-| PB_FINAL | Parallel bars final (MAG) |
-| HB_FINAL | Horizontal/high bar final (MAG) |
+| QUAL | Qualification |
+| EVENT | An Apparatus Final (also called an "Event Final") |
+| AA | All-around final |
+| TEAM | Team final |
 
-Each apparatus final is genuinely its own round — its own start list, its own
-scores, its own medal ceremony — even though several are typically held on the
-same calendar date.
+An Apparatus Final is genuinely its own event — its own start list, its own
+scores, its own medal ceremony — even though several are typically held on
+the same calendar date and, here, share one `EVENT` round value. That
+per-apparatus distinction lives on `Session.apparatus` (§3, `Session`)
+instead of on a separate `Round` value per apparatus (an earlier revision
+of this enum had `FX_FINAL`/`PH_FINAL`/etc.) — matching how `Score` already
+carries its own `apparatus` rather than duplicating it onto the round.
+`QUAL`/`AA`/`TEAM` cover every apparatus within one session, so
+`Session.apparatus` is null for those.
 
 #### `AgeCategory`
 
@@ -96,7 +95,8 @@ same calendar date.
 | HB | Horizontal/high bar (MAG) |
 
 No `AA` value — all-around is a computed summary (`AllAroundResult`, §6.2), not a
-judged apparatus result.
+judged apparatus result. (`Round.AA` is a different enum for the All-Around
+Final round itself — the two `AA`s aren't related beyond sharing a name.)
 
 #### `ScoreStatus`
 
@@ -170,10 +170,16 @@ Additional names by which the athlete has had.
 | eventId | Long, FK → `Event` | No | The event this round belongs to. |
 | date | LocalDate | No | The calendar date this round was held. Several `Session`s commonly share the same date without conflict — e.g. multiple apparatus finals held on one day. |
 | round | Round | No | The phase of competition this `Session` represents. |
-| discipline | Discipline | No | The program competing in this round. Disambiguates same-named rounds across programs — e.g. a WAG `FX_FINAL` and a MAG `FX_FINAL` are different `Session`s. |
+| discipline | Discipline | No | The program competing in this round. Disambiguates same-named rounds across programs — e.g. a WAG `EVENT` session and a MAG `EVENT` session on Floor are different `Session`s (distinguished together with `apparatus`, below). |
 | ageCategory | AgeCategory | No | The age division competing in this round. |
+| apparatus | Apparatus, nullable | Yes | Which apparatus this session is for. Set only when `round` is `EVENT` — an Apparatus Final is its own session per apparatus. Null for every other round, since `QUAL`/`AA`/`TEAM` each cover all apparatus within one session (see `Score.apparatus` for the per-apparatus split of scores within those). |
 
-Unique key: `(event_id, round, discipline, ageCategory)`
+Unique key: `(event_id, round, discipline, ageCategory, apparatus)`. Note
+this constraint alone does not reject a duplicate `QUAL`/`AA`/`TEAM`
+session, since `apparatus` is null there and standard SQL unique
+constraints don't treat two nulls as equal — that protection is enforced
+in application code (`SessionService.createSession`) instead. It fully
+works for `EVENT` sessions, where `apparatus` is always non-null.
 
 ### `Participant`
 
@@ -211,8 +217,8 @@ Unique key: `(event_id, athlete_id)`
 | secondScore | Double | Yes | The second vault attempt's own result. |
 | secondStatus | ScoreStatus | Yes | Status of the second vault attempt. Null means no second attempt occurred at all — distinct from `status`, which is always set. |
 | rank | Integer | Yes | Placement for this apparatus within this `Session`. |
-| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the next round on this apparatus. Typically only set on `QUALIFICATION` `Session`s. |
-| countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§6.1). Only meaningful for a score earned in a `TEAM_FINAL` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§6.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
+| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the next round on this apparatus. Typically only set on `QUAL` `Session`s. |
+| countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§6.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§6.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
 
 Unique key: `(participant_id, session_id, apparatus)`.
 
@@ -265,7 +271,7 @@ totals, so there's no meaningful single number to put anywhere else.
 ## 5. Derived summary results
 
 Two facts in this model are aggregates over `Score` rows rather than
-judged results in their own right: a team's total in a `TEAM_FINAL` (or
+judged results in their own right: a team's total in a `TEAM` (or
 qualifying) session, and an athlete's all-around total. Both *could* be computed
 on read instead of stored — team totals from `Score.totalScore` where
 `countsTowardTeamResult` is true, all-around totals by summing a participant's
@@ -289,11 +295,11 @@ flagged here rather than solved.
 | Field | Type | Nullable | Description |
 |---|---|---|---|
 | id | Long | No | Generated primary key. |
-| sessionId | Long, FK → `Session` | No | Scoped to a `TEAM_FINAL` (or, for some formats, `QUALIFICATION`) `Session`. |
+| sessionId | Long, FK → `Session` | No | Scoped to a `TEAM` (or, for some formats, `QUAL`) `Session`. |
 | noc | Country | No | Which country/team this result is for. Kept simple since org/roster modeling is out of scope (§1). |
 | totalScore | Double | Yes | The team's official published total. Null if the team withdrew or was disqualified before a total was posted. |
 | rank | Integer | Yes | The team's placement within the `Session`. |
-| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the team final, when this `TeamResult` is on a `QUALIFICATION` `Session`. |
+| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the team final, when this `TeamResult` is on a `QUAL` `Session`. |
 
 Unique key: `(session_id, noc)`
 
@@ -304,9 +310,9 @@ Unique key: `(session_id, noc)`
 |---|---|---|---|
 | id | Long | No | Generated primary key. |
 | participantId | Long, FK → `Participant` | No | The athlete this result is for. |
-| sessionId | Long, FK → `Session` | No | The round this all-around total applies to — typically a `QUALIFICATION` or `AA_FINAL` `Session`. |
+| sessionId | Long, FK → `Session` | No | The round this all-around total applies to — typically a `QUAL` or `AA` `Session`. |
 | totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.totalScore` rows for this `Session`. Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all). |
 | rank | Integer | Yes | The athlete's all-around placement within the `Session`. |
-| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the all-around final, when this `AllAroundResult` is on a `QUALIFICATION` `Session`. |
+| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the all-around final, when this `AllAroundResult` is on a `QUAL` `Session`. |
 
 Unique key: `(participant_id, session_id)`

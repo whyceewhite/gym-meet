@@ -26,7 +26,7 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Table(name = "session", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_session", columnNames = { "event_id", "round_code", "discipline_code", "age_category_code" })
+        @UniqueConstraint(name = "uk_session", columnNames = { "event_id", "round_code", "discipline_code", "age_category_code", "apparatus_code" })
 })
 public class Session extends BaseEntity {
 
@@ -53,4 +53,16 @@ public class Session extends BaseEntity {
     @Column(name = "age_category_code", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private AgeCategory ageCategory;
+
+    /**
+     * Which apparatus this session is for. Set only when {@code round} is
+     * {@link Round#EVENT} -- an Apparatus Final is its own session per
+     * apparatus. Null for every other round, since Qualification, the
+     * All-Around Final, and the Team Final each cover all apparatus within
+     * one session (see {@link Score#getApparatus()} for the per-apparatus
+     * split of scores within those).
+     */
+    @Column(name = "apparatus_code", length = 5)
+    @Enumerated(EnumType.STRING)
+    private Apparatus apparatus;
 }

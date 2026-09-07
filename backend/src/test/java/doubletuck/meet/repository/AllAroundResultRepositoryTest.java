@@ -61,7 +61,7 @@ class AllAroundResultRepositoryTest {
         testSession = new Session();
         testSession.setEvent(event);
         testSession.setDate(LocalDate.of(2026, 4, 23));
-        testSession.setRound(Round.AA_FINAL);
+        testSession.setRound(Round.AA);
         testSession.setDiscipline(Discipline.WAG);
         testSession.setAgeCategory(AgeCategory.SR);
         testSession = sessionRepository.save(testSession);
@@ -111,7 +111,7 @@ class AllAroundResultRepositoryTest {
         Session otherSession = new Session();
         otherSession.setEvent(testSession.getEvent());
         otherSession.setDate(LocalDate.of(2026, 4, 21));
-        otherSession.setRound(Round.QUALIFICATION);
+        otherSession.setRound(Round.QUAL);
         otherSession.setDiscipline(Discipline.WAG);
         otherSession.setAgeCategory(AgeCategory.SR);
         otherSession = sessionRepository.save(otherSession);
@@ -153,7 +153,7 @@ class AllAroundResultRepositoryTest {
         Session qualification = new Session();
         qualification.setEvent(testSession.getEvent());
         qualification.setDate(LocalDate.of(2026, 4, 21));
-        qualification.setRound(Round.QUALIFICATION);
+        qualification.setRound(Round.QUAL);
         qualification.setDiscipline(Discipline.WAG);
         qualification.setAgeCategory(AgeCategory.SR);
         qualification = sessionRepository.save(qualification);
