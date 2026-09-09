@@ -50,4 +50,13 @@ public class Athlete extends BaseEntity {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    /**
+     * The athlete's birth year, when the source only publishes a year rather
+     * than a full date. Populated only when {@code birthDate} is null --
+     * never redundantly alongside a known {@code birthDate}, since the year
+     * is already recoverable from it.
+     */
+    @Column(name = "birth_year")
+    private Short birthYear;
 }

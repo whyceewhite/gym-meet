@@ -132,7 +132,8 @@ No enumerator or type will be used. This value is typically the ISO-3166 three-l
 | surname | String | No | Athlete's family name. |
 | givenName | String | No | Athlete's given name. |
 | country | Country | Yes | The athlete's home/federation country.|
-| birthDate | Date | Yes | Birth date of the athlete, when published. |
+| birthDate | Date | Yes | Birth date of the athlete, when the source publishes a full date. |
+| birthYear | Short | Yes | Birth year of the athlete, when the source publishes only a year rather than a full date. Populated only when `birthDate` is null — never redundantly alongside a known `birthDate`. |
 
 ### `AthleteNameVariant`
 

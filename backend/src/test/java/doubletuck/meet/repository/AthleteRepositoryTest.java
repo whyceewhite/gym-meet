@@ -46,8 +46,25 @@ class AthleteRepositoryTest {
         assertEquals("Simone", found.get().getGivenName());
         assertEquals("USA", found.get().getCountry());
         assertEquals(LocalDate.of(1997, 3, 14), found.get().getBirthDate());
+        assertNull(found.get().getBirthYear());
         assertNotNull(found.get().getCreationTimestamp());
         assertNotNull(found.get().getLastUpdateTimestamp());
+    }
+
+    @Test
+    void testSave_BirthYearOnly_PersistsWithoutBirthDate() {
+        Athlete yearOnly = new Athlete();
+        yearOnly.setDiscipline(Discipline.MAG);
+        yearOnly.setSurname("Nedoroscik");
+        yearOnly.setGivenName("Stephen");
+        yearOnly.setBirthYear((short) 1998);
+        yearOnly = athleteRepository.save(yearOnly);
+
+        Optional<Athlete> found = athleteRepository.findById(yearOnly.getId());
+
+        assertTrue(found.isPresent());
+        assertEquals((short) 1998, found.get().getBirthYear());
+        assertNull(found.get().getBirthDate());
     }
 
     @Test
