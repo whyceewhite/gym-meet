@@ -19,7 +19,6 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,7 +53,6 @@ class AllAroundResultRepositoryTest {
         event.setEndDate(LocalDate.of(2026, 4, 26));
         event.setCity("Stuttgart");
         event.setCountryCode("DEU");
-        event.setDisciplines(Set.of(Discipline.WAG));
         event.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         event = eventRepository.save(event);
 

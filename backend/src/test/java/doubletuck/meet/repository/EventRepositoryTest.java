@@ -1,6 +1,5 @@
 package doubletuck.meet.repository;
 
-import doubletuck.meet.domain.Discipline;
 import doubletuck.meet.domain.Event;
 import doubletuck.meet.domain.EventLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +32,6 @@ class EventRepositoryTest {
         testEvent.setCity("Stuttgart");
         testEvent.setCountryCode("DEU");
         testEvent.setVenue("Schleyerhalle");
-        testEvent.setDisciplines(Set.of(Discipline.MAG, Discipline.WAG));
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
     }
@@ -51,7 +48,6 @@ class EventRepositoryTest {
         assertEquals("Stuttgart", found.get().getCity());
         assertEquals("DEU", found.get().getCountryCode());
         assertEquals("Schleyerhalle", found.get().getVenue());
-        assertEquals(Set.of(Discipline.MAG, Discipline.WAG), found.get().getDisciplines());
         assertEquals(EventLevel.CONTINENTAL_CHAMPIONSHIPS, found.get().getLevel());
     }
 

@@ -70,7 +70,7 @@ Creates a new event.
 ### PUT /event/{id}
 
 Updates an existing event. Replaces `figEventNumber`, `title`, `startDate`,
-`endDate`, `city`, `countryCode`, `venue`, `disciplines`, and `level`.
+`endDate`, `city`, `countryCode`, `venue`, and `level`.
 
 **Path Parameters**
 
@@ -132,7 +132,6 @@ Returned by all endpoints above.
 | city | String | Host city |
 | countryCode | String | Host country code represented by the 3-character ISO-3166 value |
 | venue | String | Venue or arena name where the event is hosted and `null` if not known |
-| disciplines | Array of String | Discipline codes this event includes: `MAG`, `WAG` |
 | level | String | Competitive tier code of the event (e.g. `CONTINENTAL_CHAMPIONSHIPS`, `WORLD_CUP`) or `UNKNOWN` if not known |
 | creationTimestamp | Instant | ISO 8601 UTC timestamp of record creation |
 | lastUpdateTimestamp | Instant | ISO 8601 UTC timestamp of last update |
@@ -149,7 +148,6 @@ Returned by all endpoints above.
   "city": "Stuttgart",
   "countryCode": "DEU",
   "venue": "Schleyerhalle",
-  "disciplines": ["MAG", "WAG"],
   "level": "CONTINENTAL_CHAMPIONSHIPS",
   "creationTimestamp": "2026-01-05T09:00:00Z",
   "lastUpdateTimestamp": "2026-01-05T09:00:00Z"
@@ -171,7 +169,6 @@ Request body for `POST /event` and `PUT /event/{id}`.
 | city | String | Yes | Max 100 characters | Host city |
 | countryCode | String | Yes | 3-character ISO-3166 code | Host country |
 | venue | String | No | Max 150 characters | Venue/arena name |
-| disciplines | Array of String | Yes | At least one of: `MAG`, `WAG` | Discipline(s) this event includes |
 | level | String | Yes | `EventLevel` enum code | Competitive tier code of the event (e.g. `CONTINENTAL_CHAMPIONSHIPS`, `WORLD_CUP`) or `UNKNOWN` if not known |
 
 **Duplicate check:** `figEventNumber` (when present), otherwise `title` + `startDate`
@@ -187,7 +184,6 @@ Request body for `POST /event` and `PUT /event/{id}`.
   "city": "Stuttgart",
   "countryCode": "DEU",
   "venue": "Schleyerhalle",
-  "disciplines": ["MAG", "WAG"],
   "level": "CONTINENTAL_CHAMPIONSHIPS"
 }
 ```

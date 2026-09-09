@@ -158,7 +158,6 @@ Additional names by which the athlete has had.
 | city | String | No | Host city. |
 | countryCode | Country | No | Host country. Distinct from any athlete's or team's NOC. |
 | venue | String | Yes | Venue/arena name, when published. |
-| disciplines | Discipline[] | No | Which program(s) this event includes. Most events are single-discipline; a combined championship can host both. |
 | level | EventLevel | No | The competitive tier of this event. Always set — `UNKNOWN` is used instead of leaving this null when the tier can't be confidently classified. |
 
 
@@ -173,13 +172,16 @@ Additional names by which the athlete has had.
 | discipline | Discipline | No | The program competing in this round. Disambiguates same-named rounds across programs — e.g. a WAG `EVENT` session and a MAG `EVENT` session on Floor are different `Session`s (distinguished together with `apparatus`, below). |
 | ageCategory | AgeCategory | No | The age division competing in this round. |
 | apparatus | Apparatus, nullable | Yes | Which apparatus this session is for. Set only when `round` is `EVENT` — an Apparatus Final is its own session per apparatus. Null for every other round, since `QUAL`/`AA`/`TEAM` each cover all apparatus within one session (see `Score.apparatus` for the per-apparatus split of scores within those). |
+| part | Integer, nullable | Yes | Which occurrence of this round this session is, for a round split across more than one session — e.g. US Championships' two-day All-Around, where `round` is `AA` on both sessions and `part` is `1` and `2`, respectively. Null for the ordinary case of a round held in a single session. |
 
-Unique key: `(event_id, round, discipline, ageCategory, apparatus)`. Note
-this constraint alone does not reject a duplicate `QUAL`/`AA`/`TEAM`
-session, since `apparatus` is null there and standard SQL unique
-constraints don't treat two nulls as equal — that protection is enforced
-in application code (`SessionService.createSession`) instead. It fully
-works for `EVENT` sessions, where `apparatus` is always non-null.
+Unique key: `(event_id, round, discipline, ageCategory, apparatus, part)`.
+Note this constraint alone does not reliably reject a duplicate session of
+any round type, since standard SQL unique constraints don't treat two
+nulls as equal, and every real session has at least one of `apparatus`
+(non-null only for `EVENT`) or `part` (non-null only for a round split
+across sessions) null — the two are never both set at once in practice.
+That protection is enforced in application code
+(`SessionService.createSession`) instead.
 
 ### `Participant`
 

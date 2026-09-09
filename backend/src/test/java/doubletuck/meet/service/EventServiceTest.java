@@ -24,7 +24,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,7 +57,6 @@ class EventServiceTest {
         testEvent.setEndDate(LocalDate.of(2026, 4, 26));
         testEvent.setCity("Stuttgart");
         testEvent.setCountryCode("DEU");
-        testEvent.setDisciplines(Set.of(Discipline.WAG));
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
     }
@@ -107,7 +105,7 @@ class EventServiceTest {
     @Test
     void testCreate_FailsOnDuplicateTitleAndStartDate_WhenFigEventNumberAbsent() {
         EventRequest request = new EventRequest(null, "2026 European Championships", testEvent.getStartDate(),
-                LocalDate.of(2026, 4, 27), "Different City", "FRA", null, Set.of(Discipline.MAG),
+                LocalDate.of(2026, 4, 27), "Different City", "FRA", null,
                 EventLevel.DOMESTIC_COMPETITION);
 
         assertThrows(ConflictException.class, () -> eventService.create(request));
@@ -116,7 +114,7 @@ class EventServiceTest {
     @Test
     void testCreate_SucceedsWithoutFigEventNumber_WhenTitleAndStartDateAreUnique() {
         EventRequest request = new EventRequest(null, "2026 US Championships", LocalDate.of(2026, 8, 15),
-                LocalDate.of(2026, 8, 18), "Fort Worth", "USA", null, Set.of(Discipline.MAG, Discipline.WAG),
+                LocalDate.of(2026, 8, 18), "Fort Worth", "USA", null,
                 EventLevel.NATIONAL_CHAMPIONSHIPS);
 
         EventResponse created = eventService.create(request);
@@ -165,7 +163,6 @@ class EventServiceTest {
         otherEvent.setEndDate(LocalDate.of(2026, 10, 10));
         otherEvent.setCity("Jakarta");
         otherEvent.setCountryCode("IDN");
-        otherEvent.setDisciplines(Set.of(Discipline.MAG, Discipline.WAG));
         otherEvent.setLevel(EventLevel.WORLD_CHAMPIONSHIPS);
         eventRepository.save(otherEvent);
 
@@ -224,6 +221,6 @@ class EventServiceTest {
 
     private EventRequest requestFor(String figEventNumber, String title, LocalDate startDate, LocalDate endDate) {
         return new EventRequest(figEventNumber, title, startDate, endDate, "Stuttgart", "DEU", null,
-                Set.of(Discipline.WAG), EventLevel.CONTINENTAL_CHAMPIONSHIPS);
+                EventLevel.CONTINENTAL_CHAMPIONSHIPS);
     }
 }

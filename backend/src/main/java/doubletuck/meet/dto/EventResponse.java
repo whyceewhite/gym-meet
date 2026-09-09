@@ -1,12 +1,10 @@
 package doubletuck.meet.dto;
 
-import doubletuck.meet.domain.Discipline;
 import doubletuck.meet.domain.Event;
 import doubletuck.meet.domain.EventLevel;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Set;
 
 public record EventResponse(
         Long id,
@@ -17,7 +15,6 @@ public record EventResponse(
         String city,
         String countryCode,
         String venue,
-        Set<Discipline> disciplines,
         EventLevel level,
         Instant creationTimestamp,
         Instant lastUpdateTimestamp) {
@@ -32,7 +29,6 @@ public record EventResponse(
                 event.getCity(),
                 event.getCountryCode(),
                 event.getVenue(),
-                event.getDisciplines(),
                 event.getLevel(),
                 event.getCreationTimestamp(),
                 event.getLastUpdateTimestamp());

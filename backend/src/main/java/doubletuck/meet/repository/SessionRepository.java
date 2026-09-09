@@ -18,16 +18,18 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     /**
      * Looks up a session by its non-apparatus-specific key. Only meaningful
      * for {@code QUAL}/{@code AA}/{@code TEAM} rounds, where {@code
-     * apparatus} is null and this combination is unique on its own. For
-     * {@code EVENT} rounds, several sessions share this same combination
-     * (one per apparatus) -- use {@link
-     * #findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatus} instead.
+     * apparatus} is null and this combination (together with {@code part})
+     * is unique on its own. For {@code EVENT} rounds, several sessions share
+     * this same combination (one per apparatus) -- use {@link
+     * #findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatusAndPart}
+     * instead. A null {@code part} matches a session where {@code part} is
+     * also null, the ordinary case of a round held in a single session.
      */
-    Optional<Session> findByEventAndRoundAndDisciplineAndAgeCategory(Event event, Round round, Discipline discipline,
-            AgeCategory ageCategory);
+    Optional<Session> findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(Event event, Round round,
+            Discipline discipline, AgeCategory ageCategory, Integer part);
 
-    Optional<Session> findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatus(Event event, Round round,
-            Discipline discipline, AgeCategory ageCategory, Apparatus apparatus);
+    Optional<Session> findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatusAndPart(Event event, Round round,
+            Discipline discipline, AgeCategory ageCategory, Apparatus apparatus, Integer part);
 
     List<Session> findByEvent(Event event);
 

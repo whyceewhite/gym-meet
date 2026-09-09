@@ -17,7 +17,6 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,14 +43,13 @@ class SessionServiceTest {
         testEvent.setEndDate(LocalDate.of(2026, 4, 26));
         testEvent.setCity("Stuttgart");
         testEvent.setCountryCode("DEU");
-        testEvent.setDisciplines(Set.of(Discipline.MAG));
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
     }
 
     @Test
     void testCreateSession_Succeeds() {
-        Session session = sessionOf(Round.QUAL, null);
+        Session session = sessionOf(Round.QUAL, null, null);
 
         Session saved = sessionService.createSession(session);
 
@@ -60,30 +58,48 @@ class SessionServiceTest {
 
     @Test
     void testCreateSession_DuplicateQualSession_ThrowsConflictException() {
-        sessionService.createSession(sessionOf(Round.QUAL, null));
+        sessionService.createSession(sessionOf(Round.QUAL, null, null));
 
-        assertThrows(ConflictException.class, () -> sessionService.createSession(sessionOf(Round.QUAL, null)));
+        assertThrows(ConflictException.class,
+                () -> sessionService.createSession(sessionOf(Round.QUAL, null, null)));
     }
 
     @Test
     void testCreateSession_DuplicateEventSessionSameApparatus_ThrowsConflictException() {
-        sessionService.createSession(sessionOf(Round.EVENT, Apparatus.FX));
+        sessionService.createSession(sessionOf(Round.EVENT, Apparatus.FX, null));
 
         assertThrows(ConflictException.class,
-                () -> sessionService.createSession(sessionOf(Round.EVENT, Apparatus.FX)));
+                () -> sessionService.createSession(sessionOf(Round.EVENT, Apparatus.FX, null)));
     }
 
     @Test
     void testCreateSession_EventSessionsDifferentApparatus_BothSucceed() {
-        Session fx = sessionService.createSession(sessionOf(Round.EVENT, Apparatus.FX));
-        Session ph = sessionService.createSession(sessionOf(Round.EVENT, Apparatus.PH));
+        Session fx = sessionService.createSession(sessionOf(Round.EVENT, Apparatus.FX, null));
+        Session ph = sessionService.createSession(sessionOf(Round.EVENT, Apparatus.PH, null));
 
         assertNotNull(fx.getId());
         assertNotNull(ph.getId());
         assertNotEquals(fx.getId(), ph.getId());
     }
 
-    private Session sessionOf(Round round, Apparatus apparatus) {
+    @Test
+    void testCreateSession_DuplicateAaSessionSamePart_ThrowsConflictException() {
+        sessionService.createSession(sessionOf(Round.AA, null, 1));
+
+        assertThrows(ConflictException.class, () -> sessionService.createSession(sessionOf(Round.AA, null, 1)));
+    }
+
+    @Test
+    void testCreateSession_MultiDayAaSessionsDifferentPart_BothSucceed() {
+        Session day1 = sessionService.createSession(sessionOf(Round.AA, null, 1));
+        Session day2 = sessionService.createSession(sessionOf(Round.AA, null, 2));
+
+        assertNotNull(day1.getId());
+        assertNotNull(day2.getId());
+        assertNotEquals(day1.getId(), day2.getId());
+    }
+
+    private Session sessionOf(Round round, Apparatus apparatus, Integer part) {
         Session session = new Session();
         session.setEvent(testEvent);
         session.setDate(LocalDate.of(2026, 4, 21));
@@ -91,6 +107,7 @@ class SessionServiceTest {
         session.setDiscipline(Discipline.MAG);
         session.setAgeCategory(AgeCategory.SR);
         session.setApparatus(apparatus);
+        session.setPart(part);
         return session;
     }
 }

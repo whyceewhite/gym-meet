@@ -17,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,12 +56,13 @@ class SessionRepositoryTest {
         assertEquals(Round.QUAL, found.get().getRound());
         assertEquals(Discipline.WAG, found.get().getDiscipline());
         assertEquals(AgeCategory.SR, found.get().getAgeCategory());
+        assertNull(found.get().getPart());
     }
 
     @Test
     void testFindByEventRoundDisciplineAndAgeCategory_Found() {
-        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategory(
-                testEvent, Round.QUAL, Discipline.WAG, AgeCategory.SR);
+        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.QUAL, Discipline.WAG, AgeCategory.SR, null);
 
         assertTrue(found.isPresent());
         assertEquals(testSession.getId(), found.get().getId());
@@ -70,26 +70,66 @@ class SessionRepositoryTest {
 
     @Test
     void testFindByEventRoundDisciplineAndAgeCategory_WrongRound_NotFound() {
-        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategory(
-                testEvent, Round.AA, Discipline.WAG, AgeCategory.SR);
+        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.AA, Discipline.WAG, AgeCategory.SR, null);
 
         assertTrue(found.isEmpty());
     }
 
     @Test
     void testFindByEventRoundDisciplineAndAgeCategory_WrongDiscipline_NotFound() {
-        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategory(
-                testEvent, Round.QUAL, Discipline.MAG, AgeCategory.SR);
+        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.QUAL, Discipline.MAG, AgeCategory.SR, null);
 
         assertTrue(found.isEmpty());
     }
 
     @Test
     void testFindByEventRoundDisciplineAndAgeCategory_WrongAgeCategory_NotFound() {
-        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategory(
-                testEvent, Round.QUAL, Discipline.WAG, AgeCategory.JR);
+        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.QUAL, Discipline.WAG, AgeCategory.JR, null);
 
         assertTrue(found.isEmpty());
+    }
+
+    @Test
+    void testFindByEventRoundDisciplineAndAgeCategory_WrongPart_NotFound() {
+        Optional<Session> found = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.QUAL, Discipline.WAG, AgeCategory.SR, 1);
+
+        assertTrue(found.isEmpty());
+    }
+
+    @Test
+    void testFindByEventRoundDisciplineAndAgeCategoryAndPart_DistinguishesMultiDayParts() {
+        Session aaDay1 = new Session();
+        aaDay1.setEvent(testEvent);
+        aaDay1.setDate(LocalDate.of(2026, 8, 15));
+        aaDay1.setRound(Round.AA);
+        aaDay1.setDiscipline(Discipline.WAG);
+        aaDay1.setAgeCategory(AgeCategory.SR);
+        aaDay1.setPart(1);
+        aaDay1 = sessionRepository.save(aaDay1);
+
+        Session aaDay2 = new Session();
+        aaDay2.setEvent(testEvent);
+        aaDay2.setDate(LocalDate.of(2026, 8, 16));
+        aaDay2.setRound(Round.AA);
+        aaDay2.setDiscipline(Discipline.WAG);
+        aaDay2.setAgeCategory(AgeCategory.SR);
+        aaDay2.setPart(2);
+        aaDay2 = sessionRepository.save(aaDay2);
+
+        Optional<Session> foundDay1 = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.AA, Discipline.WAG, AgeCategory.SR, 1);
+        Optional<Session> foundDay2 = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(
+                testEvent, Round.AA, Discipline.WAG, AgeCategory.SR, 2);
+
+        assertTrue(foundDay1.isPresent());
+        assertEquals(aaDay1.getId(), foundDay1.get().getId());
+        assertTrue(foundDay2.isPresent());
+        assertEquals(aaDay2.getId(), foundDay2.get().getId());
+        assertNotEquals(foundDay1.get().getId(), foundDay2.get().getId());
     }
 
     @Test
@@ -132,8 +172,36 @@ class SessionRepositoryTest {
         assertEquals(testSession.getId(), found.get(0).getId());
     }
 
+    /**
+     * Documents a known limitation rather than a desired behavior: {@code
+     * uk_session} includes both {@code apparatus_code} and {@code part}, and
+     * standard SQL unique constraints don't treat two nulls as equal. Every
+     * real session has at least one of the two null -- {@code apparatus} is
+     * set only for {@code EVENT} rounds, {@code part} only for a round split
+     * across sessions (§ Round.java, Session.java), and the two are never
+     * both set at once in practice -- so this constraint alone does *not*
+     * reliably catch a duplicate session of any round type. That protection
+     * lives in {@link doubletuck.meet.service.SessionService} instead (see
+     * {@code SessionServiceTest} for the cases that actually matter: same
+     * apparatus, and same {@code part}). If one of these tests starts
+     * failing (i.e. the duplicate insert starts being rejected), the DB
+     * behavior has improved and the test/comment should be updated to
+     * match, not "fixed" back to throwing.
+     */
     @Test
-    void testCreate_FailsBecauseDuplicateEventRoundDisciplineAgeCategoryApparatus() {
+    void testCreate_DuplicateQualSession_NotCaughtByDatabaseConstraintAlone() {
+        Session duplicate = new Session();
+        duplicate.setEvent(testEvent);
+        duplicate.setDate(LocalDate.of(2026, 4, 21));
+        duplicate.setRound(Round.QUAL);
+        duplicate.setDiscipline(Discipline.WAG);
+        duplicate.setAgeCategory(AgeCategory.SR);
+
+        assertDoesNotThrow(() -> sessionRepository.saveAndFlush(duplicate));
+    }
+
+    @Test
+    void testCreate_DuplicateEventSessionSameApparatus_NotCaughtByDatabaseConstraintAlone() {
         Session fxFinal = new Session();
         fxFinal.setEvent(testEvent);
         fxFinal.setDate(LocalDate.of(2026, 4, 22));
@@ -151,28 +219,27 @@ class SessionRepositoryTest {
         duplicate.setAgeCategory(AgeCategory.SR);
         duplicate.setApparatus(Apparatus.FX);
 
-        assertThrows(DataIntegrityViolationException.class, () -> sessionRepository.saveAndFlush(duplicate));
+        assertDoesNotThrow(() -> sessionRepository.saveAndFlush(duplicate));
     }
 
-    /**
-     * Documents a known limitation rather than a desired behavior: {@code
-     * uk_session} includes {@code apparatus_code}, which is null for every
-     * round except {@code EVENT} (§ Round.java), and standard SQL unique
-     * constraints don't treat two nulls as equal. So this constraint alone
-     * does *not* catch a duplicate QUAL/AA/TEAM session — that protection
-     * lives in {@link doubletuck.meet.service.SessionService} instead. If
-     * this test starts failing (i.e. the duplicate insert starts being
-     * rejected), the DB behavior has improved and this test/comment should
-     * be updated to match, not "fixed" back to throwing.
-     */
     @Test
-    void testCreate_DuplicateQualSession_NotCaughtByDatabaseConstraintAlone() {
+    void testCreate_DuplicateAaSessionSamePart_NotCaughtByDatabaseConstraintAlone() {
+        Session aaDay1 = new Session();
+        aaDay1.setEvent(testEvent);
+        aaDay1.setDate(LocalDate.of(2026, 8, 15));
+        aaDay1.setRound(Round.AA);
+        aaDay1.setDiscipline(Discipline.WAG);
+        aaDay1.setAgeCategory(AgeCategory.SR);
+        aaDay1.setPart(1);
+        sessionRepository.saveAndFlush(aaDay1);
+
         Session duplicate = new Session();
         duplicate.setEvent(testEvent);
-        duplicate.setDate(LocalDate.of(2026, 4, 21));
-        duplicate.setRound(Round.QUAL);
+        duplicate.setDate(LocalDate.of(2026, 8, 15));
+        duplicate.setRound(Round.AA);
         duplicate.setDiscipline(Discipline.WAG);
         duplicate.setAgeCategory(AgeCategory.SR);
+        duplicate.setPart(1);
 
         assertDoesNotThrow(() -> sessionRepository.saveAndFlush(duplicate));
     }
@@ -184,7 +251,6 @@ class SessionRepositoryTest {
         event.setEndDate(LocalDate.of(2026, 4, 26));
         event.setCity("Stuttgart");
         event.setCountryCode("DEU");
-        event.setDisciplines(Set.of(Discipline.WAG));
         event.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         return eventRepository.save(event);
     }

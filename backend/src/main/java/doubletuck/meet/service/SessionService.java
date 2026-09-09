@@ -21,16 +21,18 @@ public class SessionService {
 
     /**
      * Creates a session, rejecting a duplicate (same event, round, discipline,
-     * age category, and apparatus) with a {@link ConflictException}.
+     * age category, apparatus, and part) with a {@link ConflictException}.
      *
      * <p>This check exists in code, not only as a database constraint,
      * because {@code apparatus} is null for every round except {@code
-     * EVENT}, and a plain SQL unique constraint doesn't catch two rows that
-     * are both null in that column (standard NULL semantics: null isn't
-     * considered equal to null). Session's {@code uk_session} constraint
-     * still catches a duplicate {@code EVENT}-round session (apparatus is
-     * non-null there) as a redundant safety net, but this check is what
-     * actually protects {@code QUAL}/{@code AA}/{@code TEAM} rounds.
+     * EVENT}, and {@code part} is null for the ordinary case of a round
+     * held in a single session -- a plain SQL unique constraint doesn't
+     * catch two rows that are both null in the same column (standard NULL
+     * semantics: null isn't considered equal to null). Session's {@code
+     * uk_session} constraint still catches a duplicate where both columns
+     * are non-null as a redundant safety net, but this check is what
+     * actually protects the common null cases, e.g. two {@code QUAL}
+     * sessions, or two {@code AA} sessions sharing the same {@code part}.
      */
     @Transactional
     public Session createSession(Session session) {
@@ -40,16 +42,17 @@ public class SessionService {
 
     private void checkForDuplicate(Session session) {
         Optional<Session> duplicate = session.getApparatus() != null
-                ? sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatus(session.getEvent(),
-                        session.getRound(), session.getDiscipline(), session.getAgeCategory(),
-                        session.getApparatus())
-                : sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategory(session.getEvent(),
-                        session.getRound(), session.getDiscipline(), session.getAgeCategory());
+                ? sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatusAndPart(
+                        session.getEvent(), session.getRound(), session.getDiscipline(), session.getAgeCategory(),
+                        session.getApparatus(), session.getPart())
+                : sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(session.getEvent(),
+                        session.getRound(), session.getDiscipline(), session.getAgeCategory(), session.getPart());
 
         if (duplicate.isPresent()) {
             throw new ConflictException("A " + session.getRound() + " session for event "
                     + session.getEvent().getId() + " (" + session.getDiscipline() + " " + session.getAgeCategory()
-                    + (session.getApparatus() != null ? " " + session.getApparatus() : "") + ") already exists");
+                    + (session.getApparatus() != null ? " " + session.getApparatus() : "")
+                    + (session.getPart() != null ? " part " + session.getPart() : "") + ") already exists");
         }
     }
 }

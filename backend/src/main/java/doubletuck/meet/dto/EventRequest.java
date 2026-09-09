@@ -1,14 +1,11 @@
 package doubletuck.meet.dto;
 
-import doubletuck.meet.domain.Discipline;
 import doubletuck.meet.domain.EventLevel;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public record EventRequest(
         @Size(max = 20, message = "FIG event number must have 20 or fewer characters")
@@ -34,9 +31,6 @@ public record EventRequest(
 
         @Size(max = 150, message = "Venue must have 150 or fewer characters")
         String venue,
-
-        @NotEmpty(message = "At least one discipline is required")
-        Set<Discipline> disciplines,
 
         @NotNull(message = "Level is required")
         EventLevel level) {

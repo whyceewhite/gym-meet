@@ -26,7 +26,7 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Table(name = "session", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_session", columnNames = { "event_id", "round_code", "discipline_code", "age_category_code", "apparatus_code" })
+        @UniqueConstraint(name = "uk_session", columnNames = { "event_id", "round_code", "discipline_code", "age_category_code", "apparatus_code", "part" })
 })
 public class Session extends BaseEntity {
 
@@ -65,4 +65,14 @@ public class Session extends BaseEntity {
     @Column(name = "apparatus_code", length = 5)
     @Enumerated(EnumType.STRING)
     private Apparatus apparatus;
+
+    /**
+     * Which occurrence of this round this session is, for a round split
+     * across more than one session -- e.g. US Championships' two-day
+     * All-Around, where {@code round} is {@link Round#AA} on both sessions
+     * and {@code part} is {@code 1} and {@code 2}, respectively. Null for
+     * the ordinary case of a round held in a single session.
+     */
+    @Column(name = "part")
+    private Integer part;
 }

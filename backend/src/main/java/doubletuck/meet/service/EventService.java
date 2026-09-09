@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -91,7 +90,6 @@ public class EventService {
         event.setCity(request.city());
         event.setCountryCode(request.countryCode());
         event.setVenue(request.venue());
-        event.setDisciplines(new HashSet<>(request.disciplines()));
         event.setLevel(request.level());
     }
 }
