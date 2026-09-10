@@ -1,214 +1,214 @@
-Round,Apparatus,Function,Name,Surname,Given Name,NOC Code
-QUAL,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
-QUAL,,Member,CARRILES Pablo,CARRILES,Pablo,EG
-QUAL,,Member,NANKOE Raymond,NANKOE,Raymond,EG
-QUAL,FX,SV,LAZZARICH Diego,LAZZARICH,Diego,EG
-QUAL,PH,SV,GIORGADZE Ilia,GIORGADZE,Ilia,EG
-QUAL,FX,D1,IANEZ RAMOS Miguel Angel,IANEZ RAMOS,Miguel Angel,EG
-QUAL,PH,D1,RONNEBERGER Christian,RONNEBERGER,Christian,EG
-QUAL,FX,D2,FOTAK Damir,FOTAK,Damir,CRO
-QUAL,PH,D2,LEVY Jacob,LEVY,Jacob,ISR
-QUAL,FX,E1,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
-QUAL,PH,E1,TOEBACK Jonas,TOEBACK,Jonas,BEL
-QUAL,FX,E2,DRABEK Libor,DRABEK,Libor,CZE
-QUAL,PH,E2,GORSKIS Maris,GORSKIS,Maris,LAT
-QUAL,FX,E3,KUONI Andreas,KUONI,Andreas,SUI
-QUAL,PH,E3,KATYN Viliam,KATYN,Viliam,WG2
-QUAL,FX,E4,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
-QUAL,PH,E4,DONOGHUE Denis,DONOGHUE,Denis,IRL
-QUAL,FX,E5,GALEROS Stavros,GALEROS,Stavros,GRE
-QUAL,PH,E5,SKAR Jorgen Collett,SKAR,Jorgen Collett,NOR
-QUAL,FX,E6,JUG Sven,JUG,Sven,SLO
-QUAL,PH,E6,PASCU Nicusor,PASCU,Nicusor,ROU
-QUAL,FX,E7,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
-QUAL,PH,E7,UHLIR Martin,UHLIR,Martin,CZE
-QUAL,FX,T,CIZMAR Martin,CIZMAR,Martin,SVK
-QUAL,FX,L1,TVERAAS Christian,TVERAAS,Christian,NOR
-QUAL,FX,L2,INCE Mehmet,INCE,Mehmet,TUR
-QUAL,SR,SV,ABDALLA Ahmed Adly,ABDALLA,Ahmed Adly,EG
-QUAL,VT,SV,HANLEY Nicola,HANLEY,Nicola,EG
-QUAL,SR,D1,MICKEVICS Arturs,MICKEVICS,Arturs,EG
-QUAL,VT,D1,IZMODENOV Jevgenij,IZMODENOV,Jevgenij,EG
-QUAL,SR,D2,KOEDOOD Gijan,KOEDOOD,Gijan,NED
-QUAL,VT,D2,ANDRING Gilles,ANDRING,Gilles,LUX
-QUAL,SR,E1,STEBUNOV Serhii,STEBUNOV,Serhii,UKR
-QUAL,VT,E1,TASKINEN Topi,TASKINEN,Topi,FIN
-QUAL,SR,E2,NOGUEIRA André,NOGUEIRA,André,POR
-QUAL,VT,E2,KOPERSKI Adam,KOPERSKI,Adam,POL
-QUAL,SR,E3,RICHARDSON Craig,RICHARDSON,Craig,GBR
-QUAL,VT,E3,SEROBYAN Hakob,SEROBYAN,Hakob,ARM
-QUAL,SR,E4,HUMMEL Jens,HUMMEL,Jens,SWE
-QUAL,VT,E4,HAYN Thomas,HAYN,Thomas,AUT
-QUAL,SR,E5,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
-QUAL,VT,E5,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
-QUAL,SR,E6,ZURLINI Antonio,ZURLINI,Antonio,ITA
-QUAL,VT,E6,CLITHERO Byron,CLITHERO,Byron,GBR
-QUAL,SR,E7,BARAC Vladimir,BARAC,Vladimir,SRB
-QUAL,VT,E7,FERREIRINHA Jose Eduardo,FERREIRINHA,Jose Eduardo,POR
-QUAL,VT,L,TANKOUCHEV Ivan,TANKOUCHEV,Ivan,BUL
-QUAL,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
-QUAL,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
-QUAL,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
-QUAL,HB,D1,TOTH Josef,TOTH,Josef,EG
-QUAL,PB,D2,MERIEUX Pascal,MERIEUX,Pascal,FRA
-QUAL,HB,D2,TURKDOGAN Senol,TURKDOGAN,Senol,TUR
-QUAL,PB,E1,SIRERA GARRIGOS Montserrat,SIRERA GARRIGOS,Montserrat,ESP
-QUAL,HB,E1,RUPCIK Lubos,RUPCIK,Lubos,SVK
-QUAL,PB,E2,PETURSSON Sigurdur Hrafn,PETURSSON,Sigurdur Hrafn,ISL
-QUAL,HB,E2,VOGEL Achim,VOGEL,Achim,GER
-QUAL,PB,E3,YANEV Iliya,YANEV,Iliya,BUL
-QUAL,HB,E3,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
-QUAL,PB,E4,SOSNIN Valerij,SOSNIN,Valerij,LTU
-QUAL,HB,E4,STYLIANOU Sotiris,STYLIANOU,Sotiris,CYP
-QUAL,PB,E5,DEJANOVIC Dejan,DEJANOVIC,Dejan,SRB
-QUAL,HB,E5,BRANDTOFT Christian,BRANDTOFT,Christian,DEN
-QUAL,PB,E6,KOROLENKO Oleksiy,KOROLENKO,Oleksiy,UKR
-QUAL,HB,E6,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
-QUAL,PB,E7,POP Andrei,POP,Andrei,FIN
-QUAL,HB,E7,KONSTANTINOVICS Bronislavs,KONSTANTINOVICS,Bronislavs,LAT
-QUAL,PB,RES 1,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
-QUAL,PB,RES 2,FRICK Juergen,FRICK,Juergen,AUT
-QUAL,PB,RES 3,MURADLI Zakariyya,MURADLI,Zakariyya,AZE
-EVENT,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
-EVENT,,Member,CARRILES Pablo,CARRILES,Pablo,EG
-EVENT,,Member,NANKOE Raymond,NANKOE,Raymond,EG
-EVENT,FX,SV,LAZZARICH Diego,LAZZARICH,Diego,EG
-EVENT,PH,SV,GIORGADZE Ilia,GIORGADZE,Ilia,EG
-EVENT,FX,D1,IANEZ RAMOS Miguel Angel,IANEZ RAMOS,Miguel Angel,EG
-EVENT,PH,D1,RONNEBERGER Christian,RONNEBERGER,Christian,EG
-EVENT,FX,D2,FOTAK Damir,FOTAK,Damir,CRO
-EVENT,PH,D2,LEVY Jacob,LEVY,Jacob,ISR
-EVENT,FX,E1,VAN CAENEGEM Loïc,VAN CAENEGEM,Loïc,BEL
-EVENT,PH,E1,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
-EVENT,FX,E2,BRANDTOFT Christian,BRANDTOFT,Christian,DEN
-EVENT,PH,E2,TVERAAS Christian,TVERAAS,Christian,NOR
-EVENT,FX,E3,VOGEL Achim,VOGEL,Achim,GER
-EVENT,PH,E3,DRABEK Libor,DRABEK,Libor,CZE
-EVENT,FX,E4,GALEROS Stavros,GALEROS,Stavros,GRE
-EVENT,PH,E4,SOSNIN Valerij,SOSNIN,Valerij,LTU
-EVENT,FX,E5,HAYN Thomas,HAYN,Thomas,AUT
-EVENT,PH,E5,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
-EVENT,FX,E6,TASKINEN Topi,TASKINEN,Topi,FIN
-EVENT,PH,E6,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
-EVENT,FX,E7,BARAC Vladimir,BARAC,Vladimir,SRB
-EVENT,PH,E7,NOGUEIRA André,NOGUEIRA,André,POR
-EVENT,FX,T,STEBUNOV Serhii,STEBUNOV,Serhii,UKR
-EVENT,FX,L1,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
-EVENT,FX,L2,PASCU Nicusor,PASCU,Nicusor,ROU
-EVENT,SR,SV,ABDALLA Ahmed Adly,ABDALLA,Ahmed Adly,EG
-EVENT,VT,SV,HANLEY Nicola,HANLEY,Nicola,EG
-EVENT,SR,D1,MICKEVICS Arturs,MICKEVICS,Arturs,EG
-EVENT,VT,D1,IZMODENOV Jevgenij,IZMODENOV,Jevgenij,EG
-EVENT,SR,D2,KOEDOOD Gijan,KOEDOOD,Gijan,NED
-EVENT,VT,D2,ANDRING Gilles,ANDRING,Gilles,LUX
-EVENT,SR,E1,HUMMEL Jens,HUMMEL,Jens,SWE
-EVENT,VT,E1,GREUTMANN Thomas,GREUTMANN,Thomas,SUI
-EVENT,SR,E2,KOPERSKI Adam,KOPERSKI,Adam,POL
-EVENT,VT,E2,CULIN Boris,CULIN,Boris,CRO
-EVENT,SR,E3,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
-EVENT,VT,E3,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
-EVENT,SR,E4,JUG Sven,JUG,Sven,SLO
-EVENT,VT,E4,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
-EVENT,SR,E5,DONOGHUE Denis,DONOGHUE,Denis,IRL
-EVENT,VT,E5,RUPCIK Lubos,RUPCIK,Lubos,SVK
-EVENT,SR,E6,PETURSSON Sigurdur Hrafn,PETURSSON,Sigurdur Hrafn,ISL
-EVENT,VT,E6,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
-EVENT,SR,E7,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
-EVENT,VT,E7,TASKINEN Topi,TASKINEN,Topi,FIN
-EVENT,SR,RES 1,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
-EVENT,VT,L,VOGEL Achim,VOGEL,Achim,GER
-EVENT,SR,RES 2,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
-EVENT,SR,RES 3,GORSKIS Maris,GORSKIS,Maris,LAT
-EVENT,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
-EVENT,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
-EVENT,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
-EVENT,HB,D1,TOTH Josef,TOTH,Josef,EG
-EVENT,PB,D2,MERIEUX Pascal,MERIEUX,Pascal,FRA
-EVENT,HB,D2,TURKDOGAN Senol,TURKDOGAN,Senol,TUR
-EVENT,PB,E1,STYLIANOU Sotiris,STYLIANOU,Sotiris,CYP
-EVENT,HB,E1,PASCU Nicusor,PASCU,Nicusor,ROU
-EVENT,PB,E2,GORSKIS Maris,GORSKIS,Maris,LAT
-EVENT,HB,E2,KOROLENKO Oleksiy,KOROLENKO,Oleksiy,UKR
-EVENT,PB,E3,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
-EVENT,HB,E3,JOOSTEN Ward,JOOSTEN,Ward,NED
-EVENT,PB,E4,YANEV Iliya,YANEV,Iliya,BUL
-EVENT,HB,E4,LEVY Jacob,LEVY,Jacob,ISR
-EVENT,PB,E5,KUONI Andreas,KUONI,Andreas,SUI
-EVENT,HB,E5,OTOOLE Colm,OTOOLE,Colm,IRL
-EVENT,PB,E6,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
-EVENT,HB,E6,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
-EVENT,PB,E7,JUG Sven,JUG,Sven,SLO
-EVENT,HB,E7,GALEROS Stavros,GALEROS,Stavros,GRE
-EVENT,PB,RES 1,ZURLINI Antonio,ZURLINI,Antonio,ITA
-EVENT,PB,RES 2,YANEV Iliya,YANEV,Iliya,BUL
-EVENT,PB,RES 3,HUMMEL Jens,HUMMEL,Jens,SWE
-TEAM,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
-TEAM,,Member,CARRILES Pablo,CARRILES,Pablo,EG
-TEAM,,Member,NANKOE Raymond,NANKOE,Raymond,EG
-TEAM,FX,SV,LAZZARICH Diego,LAZZARICH,Diego,EG
-TEAM,PH,SV,GIORGADZE Ilia,GIORGADZE,Ilia,EG
-TEAM,FX,D1,IANEZ RAMOS Miguel Angel,IANEZ RAMOS,Miguel Angel,EG
-TEAM,PH,D1,RONNEBERGER Christian,RONNEBERGER,Christian,EG
-TEAM,FX,D2,FOTAK Damir,FOTAK,Damir,CRO
-TEAM,PH,D2,LEVY Jacob,LEVY,Jacob,ISR
-TEAM,FX,E1,STEBUNOV Serhii,STEBUNOV,Serhii,UKR
-TEAM,PH,E1,TASKINEN Topi,TASKINEN,Topi,FIN
-TEAM,FX,E2,YANEV Iliya,YANEV,Iliya,BUL
-TEAM,PH,E2,HUMMEL Jens,HUMMEL,Jens,SWE
-TEAM,FX,E3,SOSNIN Valerij,SOSNIN,Valerij,LTU
-TEAM,PH,E3,RUPCIK Lubos,RUPCIK,Lubos,SVK
-TEAM,FX,E4,HAYN Thomas,HAYN,Thomas,AUT
-TEAM,PH,E4,TVERAAS Christian,TVERAAS,Christian,NOR
-TEAM,FX,E5,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
-TEAM,PH,E5,GORSKIS Maris,GORSKIS,Maris,LAT
-TEAM,FX,E6,KATYN Viliam,KATYN,Viliam,WG2
-TEAM,PH,E6,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
-TEAM,FX,E7,PREZHYN Daniel,PREZHYN,Daniel,ISR
-TEAM,PH,E7,JOOSTEN Ward,JOOSTEN,Ward,NED
-TEAM,FX,T,JOVANOVIC Dejan,JOVANOVIC,Dejan,SLO
-TEAM,FX,L1,GALEROS Stavros,GALEROS,Stavros,GRE
-TEAM,FX,L2,MAKARANKA Ivan,MAKARANKA,Ivan,WG1
-TEAM,SR,SV,ABDALLA Ahmed Adly,ABDALLA,Ahmed Adly,EG
-TEAM,VT,SV,HANLEY Nicola,HANLEY,Nicola,EG
-TEAM,SR,D1,MICKEVICS Arturs,MICKEVICS,Arturs,EG
-TEAM,VT,D1,IZMODENOV Jevgenij,IZMODENOV,Jevgenij,EG
-TEAM,SR,D2,KOEDOOD Gijan,KOEDOOD,Gijan,NED
-TEAM,VT,D2,ANDRING Gilles,ANDRING,Gilles,LUX
-TEAM,SR,E1,PETURSSON Sigurdur Hrafn,PETURSSON,Sigurdur Hrafn,ISL
-TEAM,VT,E1,KUONI Andreas,KUONI,Andreas,SUI
-TEAM,SR,E2,STYLIANOU Sotiris,STYLIANOU,Sotiris,CYP
-TEAM,VT,E2,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
-TEAM,SR,E3,RICHARDSON Craig,RICHARDSON,Craig,GBR
-TEAM,VT,E3,BOUTAKIS Eleftherios,BOUTAKIS,Eleftherios,GRE
-TEAM,SR,E4,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
-TEAM,VT,E4,BARAC Vladimir,BARAC,Vladimir,SRB
-TEAM,SR,E5,FERREIRINHA Jose Eduardo,FERREIRINHA,Jose Eduardo,POR
-TEAM,VT,E5,JUG Sven,JUG,Sven,SLO
-TEAM,SR,E6,FRICK Juergen,FRICK,Juergen,AUT
-TEAM,VT,E6,KUNZE Christoph,KUNZE,Christoph,GER
-TEAM,SR,E7,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
-TEAM,VT,E7,TOMASSON Bjorn Magnus,TOMASSON,Bjorn Magnus,ISL
-TEAM,VT,L,HIMBERG Roland,HIMBERG,Roland,SWE
-TEAM,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
-TEAM,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
-TEAM,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
-TEAM,HB,D1,TOTH Josef,TOTH,Josef,EG
-TEAM,PB,D2,MERIEUX Pascal,MERIEUX,Pascal,FRA
-TEAM,HB,D2,TURKDOGAN Senol,TURKDOGAN,Senol,TUR
-TEAM,PB,E1,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
-TEAM,HB,E1,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
-TEAM,PB,E2,ZURLINI Antonio,ZURLINI,Antonio,ITA
-TEAM,HB,E2,KOPERSKI Adam,KOPERSKI,Adam,POL
-TEAM,PB,E3,OTOOLE Colm,OTOOLE,Colm,IRL
-TEAM,HB,E3,TOEBACK Jonas,TOEBACK,Jonas,BEL
-TEAM,PB,E4,UHLIR Martin,UHLIR,Martin,CZE
-TEAM,HB,E4,BOTOS Liviu,BOTOS,Liviu,ROU
-TEAM,PB,E5,BRANDTOFT Christian,BRANDTOFT,Christian,DEN
-TEAM,HB,E5,VOGEL Achim,VOGEL,Achim,GER
-TEAM,PB,E6,DEJANOVIC Dejan,DEJANOVIC,Dejan,SRB
-TEAM,HB,E6,SIRERA GARRIGOS Montserrat,SIRERA GARRIGOS,Montserrat,ESP
-TEAM,PB,E7,BORDAN Csaba,BORDAN,Csaba,HUN
-TEAM,HB,E7,POP Andrei,POP,Andrei,FIN
-TEAM,PB,RES 1,SKAR Jorgen Collett,SKAR,Jorgen Collett,NOR
-TEAM,PB,RES 2,CIZMAR Martin,CIZMAR,Martin,SVK
-TEAM,PB,RES 3,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
+Event Name,Discipline,Age Category,Event Start Date,Round,Apparatus,Function,Name,Surname,Given Name,NOC Code
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,,Member,CARRILES Pablo,CARRILES,Pablo,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,,Member,NANKOE Raymond,NANKOE,Raymond,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,SV,LAZZARICH Diego,LAZZARICH,Diego,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,SV,GIORGADZE Ilia,GIORGADZE,Ilia,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,D1,IANEZ RAMOS Miguel Angel,IANEZ RAMOS,Miguel Angel,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,D1,RONNEBERGER Christian,RONNEBERGER,Christian,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,D2,FOTAK Damir,FOTAK,Damir,CRO
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,D2,LEVY Jacob,LEVY,Jacob,ISR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E1,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E1,TOEBACK Jonas,TOEBACK,Jonas,BEL
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E2,DRABEK Libor,DRABEK,Libor,CZE
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E2,GORSKIS Maris,GORSKIS,Maris,LAT
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E3,KUONI Andreas,KUONI,Andreas,SUI
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E3,KATYN Viliam,KATYN,Viliam,WG2
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E4,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E4,DONOGHUE Denis,DONOGHUE,Denis,IRL
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E5,GALEROS Stavros,GALEROS,Stavros,GRE
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E5,SKAR Jorgen Collett,SKAR,Jorgen Collett,NOR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E6,JUG Sven,JUG,Sven,SLO
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E6,PASCU Nicusor,PASCU,Nicusor,ROU
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,E7,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PH,E7,UHLIR Martin,UHLIR,Martin,CZE
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,T,CIZMAR Martin,CIZMAR,Martin,SVK
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,L1,TVERAAS Christian,TVERAAS,Christian,NOR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,FX,L2,INCE Mehmet,INCE,Mehmet,TUR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,SV,ABDALLA Ahmed Adly,ABDALLA,Ahmed Adly,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,SV,HANLEY Nicola,HANLEY,Nicola,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,D1,MICKEVICS Arturs,MICKEVICS,Arturs,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,D1,IZMODENOV Jevgenij,IZMODENOV,Jevgenij,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,D2,KOEDOOD Gijan,KOEDOOD,Gijan,NED
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,D2,ANDRING Gilles,ANDRING,Gilles,LUX
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E1,STEBUNOV Serhii,STEBUNOV,Serhii,UKR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E1,TASKINEN Topi,TASKINEN,Topi,FIN
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E2,NOGUEIRA André,NOGUEIRA,André,POR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E2,KOPERSKI Adam,KOPERSKI,Adam,POL
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E3,RICHARDSON Craig,RICHARDSON,Craig,GBR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E3,SEROBYAN Hakob,SEROBYAN,Hakob,ARM
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E4,HUMMEL Jens,HUMMEL,Jens,SWE
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E4,HAYN Thomas,HAYN,Thomas,AUT
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E5,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E5,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E6,ZURLINI Antonio,ZURLINI,Antonio,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E6,CLITHERO Byron,CLITHERO,Byron,GBR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,SR,E7,BARAC Vladimir,BARAC,Vladimir,SRB
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,E7,FERREIRINHA Jose Eduardo,FERREIRINHA,Jose Eduardo,POR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,VT,L,TANKOUCHEV Ivan,TANKOUCHEV,Ivan,BUL
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,D1,TOTH Josef,TOTH,Josef,EG
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,D2,MERIEUX Pascal,MERIEUX,Pascal,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,D2,TURKDOGAN Senol,TURKDOGAN,Senol,TUR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E1,SIRERA GARRIGOS Montserrat,SIRERA GARRIGOS,Montserrat,ESP
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E1,RUPCIK Lubos,RUPCIK,Lubos,SVK
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E2,PETURSSON Sigurdur Hrafn,PETURSSON,Sigurdur Hrafn,ISL
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E2,VOGEL Achim,VOGEL,Achim,GER
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E3,YANEV Iliya,YANEV,Iliya,BUL
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E3,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E4,SOSNIN Valerij,SOSNIN,Valerij,LTU
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E4,STYLIANOU Sotiris,STYLIANOU,Sotiris,CYP
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E5,DEJANOVIC Dejan,DEJANOVIC,Dejan,SRB
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E5,BRANDTOFT Christian,BRANDTOFT,Christian,DEN
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E6,KOROLENKO Oleksiy,KOROLENKO,Oleksiy,UKR
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E6,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E7,POP Andrei,POP,Andrei,FIN
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E7,KONSTANTINOVICS Bronislavs,KONSTANTINOVICS,Bronislavs,LAT
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,RES 1,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,RES 2,FRICK Juergen,FRICK,Juergen,AUT
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,RES 3,MURADLI Zakariyya,MURADLI,Zakariyya,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,,Member,CARRILES Pablo,CARRILES,Pablo,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,,Member,NANKOE Raymond,NANKOE,Raymond,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,SV,LAZZARICH Diego,LAZZARICH,Diego,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,SV,GIORGADZE Ilia,GIORGADZE,Ilia,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,D1,IANEZ RAMOS Miguel Angel,IANEZ RAMOS,Miguel Angel,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,D1,RONNEBERGER Christian,RONNEBERGER,Christian,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,D2,FOTAK Damir,FOTAK,Damir,CRO
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,D2,LEVY Jacob,LEVY,Jacob,ISR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E1,VAN CAENEGEM Loïc,VAN CAENEGEM,Loïc,BEL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E1,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E2,BRANDTOFT Christian,BRANDTOFT,Christian,DEN
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E2,TVERAAS Christian,TVERAAS,Christian,NOR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E3,VOGEL Achim,VOGEL,Achim,GER
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E3,DRABEK Libor,DRABEK,Libor,CZE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E4,GALEROS Stavros,GALEROS,Stavros,GRE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E4,SOSNIN Valerij,SOSNIN,Valerij,LTU
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E5,HAYN Thomas,HAYN,Thomas,AUT
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E5,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E6,TASKINEN Topi,TASKINEN,Topi,FIN
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E6,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,E7,BARAC Vladimir,BARAC,Vladimir,SRB
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PH,E7,NOGUEIRA André,NOGUEIRA,André,POR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,T,STEBUNOV Serhii,STEBUNOV,Serhii,UKR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,L1,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,FX,L2,PASCU Nicusor,PASCU,Nicusor,ROU
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,SV,ABDALLA Ahmed Adly,ABDALLA,Ahmed Adly,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,SV,HANLEY Nicola,HANLEY,Nicola,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,D1,MICKEVICS Arturs,MICKEVICS,Arturs,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,D1,IZMODENOV Jevgenij,IZMODENOV,Jevgenij,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,D2,KOEDOOD Gijan,KOEDOOD,Gijan,NED
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,D2,ANDRING Gilles,ANDRING,Gilles,LUX
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E1,HUMMEL Jens,HUMMEL,Jens,SWE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E1,GREUTMANN Thomas,GREUTMANN,Thomas,SUI
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E2,KOPERSKI Adam,KOPERSKI,Adam,POL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E2,CULIN Boris,CULIN,Boris,CRO
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E3,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E3,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E4,JUG Sven,JUG,Sven,SLO
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E4,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E5,DONOGHUE Denis,DONOGHUE,Denis,IRL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E5,RUPCIK Lubos,RUPCIK,Lubos,SVK
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E6,PETURSSON Sigurdur Hrafn,PETURSSON,Sigurdur Hrafn,ISL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E6,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E7,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E7,TASKINEN Topi,TASKINEN,Topi,FIN
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,RES 1,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,L,VOGEL Achim,VOGEL,Achim,GER
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,RES 2,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,RES 3,GORSKIS Maris,GORSKIS,Maris,LAT
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,D1,TOTH Josef,TOTH,Josef,EG
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,D2,MERIEUX Pascal,MERIEUX,Pascal,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,D2,TURKDOGAN Senol,TURKDOGAN,Senol,TUR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E1,STYLIANOU Sotiris,STYLIANOU,Sotiris,CYP
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E1,PASCU Nicusor,PASCU,Nicusor,ROU
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E2,GORSKIS Maris,GORSKIS,Maris,LAT
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E2,KOROLENKO Oleksiy,KOROLENKO,Oleksiy,UKR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E3,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E3,JOOSTEN Ward,JOOSTEN,Ward,NED
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E4,YANEV Iliya,YANEV,Iliya,BUL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E4,LEVY Jacob,LEVY,Jacob,ISR
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E5,KUONI Andreas,KUONI,Andreas,SUI
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E5,OTOOLE Colm,OTOOLE,Colm,IRL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E6,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E6,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E7,JUG Sven,JUG,Sven,SLO
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E7,GALEROS Stavros,GALEROS,Stavros,GRE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,RES 1,ZURLINI Antonio,ZURLINI,Antonio,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,RES 2,YANEV Iliya,YANEV,Iliya,BUL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,RES 3,HUMMEL Jens,HUMMEL,Jens,SWE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,,Member,CARRILES Pablo,CARRILES,Pablo,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,,Member,NANKOE Raymond,NANKOE,Raymond,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,SV,LAZZARICH Diego,LAZZARICH,Diego,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,SV,GIORGADZE Ilia,GIORGADZE,Ilia,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,D1,IANEZ RAMOS Miguel Angel,IANEZ RAMOS,Miguel Angel,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,D1,RONNEBERGER Christian,RONNEBERGER,Christian,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,D2,FOTAK Damir,FOTAK,Damir,CRO
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,D2,LEVY Jacob,LEVY,Jacob,ISR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E1,STEBUNOV Serhii,STEBUNOV,Serhii,UKR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E1,TASKINEN Topi,TASKINEN,Topi,FIN
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E2,YANEV Iliya,YANEV,Iliya,BUL
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E2,HUMMEL Jens,HUMMEL,Jens,SWE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E3,SOSNIN Valerij,SOSNIN,Valerij,LTU
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E3,RUPCIK Lubos,RUPCIK,Lubos,SVK
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E4,HAYN Thomas,HAYN,Thomas,AUT
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E4,TVERAAS Christian,TVERAAS,Christian,NOR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E5,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E5,GORSKIS Maris,GORSKIS,Maris,LAT
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E6,KATYN Viliam,KATYN,Viliam,WG2
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E6,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,E7,PREZHYN Daniel,PREZHYN,Daniel,ISR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PH,E7,JOOSTEN Ward,JOOSTEN,Ward,NED
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,T,JOVANOVIC Dejan,JOVANOVIC,Dejan,SLO
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,L1,GALEROS Stavros,GALEROS,Stavros,GRE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,FX,L2,MAKARANKA Ivan,MAKARANKA,Ivan,WG1
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,SV,ABDALLA Ahmed Adly,ABDALLA,Ahmed Adly,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,SV,HANLEY Nicola,HANLEY,Nicola,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,D1,MICKEVICS Arturs,MICKEVICS,Arturs,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,D1,IZMODENOV Jevgenij,IZMODENOV,Jevgenij,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,D2,KOEDOOD Gijan,KOEDOOD,Gijan,NED
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,D2,ANDRING Gilles,ANDRING,Gilles,LUX
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E1,PETURSSON Sigurdur Hrafn,PETURSSON,Sigurdur Hrafn,ISL
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E1,KUONI Andreas,KUONI,Andreas,SUI
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E2,STYLIANOU Sotiris,STYLIANOU,Sotiris,CYP
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E2,VAITOVICH Aliaksandr,VAITOVICH,Aliaksandr,WG1
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E3,RICHARDSON Craig,RICHARDSON,Craig,GBR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E3,BOUTAKIS Eleftherios,BOUTAKIS,Eleftherios,GRE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E4,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E4,BARAC Vladimir,BARAC,Vladimir,SRB
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E5,FERREIRINHA Jose Eduardo,FERREIRINHA,Jose Eduardo,POR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E5,JUG Sven,JUG,Sven,SLO
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E6,FRICK Juergen,FRICK,Juergen,AUT
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E6,KUNZE Christoph,KUNZE,Christoph,GER
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,SR,E7,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,E7,TOMASSON Bjorn Magnus,TOMASSON,Bjorn Magnus,ISL
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,VT,L,HIMBERG Roland,HIMBERG,Roland,SWE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,D1,TOTH Josef,TOTH,Josef,EG
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,D2,MERIEUX Pascal,MERIEUX,Pascal,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,D2,TURKDOGAN Senol,TURKDOGAN,Senol,TUR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E1,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E1,PUSKAS Peter Oliver,PUSKAS,Peter Oliver,HUN
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E2,ZURLINI Antonio,ZURLINI,Antonio,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E2,KOPERSKI Adam,KOPERSKI,Adam,POL
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E3,OTOOLE Colm,OTOOLE,Colm,IRL
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E3,TOEBACK Jonas,TOEBACK,Jonas,BEL
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E4,UHLIR Martin,UHLIR,Martin,CZE
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E4,BOTOS Liviu,BOTOS,Liviu,ROU
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E5,BRANDTOFT Christian,BRANDTOFT,Christian,DEN
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E5,VOGEL Achim,VOGEL,Achim,GER
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E6,DEJANOVIC Dejan,DEJANOVIC,Dejan,SRB
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E6,SIRERA GARRIGOS Montserrat,SIRERA GARRIGOS,Montserrat,ESP
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E7,BORDAN Csaba,BORDAN,Csaba,HUN
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E7,POP Andrei,POP,Andrei,FIN
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,RES 1,SKAR Jorgen Collett,SKAR,Jorgen Collett,NOR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,RES 2,CIZMAR Martin,CIZMAR,Martin,SVK
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,RES 3,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA

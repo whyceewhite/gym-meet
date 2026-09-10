@@ -339,6 +339,86 @@ file type.
     matching how `data-model.md`'s `Score.apparatus` already carried this
     independently of `Round`.
 
+### 5.2a Self-describing metadata prefix
+
+Every file in §5 opens with a fixed run of metadata columns, in this order,
+before any of the columns documented in its own section below. The point is
+that each file stands alone — readable, joinable, and unambiguous — without
+needing its filename intact; filenames were the *only* source for this
+information until this convention was added, which made a rename or a
+concatenation of two files silently lose meaning.
+
+**`PARTICIPANTS.csv`, `JUDGES.csv`, `SUMMARY-*.csv`:**
+
+| Column | Notes |
+|---|---|
+| Event Name | The literal `Event.title` (`data-model.md`) for this specific discipline+age sub-event — e.g. `37th Senior European Championships` for MAG SR, `36th Senior European Championships` for WAG SR. **Not** a coarser shared label like "2026 European Championships" — this competition already has four separate `Event` rows (`EVENT.csv`: MAG-SR, MAG-JR, WAG-SR, WAG-JR), each with its own title, FIG event number, and date range, and this column matches that 1:1. There is no parent "meet" concept above `Event` in the domain model, and this column deliberately doesn't invent one. |
+| Discipline | `MAG` / `WAG` |
+| Age Category | `SR` / `JR` / `JR16` / `JR17` (`AgeCategory` enum) |
+| Event Start Date | `Event.startDate`, from `EVENT.csv`. Exists specifically to disambiguate one year's edition from another (`Event.title` alone doesn't carry a year, e.g. `"37th Senior European Championships"`) — without this, two competitions' files could only be told apart by ordering `figEventNumber`s. |
+
+**`SCORES-*.csv`** gets the same first three columns, but a `Session Start
+Date` instead of `Event Start Date`:
+
+| Column | Notes |
+|---|---|
+| Event Name, Discipline, Age Category | As above |
+| Session Start Date | The calendar date this specific `Round` (and, for `EVENT`, this specific apparatus — see below) was actually competed, sourced from the PDF's **Competition Schedule** pages, cross-referenced by round name and time window — **never** from a page footer's report-generation timestamp (§5.2b). Named "Start" rather than plain "Date" on purpose: most rounds are single-day in this data set, but a large-field round (e.g. a Worlds-sized Qualification) can genuinely span two calendar days, and the column name shouldn't imply otherwise even though `Session.date` (`data-model.md`) is presently a single field, not a range. If a future competition's round really does span multiple days, that's a `Session`/schema question to revisit, not something to paper over with this column. |
+
+**`SUMMARY-*.csv` uses `Event Start Date`, not `Session Start Date`,
+deliberately** — these files are already scoped to one round by their
+filename (`SUMMARY-QUAL-TEAM`, `SUMMARY-FINAL-TEAM`, `SUMMARY-QUAL-AA`), so a
+per-session date wasn't judged worth the extra precision the way it was for
+`SCORES-*`. Likewise `JUDGES.csv` bundles every round into one file (its own
+`Round` column distinguishes them, §5.2) but only gets one `Event Start
+Date` for the whole file, not a per-round session date — judges aren't yet
+tied to a specific `Session` at all; see the note below.
+
+**Per-apparatus session-date example (MAG SR only):** MAG Senior's Apparatus
+Final genuinely runs across two calendar days — the Competition Schedule
+lists "Senior Men's Individual Apparatus Finals, Part [unlabeled — the part
+number doesn't extract as text from the source PDF] 18:00-20:10" on one day
+and a second "Part ... 16:30-19:00" block the next day, with no apparatus
+breakdown in the schedule text itself. Resolved using each apparatus's
+`SCORES-EVENT-<APP>` report-generation timestamp, which clusters tightly
+inside one or the other scheduled window (FX/PH/SR all generated
+18:29–20:26 on day one; VT/PB/HB all generated 17:02–18:45 on day two) —
+this is a narrower, safer use of the footer than trusting it for *which day
+a whole round happened* (§5.2b's caution): here the day is already known
+from the schedule, and the footer is only disambiguating which of two known
+days a given apparatus falls into, corroborated by tight same-day clustering
+per apparatus. Result: MAG-SR `SCORES-EVENT-{FX,PH,SR}.csv` get one date,
+`SCORES-EVENT-{VT,PB,HB}.csv` get the next day. No other file in this data
+set needed a split — every other round's apparatus all share one date.
+
+**Judges aren't tied to a `Session` yet.** `JUDGES.csv` getting `Event Name`/
+`Discipline`/`Age Category`/`Event Start Date` closes the "which sub-event is
+this file for" gap, but doesn't by itself let an importer resolve a judge
+assignment to a specific `Session` row — that still requires matching this
+file's `Round` column (and, once one exists, `Apparatus`) against the
+`Session`s created from the `SCORES-*`/`SUMMARY-*` files for the same
+`Event`/`Discipline`/`AgeCategory`. There is currently no `Judge`/
+`JudgeAssignment` domain entity at all (checked: none exists in
+`domain/`) — that needs to be designed before this file can actually be
+imported, not just parsed.
+
+### 5.2b Don't trust the footer's report-generation timestamp as a competition date
+
+The page footer this whole document otherwise relies on for *locating* a
+report (§2–§4) carries a timestamp too (e.g. `Wed, 19 Aug 2026 21:26:04`),
+and it is tempting to reuse it as "the date this round happened." **Don't —
+it's a publish/regeneration timestamp, not the competition date.** Confirmed
+case: WAG Qualification's footers all read "Thu, 13 Aug," but the
+Competition Schedule shows Qualification actually took place "Wed, 12 Aug"
+— results were compiled and (re-)stamped the next day. The authoritative
+source for `Session Start Date` is always the PDF's own **Competition
+Schedule** section (near the front of the file, one page per day, listing
+time / subdivision / round name) — read the actual date next to the actual
+round name there. The one narrow exception is disambiguating *which of two
+already-schedule-confirmed days* a specific apparatus falls into, per the
+MAG SR example above — that's a corroboration technique, not a replacement
+for reading the schedule first.
+
 ### 5.3 `PARTICIPANTS.csv`
 
 One row per athlete entry. Columns:
@@ -874,12 +954,27 @@ character class over one column of a results table is never actually safe
 to assume, because a penalty column can always turn negative on the exact
 row you use to write it.
 
-### 7.10 What the schedule says exists and what the results PDF actually contains can disagree
+### 7.10 A schedule line naming a round doesn't mean that round has its own session — check the time block, not just the label
 
-The competition schedule pages (front of the PDF) list a **"Women's Junior
-Team Final"** and both a **"Women's Senior/Junior Individual All-Around
-Final"** as scheduled sessions. Neither has any corresponding results in
-this PDF:
+**Correction to an earlier read of this section:** this was originally
+written as "the schedule says these rounds exist but the results PDF
+doesn't have them" — a real discrepancy. That was wrong. Re-reading the
+Competition Schedule pages properly (while building §5.2a's `Session Start
+Date` column) showed the schedule agrees with the results all along: it
+lists **"Women's Junior Team Final"** and **"Women's Senior/Junior
+Individual All-Around Final"** as their own line items, but each one is
+stamped with the *identical* time block as the Qualification subdivisions
+printed directly beneath it (e.g. WAG Senior AA Final: `09:30 - 21:20`,
+exactly matching the full span of that day's five Qualification
+subdivisions combined). The schedule is using three different labels for
+one physical session, not describing three separate sessions — the
+takeaway is **read the time column, not just the session-name column**,
+before concluding a round has its own results to go looking for. The
+underlying data conclusion below (no separate session/results for these)
+was correct then and still is now — only the "schedule vs. PDF disagree"
+framing was wrong.
+
+Neither has any corresponding *separate* results in this PDF:
 
 - No `GARWTEAM----JNR-------FNL---------` footer code exists anywhere, and
   no page anywhere titles itself "Team Final"/"JUNIORS" outside the
@@ -896,11 +991,13 @@ this PDF:
   for both `SR` and `JR`, but **no `SUMMARY-FINAL-AA`** — not an oversight,
   there is nothing to parse.
 
-The general lesson: the schedule describes what was *planned*, not what
-the results document *contains*. Confirm a round's results actually exist
-as their own report (a real footer code, a real page title) before
-building a file for it — don't infer a file should exist just because the
-schedule names the round.
+The general lesson: a distinct name on the schedule doesn't mean a distinct
+session — check whether its time block is actually its own slot or just a
+relabeling of a block already accounted for by another round (§5.2a). And
+regardless of what the schedule implies either way, confirm a round's
+results actually exist as their own report (a real footer code, a real page
+title) before building a file for it — don't infer a file should exist just
+because the schedule names the round.
 
 ### 7.11 A team can be missing an entire apparatus
 

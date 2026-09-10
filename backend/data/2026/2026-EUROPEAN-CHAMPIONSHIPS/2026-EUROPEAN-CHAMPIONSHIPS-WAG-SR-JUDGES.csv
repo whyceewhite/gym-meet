@@ -1,165 +1,165 @@
-Round,Apparatus,Function,Name,Surname,Given Name,NOC Code
-QUAL,,President,KAVANAGH Mairead Geraldine,KAVANAGH,Mairead Geraldine,EG
-QUAL,,Member,COCUZZA Maria,COCUZZA,Maria,EG
-QUAL,,Member,RINGLER Fabienne,RINGLER,Fabienne,EG
-QUAL,VT,SV,SALONEN Jonna,SALONEN,Jonna,EG
-QUAL,UB,SV,VAN CAUWENBERGHE Valerie,VAN CAUWENBERGHE,Valerie,EG
-QUAL,VT,D1,MIHAILESCU GRIGORAS Anca,MIHAILESCU GRIGORAS,Anca,EG
-QUAL,UB,D1,FRAUENKNECHT Christine,FRAUENKNECHT,Christine,EG
-QUAL,VT,D2,IOANNOU Maria,IOANNOU,Maria,CYP
-QUAL,UB,D2,SEILE Nadezda,SEILE,Nadezda,LAT
-QUAL,VT,E1,KAILOVA Petra,KAILOVA,Petra,CZE
-QUAL,UB,E1,BILL Michaela,BILL,Michaela,LIE
-QUAL,VT,E2,RATYNSKA-BURY Maria Anna,RATYNSKA-BURY,Maria Anna,POL
-QUAL,UB,E2,FRANIOV Carina,FRANIOV,Carina,ROU
-QUAL,VT,E3,RAITER Olena,RAITER,Olena,UKR
-QUAL,UB,E3,MURRAY Mary Jude,MURRAY,Mary Jude,IRL
-QUAL,VT,E4,TREDGOLD Susan,TREDGOLD,Susan,GBR
-QUAL,UB,E4,BJOERNSTAD Ann Helen,BJOERNSTAD,Ann Helen,NOR
-QUAL,VT,E5,MIELKO Ana,MIELKO,Ana,LTU
-QUAL,UB,E5,BORG Francesca,BORG,Francesca,MLT
-QUAL,VT,E6,MAVRIC Mojca,MAVRIC,Mojca,SLO
-QUAL,UB,E6,STRUCK Karsten,STRUCK,Karsten,GER
-QUAL,VT,E7,ABDULLAYEVA Anzhella,ABDULLAYEVA,Anzhella,AZE
-QUAL,UB,E7,KEYSER Manon,KEYSER,Manon,LUX
-QUAL,VT,L,ROBAKIDZE Magda,ROBAKIDZE,Magda,GEO
-QUAL,UB,T,PRIVALOVA Ekaterina,PRIVALOVA,Ekaterina,WG2
-QUAL,VT,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
-QUAL,UB,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
-QUAL,VT,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
-QUAL,UB,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
-QUAL,BB,SV,SLIUSARCHUK Oksana,SLIUSARCHUK,Oksana,EG
-QUAL,FX,SV,KOLEVA-CASTELLETTI Martina Silvia,KOLEVA-CASTELLETTI,Martina Silvia,EG
-QUAL,BB,D1,GARCIA BEN Zeltia Natividade,GARCIA BEN,Zeltia Natividade,EG
-QUAL,FX,D1,GRATT Tanja,GRATT,Tanja,EG
-QUAL,BB,D2,RAISANEN Tuulia,RAISANEN,Tuulia,FIN
-QUAL,FX,D2,REDYANOVA Elena,REDYANOVA,Elena,WG2
-QUAL,BB,E1,KALMAR Zsuzsanna Katalin,KALMAR,Zsuzsanna Katalin,HUN
-QUAL,FX,E1,MELLOU Foteini,MELLOU,Foteini,GRE
-QUAL,BB,E2,BUCK Tamar,BUCK,Tamar,ISR
-QUAL,FX,E2,ASPENBERG Ylva,ASPENBERG,Ylva,SWE
-QUAL,BB,E3,LINDBERG Lucas,LINDBERG,Lucas,DEN
-QUAL,FX,E3,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
-QUAL,BB,E4,MARKOVA Katerina,MARKOVA,Katerina,BUL
-QUAL,FX,E4,MIQUEL Stephane,MIQUEL,Stephane,FRA
-QUAL,BB,E5,ILGAR Yeliz,ILGAR,Yeliz,TUR
-QUAL,FX,E5,OMELIANCHYK-ZIURKALOV Oksana,OMELIANCHYK-ZIURKALOV,Oksana,UKR
-QUAL,BB,E6,PALIJAN Anamarija,PALIJAN,Anamarija,CRO
-QUAL,FX,E6,VORSTENBOSCH Pien,VORSTENBOSCH,Pien,NED
-QUAL,BB,E7,DEBEN Kaat,DEBEN,Kaat,BEL
-QUAL,FX,E7,CARVALHO Joana,CARVALHO,Joana,POR
-QUAL,BB,T1,SAXER Stephanie,SAXER,Stephanie,SUI
-QUAL,FX,T,DAGISTANLI Sibel,DAGISTANLI,Sibel,TUR
-QUAL,BB,T2,UIT HET BROEK Blanca,UIT HET BROEK,Blanca,NED
-QUAL,FX,L1,OYETS Volha,OYETS,Volha,WG1
-QUAL,BB,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
-QUAL,FX,L2,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
-QUAL,BB,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
-QUAL,FX,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
-QUAL,FX,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
-EVENT,,President,KAVANAGH Mairead Geraldine,KAVANAGH,Mairead Geraldine,EG
-EVENT,,Member,COCUZZA Maria,COCUZZA,Maria,EG
-EVENT,,Member,RINGLER Fabienne,RINGLER,Fabienne,EG
-EVENT,VT,SV,SALONEN Jonna,SALONEN,Jonna,EG
-EVENT,UB,SV,VAN CAUWENBERGHE Valerie,VAN CAUWENBERGHE,Valerie,EG
-EVENT,VT,D1,MIHAILESCU GRIGORAS Anca,MIHAILESCU GRIGORAS,Anca,EG
-EVENT,UB,D1,FRAUENKNECHT Christine,FRAUENKNECHT,Christine,EG
-EVENT,VT,D2,IOANNOU Maria,IOANNOU,Maria,CYP
-EVENT,UB,D2,SEILE Nadezda,SEILE,Nadezda,LAT
-EVENT,VT,E1,MIQUEL Stephane,MIQUEL,Stephane,FRA
-EVENT,UB,E1,TREDGOLD Susan,TREDGOLD,Susan,GBR
-EVENT,VT,E2,SAXER Stephanie,SAXER,Stephanie,SUI
-EVENT,UB,E2,MELLOU Foteini,MELLOU,Foteini,GRE
-EVENT,VT,E3,VORSTENBOSCH Pien,VORSTENBOSCH,Pien,NED
-EVENT,UB,E3,ASPENBERG Ylva,ASPENBERG,Ylva,SWE
-EVENT,VT,E4,KEYSER Manon,KEYSER,Manon,LUX
-EVENT,UB,E4,KAILOVA Petra,KAILOVA,Petra,CZE
-EVENT,VT,E5,ILGAR Yeliz,ILGAR,Yeliz,TUR
-EVENT,UB,E5,BJOERNSTAD Ann Helen,BJOERNSTAD,Ann Helen,NOR
-EVENT,VT,E6,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
-EVENT,UB,E6,CARVALHO Joana,CARVALHO,Joana,POR
-EVENT,VT,E7,OMELIANCHYK-ZIURKALOV Oksana,OMELIANCHYK-ZIURKALOV,Oksana,UKR
-EVENT,UB,E7,ABDULLAYEVA Anzhella,ABDULLAYEVA,Anzhella,AZE
-EVENT,VT,L,OYETS Volha,OYETS,Volha,WG1
-EVENT,UB,T,ILGAR Yeliz,ILGAR,Yeliz,TUR
-EVENT,VT,RES,BILL Michaela,BILL,Michaela,LIE
-EVENT,UB,RES,MARKOVA Katerina,MARKOVA,Katerina,BUL
-EVENT,BB,SV,SLIUSARCHUK Oksana,SLIUSARCHUK,Oksana,EG
-EVENT,FX,SV,KOLEVA-CASTELLETTI Martina Silvia,KOLEVA-CASTELLETTI,Martina Silvia,EG
-EVENT,BB,D1,GARCIA BEN Zeltia Natividade,GARCIA BEN,Zeltia Natividade,EG
-EVENT,FX,D1,GRATT Tanja,GRATT,Tanja,EG
-EVENT,BB,D2,RAISANEN Tuulia,RAISANEN,Tuulia,FIN
-EVENT,FX,D2,REDYANOVA Elena,REDYANOVA,Elena,WG2
-EVENT,BB,E1,MAVRIC Mojca,MAVRIC,Mojca,SLO
-EVENT,FX,E1,STRUCK Karsten,STRUCK,Karsten,GER
-EVENT,BB,E2,BUCK Tamar,BUCK,Tamar,ISR
-EVENT,FX,E2,LINDBERG Lucas,LINDBERG,Lucas,DEN
-EVENT,BB,E3,MIELKO Ana,MIELKO,Ana,LTU
-EVENT,FX,E3,BORG Francesca,BORG,Francesca,MLT
-EVENT,BB,E4,BILL Michaela,BILL,Michaela,LIE
-EVENT,FX,E4,MARKOVA Katerina,MARKOVA,Katerina,BUL
-EVENT,BB,E5,MURRAY Mary Jude,MURRAY,Mary Jude,IRL
-EVENT,FX,E5,RATYNSKA-BURY Maria Anna,RATYNSKA-BURY,Maria Anna,POL
-EVENT,BB,E6,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
-EVENT,FX,E6,PALIJAN Anamarija,PALIJAN,Anamarija,CRO
-EVENT,BB,E7,OYETS Volha,OYETS,Volha,WG1
-EVENT,FX,E7,DEBEN Kaat,DEBEN,Kaat,BEL
-EVENT,BB,T1,CARVALHO Joana,CARVALHO,Joana,POR
-EVENT,FX,T,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
-EVENT,BB,T2,FRANIOV Carina,FRANIOV,Carina,ROU
-EVENT,FX,L1,ROBAKIDZE Magda,ROBAKIDZE,Magda,GEO
-EVENT,BB,RES,DEBEN Kaat,DEBEN,Kaat,BEL
-EVENT,FX,L2,FRANIOV Carina,FRANIOV,Carina,ROU
-EVENT,FX,RES,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
-TEAM,,President,KAVANAGH Mairead Geraldine,KAVANAGH,Mairead Geraldine,EG
-TEAM,,Member,COCUZZA Maria,COCUZZA,Maria,EG
-TEAM,,Member,RINGLER Fabienne,RINGLER,Fabienne,EG
-TEAM,VT,SV,SALONEN Jonna,SALONEN,Jonna,EG
-TEAM,UB,SV,VAN CAUWENBERGHE Valerie,VAN CAUWENBERGHE,Valerie,EG
-TEAM,VT,D1,MIHAILESCU GRIGORAS Anca,MIHAILESCU GRIGORAS,Anca,EG
-TEAM,UB,D1,FRAUENKNECHT Christine,FRAUENKNECHT,Christine,EG
-TEAM,VT,D2,IOANNOU Maria,IOANNOU,Maria,CYP
-TEAM,UB,D2,SEILE Nadezda,SEILE,Nadezda,LAT
-TEAM,VT,E1,SAXER Stephanie,SAXER,Stephanie,SUI
-TEAM,UB,E1,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
-TEAM,VT,E2,DEBEN Kaat,DEBEN,Kaat,BEL
-TEAM,UB,E2,STRUCK Karsten,STRUCK,Karsten,GER
-TEAM,VT,E3,MELLOU Foteini,MELLOU,Foteini,GRE
-TEAM,UB,E3,RATYNSKA-BURY Maria Anna,RATYNSKA-BURY,Maria Anna,POL
-TEAM,VT,E4,KAILOVA Petra,KAILOVA,Petra,CZE
-TEAM,UB,E4,BUCK Tamar,BUCK,Tamar,ISR
-TEAM,VT,E5,MIELKO Ana,MIELKO,Ana,LTU
-TEAM,UB,E5,BJOERNSTAD Ann Helen,BJOERNSTAD,Ann Helen,NOR
-TEAM,VT,E6,ASPENBERG Ylva,ASPENBERG,Ylva,SWE
-TEAM,UB,E6,FRANIOV Carina,FRANIOV,Carina,ROU
-TEAM,VT,E7,BILL Michaela,BILL,Michaela,LIE
-TEAM,UB,E7,KEYSER Manon,KEYSER,Manon,LUX
-TEAM,VT,L,CARVALHO Joana,CARVALHO,Joana,POR
-TEAM,UB,T,LINDBERG Lucas,LINDBERG,Lucas,DEN
-TEAM,BB,SV,SLIUSARCHUK Oksana,SLIUSARCHUK,Oksana,EG
-TEAM,FX,SV,KOLEVA-CASTELLETTI Martina Silvia,KOLEVA-CASTELLETTI,Martina Silvia,EG
-TEAM,BB,D1,GARCIA BEN Zeltia Natividade,GARCIA BEN,Zeltia Natividade,EG
-TEAM,FX,D1,GRATT Tanja,GRATT,Tanja,EG
-TEAM,BB,D2,RAISANEN Tuulia,RAISANEN,Tuulia,FIN
-TEAM,FX,D2,REDYANOVA Elena,REDYANOVA,Elena,WG2
-TEAM,BB,E1,OYETS Volha,OYETS,Volha,WG1
-TEAM,FX,E1,ABDULLAYEVA Anzhella,ABDULLAYEVA,Anzhella,AZE
-TEAM,BB,E2,BORG Francesca,BORG,Francesca,MLT
-TEAM,FX,E2,MIQUEL Stephane,MIQUEL,Stephane,FRA
-TEAM,BB,E3,ILGAR Yeliz,ILGAR,Yeliz,TUR
-TEAM,FX,E3,VORSTENBOSCH Pien,VORSTENBOSCH,Pien,NED
-TEAM,BB,E4,MARKOVA Katerina,MARKOVA,Katerina,BUL
-TEAM,FX,E4,SEECK Lotte,SEECK,Lotte,FIN
-TEAM,BB,E5,ZSILINSZKI Tunde,ZSILINSZKI,Tunde,HUN
-TEAM,FX,E5,MAVRIC Mojca,MAVRIC,Mojca,SLO
-TEAM,BB,E6,MURRAY Mary Jude,MURRAY,Mary Jude,IRL
-TEAM,FX,E6,OMELIANCHYK-ZIURKALOV Oksana,OMELIANCHYK-ZIURKALOV,Oksana,UKR
-TEAM,BB,E7,PALIJAN Anamarija,PALIJAN,Anamarija,CRO
-TEAM,FX,E7,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
-TEAM,BB,T1,SADE PRI PAZ Danit Pola,SADE PRI PAZ,Danit Pola,ISR
-TEAM,FX,T,ECKHARD Katja,ECKHARD,Katja,GER
-TEAM,BB,T2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
-TEAM,FX,L1,ROBAKIDZE Magda,ROBAKIDZE,Magda,GEO
-TEAM,BB,RES 1,DAGISTANLI Sibel,DAGISTANLI,Sibel,TUR
-TEAM,FX,L2,TREDGOLD Susan,TREDGOLD,Susan,GBR
-TEAM,BB,RES 2,UIT HET BROEK Blanca,UIT HET BROEK,Blanca,NED
+Event Name,Discipline,Age Category,Event Start Date,Round,Apparatus,Function,Name,Surname,Given Name,NOC Code
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,,President,KAVANAGH Mairead Geraldine,KAVANAGH,Mairead Geraldine,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,,Member,COCUZZA Maria,COCUZZA,Maria,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,,Member,RINGLER Fabienne,RINGLER,Fabienne,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,SV,SALONEN Jonna,SALONEN,Jonna,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,SV,VAN CAUWENBERGHE Valerie,VAN CAUWENBERGHE,Valerie,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,D1,MIHAILESCU GRIGORAS Anca,MIHAILESCU GRIGORAS,Anca,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,D1,FRAUENKNECHT Christine,FRAUENKNECHT,Christine,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,D2,IOANNOU Maria,IOANNOU,Maria,CYP
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,D2,SEILE Nadezda,SEILE,Nadezda,LAT
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E1,KAILOVA Petra,KAILOVA,Petra,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E1,BILL Michaela,BILL,Michaela,LIE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E2,RATYNSKA-BURY Maria Anna,RATYNSKA-BURY,Maria Anna,POL
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E2,FRANIOV Carina,FRANIOV,Carina,ROU
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E3,RAITER Olena,RAITER,Olena,UKR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E3,MURRAY Mary Jude,MURRAY,Mary Jude,IRL
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E4,TREDGOLD Susan,TREDGOLD,Susan,GBR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E4,BJOERNSTAD Ann Helen,BJOERNSTAD,Ann Helen,NOR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E5,MIELKO Ana,MIELKO,Ana,LTU
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E5,BORG Francesca,BORG,Francesca,MLT
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E6,MAVRIC Mojca,MAVRIC,Mojca,SLO
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E6,STRUCK Karsten,STRUCK,Karsten,GER
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,E7,ABDULLAYEVA Anzhella,ABDULLAYEVA,Anzhella,AZE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,E7,KEYSER Manon,KEYSER,Manon,LUX
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,L,ROBAKIDZE Magda,ROBAKIDZE,Magda,GEO
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,T,PRIVALOVA Ekaterina,PRIVALOVA,Ekaterina,WG2
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,VT,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,UB,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,SV,SLIUSARCHUK Oksana,SLIUSARCHUK,Oksana,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,SV,KOLEVA-CASTELLETTI Martina Silvia,KOLEVA-CASTELLETTI,Martina Silvia,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,D1,GARCIA BEN Zeltia Natividade,GARCIA BEN,Zeltia Natividade,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,D1,GRATT Tanja,GRATT,Tanja,EG
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,D2,RAISANEN Tuulia,RAISANEN,Tuulia,FIN
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,D2,REDYANOVA Elena,REDYANOVA,Elena,WG2
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E1,KALMAR Zsuzsanna Katalin,KALMAR,Zsuzsanna Katalin,HUN
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E1,MELLOU Foteini,MELLOU,Foteini,GRE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E2,BUCK Tamar,BUCK,Tamar,ISR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E2,ASPENBERG Ylva,ASPENBERG,Ylva,SWE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E3,LINDBERG Lucas,LINDBERG,Lucas,DEN
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E3,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E4,MARKOVA Katerina,MARKOVA,Katerina,BUL
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E4,MIQUEL Stephane,MIQUEL,Stephane,FRA
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E5,ILGAR Yeliz,ILGAR,Yeliz,TUR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E5,OMELIANCHYK-ZIURKALOV Oksana,OMELIANCHYK-ZIURKALOV,Oksana,UKR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E6,PALIJAN Anamarija,PALIJAN,Anamarija,CRO
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E6,VORSTENBOSCH Pien,VORSTENBOSCH,Pien,NED
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,E7,DEBEN Kaat,DEBEN,Kaat,BEL
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,E7,CARVALHO Joana,CARVALHO,Joana,POR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,T1,SAXER Stephanie,SAXER,Stephanie,SUI
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,T,DAGISTANLI Sibel,DAGISTANLI,Sibel,TUR
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,T2,UIT HET BROEK Blanca,UIT HET BROEK,Blanca,NED
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,L1,OYETS Volha,OYETS,Volha,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,L2,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,BB,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,RES 1,KRASNOGIR Ekaterina,KRASNOGIR,Ekaterina,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,QUAL,FX,RES 2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,,President,KAVANAGH Mairead Geraldine,KAVANAGH,Mairead Geraldine,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,,Member,COCUZZA Maria,COCUZZA,Maria,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,,Member,RINGLER Fabienne,RINGLER,Fabienne,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,SV,SALONEN Jonna,SALONEN,Jonna,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,SV,VAN CAUWENBERGHE Valerie,VAN CAUWENBERGHE,Valerie,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,D1,MIHAILESCU GRIGORAS Anca,MIHAILESCU GRIGORAS,Anca,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,D1,FRAUENKNECHT Christine,FRAUENKNECHT,Christine,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,D2,IOANNOU Maria,IOANNOU,Maria,CYP
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,D2,SEILE Nadezda,SEILE,Nadezda,LAT
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E1,MIQUEL Stephane,MIQUEL,Stephane,FRA
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E1,TREDGOLD Susan,TREDGOLD,Susan,GBR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E2,SAXER Stephanie,SAXER,Stephanie,SUI
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E2,MELLOU Foteini,MELLOU,Foteini,GRE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E3,VORSTENBOSCH Pien,VORSTENBOSCH,Pien,NED
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E3,ASPENBERG Ylva,ASPENBERG,Ylva,SWE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E4,KEYSER Manon,KEYSER,Manon,LUX
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E4,KAILOVA Petra,KAILOVA,Petra,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E5,ILGAR Yeliz,ILGAR,Yeliz,TUR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E5,BJOERNSTAD Ann Helen,BJOERNSTAD,Ann Helen,NOR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E6,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E6,CARVALHO Joana,CARVALHO,Joana,POR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,E7,OMELIANCHYK-ZIURKALOV Oksana,OMELIANCHYK-ZIURKALOV,Oksana,UKR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,E7,ABDULLAYEVA Anzhella,ABDULLAYEVA,Anzhella,AZE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,L,OYETS Volha,OYETS,Volha,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,T,ILGAR Yeliz,ILGAR,Yeliz,TUR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,VT,RES,BILL Michaela,BILL,Michaela,LIE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,UB,RES,MARKOVA Katerina,MARKOVA,Katerina,BUL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,SV,SLIUSARCHUK Oksana,SLIUSARCHUK,Oksana,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,SV,KOLEVA-CASTELLETTI Martina Silvia,KOLEVA-CASTELLETTI,Martina Silvia,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,D1,GARCIA BEN Zeltia Natividade,GARCIA BEN,Zeltia Natividade,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,D1,GRATT Tanja,GRATT,Tanja,EG
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,D2,RAISANEN Tuulia,RAISANEN,Tuulia,FIN
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,D2,REDYANOVA Elena,REDYANOVA,Elena,WG2
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E1,MAVRIC Mojca,MAVRIC,Mojca,SLO
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E1,STRUCK Karsten,STRUCK,Karsten,GER
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E2,BUCK Tamar,BUCK,Tamar,ISR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E2,LINDBERG Lucas,LINDBERG,Lucas,DEN
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E3,MIELKO Ana,MIELKO,Ana,LTU
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E3,BORG Francesca,BORG,Francesca,MLT
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E4,BILL Michaela,BILL,Michaela,LIE
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E4,MARKOVA Katerina,MARKOVA,Katerina,BUL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E5,MURRAY Mary Jude,MURRAY,Mary Jude,IRL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E5,RATYNSKA-BURY Maria Anna,RATYNSKA-BURY,Maria Anna,POL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E6,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E6,PALIJAN Anamarija,PALIJAN,Anamarija,CRO
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,E7,OYETS Volha,OYETS,Volha,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,E7,DEBEN Kaat,DEBEN,Kaat,BEL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,T1,CARVALHO Joana,CARVALHO,Joana,POR
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,T,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,T2,FRANIOV Carina,FRANIOV,Carina,ROU
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,L1,ROBAKIDZE Magda,ROBAKIDZE,Magda,GEO
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,BB,RES,DEBEN Kaat,DEBEN,Kaat,BEL
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,L2,FRANIOV Carina,FRANIOV,Carina,ROU
+36th Senior European Championships,WAG,SR,2026-08-13,EVENT,FX,RES,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,,President,KAVANAGH Mairead Geraldine,KAVANAGH,Mairead Geraldine,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,,Member,COCUZZA Maria,COCUZZA,Maria,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,,Member,RINGLER Fabienne,RINGLER,Fabienne,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,SV,SALONEN Jonna,SALONEN,Jonna,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,SV,VAN CAUWENBERGHE Valerie,VAN CAUWENBERGHE,Valerie,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,D1,MIHAILESCU GRIGORAS Anca,MIHAILESCU GRIGORAS,Anca,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,D1,FRAUENKNECHT Christine,FRAUENKNECHT,Christine,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,D2,IOANNOU Maria,IOANNOU,Maria,CYP
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,D2,SEILE Nadezda,SEILE,Nadezda,LAT
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E1,SAXER Stephanie,SAXER,Stephanie,SUI
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E1,ZVALOVA Zuzana,ZVALOVA,Zuzana,SVK
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E2,DEBEN Kaat,DEBEN,Kaat,BEL
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E2,STRUCK Karsten,STRUCK,Karsten,GER
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E3,MELLOU Foteini,MELLOU,Foteini,GRE
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E3,RATYNSKA-BURY Maria Anna,RATYNSKA-BURY,Maria Anna,POL
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E4,KAILOVA Petra,KAILOVA,Petra,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E4,BUCK Tamar,BUCK,Tamar,ISR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E5,MIELKO Ana,MIELKO,Ana,LTU
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E5,BJOERNSTAD Ann Helen,BJOERNSTAD,Ann Helen,NOR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E6,ASPENBERG Ylva,ASPENBERG,Ylva,SWE
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E6,FRANIOV Carina,FRANIOV,Carina,ROU
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,E7,BILL Michaela,BILL,Michaela,LIE
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,E7,KEYSER Manon,KEYSER,Manon,LUX
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,VT,L,CARVALHO Joana,CARVALHO,Joana,POR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,UB,T,LINDBERG Lucas,LINDBERG,Lucas,DEN
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,SV,SLIUSARCHUK Oksana,SLIUSARCHUK,Oksana,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,SV,KOLEVA-CASTELLETTI Martina Silvia,KOLEVA-CASTELLETTI,Martina Silvia,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,D1,GARCIA BEN Zeltia Natividade,GARCIA BEN,Zeltia Natividade,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,D1,GRATT Tanja,GRATT,Tanja,EG
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,D2,RAISANEN Tuulia,RAISANEN,Tuulia,FIN
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,D2,REDYANOVA Elena,REDYANOVA,Elena,WG2
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E1,OYETS Volha,OYETS,Volha,WG1
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E1,ABDULLAYEVA Anzhella,ABDULLAYEVA,Anzhella,AZE
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E2,BORG Francesca,BORG,Francesca,MLT
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E2,MIQUEL Stephane,MIQUEL,Stephane,FRA
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E3,ILGAR Yeliz,ILGAR,Yeliz,TUR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E3,VORSTENBOSCH Pien,VORSTENBOSCH,Pien,NED
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E4,MARKOVA Katerina,MARKOVA,Katerina,BUL
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E4,SEECK Lotte,SEECK,Lotte,FIN
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E5,ZSILINSZKI Tunde,ZSILINSZKI,Tunde,HUN
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E5,MAVRIC Mojca,MAVRIC,Mojca,SLO
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E6,MURRAY Mary Jude,MURRAY,Mary Jude,IRL
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E6,OMELIANCHYK-ZIURKALOV Oksana,OMELIANCHYK-ZIURKALOV,Oksana,UKR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,E7,PALIJAN Anamarija,PALIJAN,Anamarija,CRO
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,E7,VIGGOSDOTTIR Saeunn Svanhvit,VIGGOSDOTTIR,Saeunn Svanhvit,ISL
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,T1,SADE PRI PAZ Danit Pola,SADE PRI PAZ,Danit Pola,ISR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,T,ECKHARD Katja,ECKHARD,Katja,GER
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,T2,VARMUZKOVA Pavla,VARMUZKOVA,Pavla,CZE
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,L1,ROBAKIDZE Magda,ROBAKIDZE,Magda,GEO
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,RES 1,DAGISTANLI Sibel,DAGISTANLI,Sibel,TUR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,FX,L2,TREDGOLD Susan,TREDGOLD,Susan,GBR
+36th Senior European Championships,WAG,SR,2026-08-13,TEAM,BB,RES 2,UIT HET BROEK Blanca,UIT HET BROEK,Blanca,NED
