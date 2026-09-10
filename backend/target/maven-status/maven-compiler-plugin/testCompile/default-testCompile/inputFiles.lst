@@ -2,6 +2,7 @@
 /Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/AthleteNameVariantRepositoryTest.java
 /Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/AthleteRepositoryTest.java
 /Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/EventRepositoryTest.java
+/Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/JudgeRepositoryTest.java
 /Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/ParticipantRepositoryTest.java
 /Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/ScoreRepositoryTest.java
 /Users/evie/Development/gym-meet/backend/src/test/java/doubletuck/meet/repository/SessionRepositoryTest.java

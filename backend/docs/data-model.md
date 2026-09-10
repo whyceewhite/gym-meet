@@ -17,6 +17,7 @@ erDiagram
     SESSION ||--o{ SCORE : scored
     SESSION ||--o{ TEAM_RESULT : "team standings"
     SESSION ||--o{ ALL_AROUND_RESULT : "all-around standings"
+    SESSION ||--o{ JUDGE : judged
 ```
 
 `Event` is the named competition ("2026 European Championships"). `Session` is a
@@ -120,6 +121,39 @@ Final round itself — the two `AA`s aren't related beyond sharing a name.)
 
 No enumerator or type will be used. This value is typically the ISO-3166 three-letter country code. At times, there will be FIG neutral-athletes who are not associated with a placeholder country for the competition.
 
+#### `JudgeFunction`
+
+| Value | Description |
+|---|---|
+| PRESIDENT | |
+| MEMBER | |
+| D1 | |
+| D2 | |
+| E1 | |
+| E2 | |
+| E3 | |
+| E4 | |
+| E5 | |
+| E6 | |
+| E7 | |
+| L | |
+| L1 | |
+| L2 | |
+| T | |
+| T1 | |
+| T2 | |
+| SV | |
+| RES | |
+| RES_1 | |
+| RES_2 | |
+| RES_3 | |
+
+Codes as published by the source (`*-JUDGES.csv` exports), uppercased and
+with spaces replaced by underscores (e.g. "RES 1" → `RES_1`). Deliberately
+not further annotated here — several of these (`SV`, `L`/`L1`/`L2`,
+`T`/`T1`/`T2`) don't have a confirmed meaning yet; add descriptions once
+verified rather than guessing.
+
 ## 3. Entities
 
 ### `Athlete`
@@ -183,6 +217,24 @@ nulls as equal, and every real session has at least one of `apparatus`
 across sessions) null — the two are never both set at once in practice.
 That protection is enforced in application code
 (`SessionService.createSession`) instead.
+
+### `Judge`
+
+| Field | Type | Nullable | Description |
+|---|---|---|---|
+| id | Long | No | Generated primary key. |
+| sessionId | Long, FK → `Session` | No | The session this judge served on. |
+| apparatus | Apparatus | Yes | Which apparatus this judge is assigned to within the session. Null for a session-wide role (e.g. Superior Jury `PRESIDENT`/`MEMBER`) rather than a per-apparatus panel seat. |
+| function | JudgeFunction | No | The judge's role on the panel. |
+| givenName | String | No | Judge's given name, as published by the source. |
+| surname | String | No | Judge's family name, as published by the source. |
+| nocCode | String | No | The federation/NOC this judge is credited to. Not always a 3-letter ISO-3166 country code — a continental union appointing a Superior Jury (e.g. `EG` for European Gymnastics) is credited here too, so no fixed length is enforced. |
+
+Unique key: `(session_id, apparatus, function, surname, givenName)`. Not
+simply `(session_id, apparatus, function)`, since a single function can be
+held by more than one judge in the same session with no apparatus to
+further distinguish them — e.g. a `QUAL` session's Superior Jury typically
+has several `MEMBER` judges.
 
 ### `Participant`
 

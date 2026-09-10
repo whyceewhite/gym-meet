@@ -5,6 +5,7 @@ doubletuck/meet/repository/ParticipantRepositoryTest.class
 doubletuck/meet/repository/TeamResultRepositoryTest.class
 doubletuck/meet/repository/AthleteRepositoryTest.class
 doubletuck/meet/service/EventServiceTest.class
+doubletuck/meet/repository/JudgeRepositoryTest.class
 doubletuck/meet/service/SessionServiceTest.class
 doubletuck/meet/repository/ScoreRepositoryTest.class
 doubletuck/meet/repository/EventRepositoryTest.class

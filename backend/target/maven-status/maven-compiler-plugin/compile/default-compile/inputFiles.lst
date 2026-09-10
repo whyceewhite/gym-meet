@@ -11,6 +11,8 @@
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Discipline.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Event.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/EventLevel.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Judge.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/JudgeFunction.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Participant.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/QualificationResult.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/domain/Round.java
@@ -25,6 +27,7 @@
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/AthleteNameVariantRepository.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/AthleteRepository.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/EventRepository.java
+/Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/JudgeRepository.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/ParticipantRepository.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/ScoreRepository.java
 /Users/evie/Development/gym-meet/backend/src/main/java/doubletuck/meet/repository/SessionRepository.java

@@ -1,11 +1,13 @@
 doubletuck/meet/repository/EventRepository.class
 doubletuck/meet/domain/Discipline.class
+doubletuck/meet/repository/JudgeRepository.class
 doubletuck/meet/dto/EventResponse.class
 doubletuck/meet/Application.class
 doubletuck/meet/domain/Athlete.class
 doubletuck/meet/domain/AgeCategory.class
 doubletuck/meet/domain/TeamResult.class
 doubletuck/meet/service/SessionService.class
+doubletuck/meet/domain/JudgeFunction.class
 doubletuck/meet/controller/EventController.class
 doubletuck/meet/domain/BonusDetail.class
 doubletuck/meet/domain/BaseEntity.class
@@ -20,6 +22,7 @@ doubletuck/meet/repository/ScoreRepository.class
 doubletuck/meet/repository/TeamResultRepository.class
 doubletuck/meet/repository/AllAroundResultRepository.class
 doubletuck/meet/repository/ParticipantRepository.class
+doubletuck/meet/domain/Judge.class
 doubletuck/meet/domain/Score.class
 doubletuck/meet/repository/AthleteRepository.class
 doubletuck/meet/domain/Round.class
