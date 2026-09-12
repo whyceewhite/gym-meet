@@ -31,5 +31,6 @@ If changes to the code changes, then any documentation that refers to the change
 | document | description |
 | --- | --- |
 | docs/data-model.md | The class structures that form and contain the data. |
+| docs/import-file-model.md | The columns and descriptions of the CSV files (SCORES, JUDGES, PARTICIPANTS, SUMMARY, EVENT) used to import competition data. |
 
 
