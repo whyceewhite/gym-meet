@@ -164,40 +164,24 @@ table above (`Status`→`Score.status`, `D`→`Score.difficulty`, etc.), **not**
 the `1`/`2` split. Don't assume "Vault" always means the double-attempt
 shape — check the actual page.
 
-## `SUMMARY-<ROUND>-TEAM.csv`
+## `SUMMARY-<ROUND>-{TEAM,AA}.csv`
 
-Top-line team standings only — one row per NOC, not the per-athlete scores
-feeding into it (those live in `SCORES-TEAM-<APP>.csv` instead).
-
-| Column | QUAL | FINAL | Description | Entity Mapping |
-|---|:-:|:-:|---|---|
-| Round | ✓ | ✓ | `QUAL` or `TEAM` (not `FINAL` — the filename's `<ROUND>` segment and the `Round` column intentionally differ for this one file; see naming doc) | `Session.round` |
-| Rank | ✓ | ✓ | | `TeamResult.rank` |
-| NOC Code | ✓ | ✓ | The source also prints a full federation name, not captured here — `NOC Code` alone is enough to join back to `PARTICIPANTS.csv`/`Athlete.country` | `TeamResult.noc` |
-| `<APP> Total` (one column per apparatus) | ✓ | ✓ | Already the sum/drop-lowest total printed by the source, not recomputed. Apparatus set and column order is discipline-specific: `FX, PH, SR, VT, PB, HB` for MAG, `FX, BB, UB, VT` for WAG | *(`TeamResult` has no per-apparatus fields — only a grand `totalScore`. This breakdown isn't stored anywhere; it would need to be derived from `SCORES-TEAM-<APP>.csv` via `Score.countsTowardTeamResult`, not imported directly onto `TeamResult`)* |
-| SJ Penalty | ✓ | ✓ | Superior Jury penalty applied to the team as a whole, distinct from an individual routine's `Penalty`. Unverified against a real non-blank example so far | *(no `TeamResult` field for a team-level penalty)* |
-| Total | ✓ | ✓ | Team's grand total | `TeamResult.totalScore` |
-| Qualification | ✓ | | `Q`/`R1`/`R2`/`R3`/`NR`/blank. **Omitted entirely from `FINAL`** — no further round to qualify into once the Team Final is done. If this column ever shows up, always blank, on a `FINAL` file, that's a bug to fix, not a value to import | `TeamResult.qualificationResult` |
-
-Not every age category has both rounds — a `SUMMARY-FINAL-TEAM` file only
-exists where the source PDF has an actual separate Team Final report (see
-"File families" above).
-
-## `SUMMARY-QUAL-AA.csv`
-
-Top-line all-around standings, Qualification round. (No `SUMMARY-FINAL-AA`
-variant exists in the data parsed so far — build one the same way if a
-future competition's source PDF has a genuine separate All-Around Final
-report.)
+Top-line standings only — one row per NOC (Team) or per athlete
+(All-Around) — not the detailed per-athlete/per-apparatus scores feeding
+into it (those live in `SCORES-<ROUND>-<APP>.csv` instead). Not every round
+has both files for every age category — a `SUMMARY-FINAL-TEAM`/
+`SUMMARY-FINAL-AA` file only exists where the source PDF has an actual
+separate Final report for it (see "File families" above; no
+`SUMMARY-FINAL-AA` has been seen yet).
 
 | Column | Description | Entity Mapping |
 |---|---|---|
-| Round | | `Session.round` |
-| Rank | | `AllAroundResult.rank` |
-| Bib | Identifies the athlete, joins to `PARTICIPANTS.csv` | *(join key to `Participant.bibNumber`)* |
-| Name | As printed on this report — cross-check against `PARTICIPANTS.csv` by Bib | *(not stored — verification only)* |
-| NOC Code | | *(not stored — already on `Participant.noc`)* |
-| `<APP> Total` (one column per apparatus) | Same apparatus set/order convention as `SUMMARY-<ROUND>-TEAM.csv` | *(same gap as `SUMMARY-<ROUND>-TEAM.csv` — `AllAroundResult` has only a grand `totalScore`, no per-apparatus fields)* |
-| SJ Penalty | | *(no `AllAroundResult` field)* |
-| Total | Athlete's grand total | `AllAroundResult.totalScore` |
-| Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank — only meaningful if a further AA round exists to qualify into | `AllAroundResult.qualificationResult` |
+| Round | The round this summary is from: [Round](../src/main/java/doubletuck/meet/domain/Round.java). Note: `SUMMARY-FINAL-TEAM`'s filename segment is `FINAL` while this column's value is `TEAM` | `Session.round` |
+| Rank | Placement in the standings | `TeamResult.rank` / `AllAroundResult.rank` |
+| Bib | Identifies the athlete. **All-Around summary only** | |
+| Name | Athlete name as printed. **All-Around summary only** | |
+| NOC Code | Country/federation the row represents | `TeamResult.noc` |
+| `<APP> Total` (one column per apparatus) | Already the sum/drop-lowest total printed by the source, not recomputed. Apparatus set and column order is discipline-specific: `FX, PH, SR, VT, PB, HB` for MAG, `FX, BB, UB, VT` for WAG | |
+| SJ Penalty | Superior Jury penalty applied to the row as a whole, distinct from an individual routine's `Penalty` | |
+| Total | Grand total | `TeamResult.totalScore` / `AllAroundResult.totalScore` |
+| Qualification | [QualificationResult](../src/main/java/doubletuck/meet/domain/QualificationResult.java). Omitted entirely from a `FINAL` summary — no further round to qualify into | `TeamResult.qualificationResult` / `AllAroundResult.qualificationResult` |
