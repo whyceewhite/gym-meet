@@ -463,8 +463,9 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Status | `COMPLETED`, or `DNS` if the athlete didn't start this apparatus. Always populated, never blank (§5.2). |
 | D | Blank on PH's absent-Bonus rows is *not* a thing — PH just never has a `B` value; leave `D`/`E` populated normally |
 | E | |
-| B | Blank if the apparatus/row has no bonus value (e.g. every PH row) |
+| B | Blank if the apparatus/row has no bonus value (e.g. every PH row). Present on every apparatus/discipline for column alignment (§7.2) even where never observed non-blank |
 | Penalty | Blank when no penalty was applied (not `0`) |
+| SJ Penalty | Superior Jury Penalty — distinct from `Penalty`. Present for column alignment with Vault (§7.3); not observed non-blank on any non-vault apparatus for either discipline so far |
 | Total | Blank when `Status` is `DNS` |
 | Qualification | `Q` / `R1` / `R2` / `R3` / `NR` / blank — matches `QualificationResult` exactly |
 
@@ -475,9 +476,11 @@ One row per judge per apparatus panel per round, all rounds in one file.
 |---|---|
 | Round, Apparatus, Rank, Bib, Name, NOC Code | As above. `Rank` always comes from the **single-vault** list. |
 | Status1 | Status of vault attempt 1: `COMPLETED`, `DNS` (never vaulted at all), or `INVALID_VAULT` (see below). Always populated — this is the one status the domain requires non-null (`Score.status`), unlike `Status2`. |
-| D1, E1, B1, Penalty1, Total1 | Vault 1 figures, from the single-vault list |
+| D1, E1, B1, Penalty1, Total1 | Vault 1 figures, from the single-vault list. `B1` populated for MAG, always blank for WAG so far (§7.2) |
+| SJ Penalty1 | Superior Jury Penalty, attempt 1 — distinct from `Penalty1`. Populated for WAG, always blank for MAG so far (§7.3) — the opposite split from `B1` |
 | Status2 | Status of vault attempt 2, **four-state**: blank = no second attempt was expected at all (this athlete isn't on the double-vault list, and `Score.secondStatus` is genuinely nullable for exactly this case); `COMPLETED` = a real second vault happened; `DNS` = a second vault was intended (athlete is on the double-vault list) but not completed; `INVALID_VAULT` = a second vault was attempted but ruled invalid. Don't collapse "opted out" (blank) and "started but didn't finish" (`DNS`) into the same value. |
-| D2, E2, B2, Penalty2, Total2 | Vault 2 figures, from the double-vault list. Blank whenever `Status2` is blank or `DNS`. |
+| D2, E2, B2, Penalty2, Total2 | Vault 2 figures, from the double-vault list. Blank whenever `Status2` is blank or `DNS`. Same MAG/WAG `B2` split as `B1` |
+| SJ Penalty2 | Same WAG/MAG split as `SJ Penalty1` |
 | Total | The athlete's official counting result: `Total1` alone for a single-vault athlete, the published average for a completed two-vault athlete, blank when there's no valid combined result (`Status1=DNS` or `Status2=DNS`) |
 | Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank — only ever set from the double-vault list; always blank for single-vault-only athletes |
 | Qualification Rank | This athlete's rank **within the double-vault list specifically** (i.e. among just the Vault-final hopefuls) — distinct from `Rank`. Blank for single-vault-only athletes. See §6 for the open question of how this maps to `data-model.md`. |
@@ -516,7 +519,7 @@ that only existed to track qualification, but keeps `Status` — every
 | Apparatus | Two-letter code |
 | Rank, Bib, Name, NOC Code | As in §5.5 |
 | Status | `COMPLETED` for every row seen so far — no withdrawal has shown up in a Final yet, but the column is present regardless (§5.2) so a future one doesn't require a schema change, just a different value |
-| D, E, B, Penalty, Total | As in §5.5. PH again has no `B` column and prints `E` before `D` in the source — same header-order check from §3.1 applies |
+| D, E, B, Penalty, SJ Penalty, Total | As in §5.5. PH again has no non-blank `B` value and prints `E` before `D` in the source — same header-order check from §3.1 applies |
 
 No `Qualification` column — there's no further round to qualify into, so
 there's nothing for it to hold.
@@ -529,8 +532,8 @@ one listing here, not two, and every row is fully populated:
 |---|---|
 | Round, Apparatus, Rank, Bib, Name, NOC Code | As above |
 | Status1, Status2 | Both `COMPLETED` for every row seen so far — every finalist completes both attempts, but the columns are present regardless (§5.2) |
-| D1, E1, B1, Penalty1, Total1 | Vault 1 |
-| D2, E2, B2, Penalty2, Total2 | Vault 2 |
+| D1, E1, B1, Penalty1, SJ Penalty1, Total1 | Vault 1. `B1`/`SJ Penalty1` follow the same MAG/WAG split as §5.5 |
+| D2, E2, B2, Penalty2, SJ Penalty2, Total2 | Vault 2, same split |
 | Total | The published average of the two vaults |
 
 `Qualification`/`Qualification Rank` don't apply here (same reasoning as the
@@ -557,9 +560,9 @@ quirks — with one value changed and one structural surprise:
 | Column | Notes |
 |---|---|
 | Round | `AA` (§5.2) — the one column that actually differs from §5.6 |
-| Apparatus, Rank, Bib, Name, NOC Code, Status, D, E, B, Penalty, Total | As in §5.6 |
+| Apparatus, Rank, Bib, Name, NOC Code, Status, D, E, B, Penalty, SJ Penalty, Total | As in §5.6 |
 
-**Vault is the single-attempt shape here** — `Status`/`D`/`E`/`B`/`Penalty`/`Total`,
+**Vault is the single-attempt shape here** — `Status`/`D`/`E`/`B`/`Penalty`/`SJ Penalty`/`Total`,
 not the `Status1`/`Status2`/`D1`/`D2` split. This is the opposite of what the filenames alone
 would suggest (`SCORES-EVENT-VT` is the two-attempt shape, per §5.6;
 `SCORES-AA-VT` is the plain one), and it makes sense once you think about
@@ -587,7 +590,7 @@ Final (§5.7):
 | Apparatus | Two-letter code. Like Judges Assignment (§3.4) and the `SUMMARY-QUAL-TEAM` top-line report (§5.9), the apparatus is an **icon** in the page header, not text — confirmed here by rendering all six pages, same FX/PH/SR/VT/PB/HB order as everywhere else. |
 | Rank, Bib, Name, NOC Code | As in §5.5/§5.6/§5.7. Ties are common here (the field size is fixed at "qualified teams × roster count on that apparatus," not a ranked cut, so more ties survive than in Qualification/individual Finals) — copy duplicate ranks as printed. |
 | Status | As in §5.6/§5.7 — `COMPLETED` for every row seen so far |
-| D, E, B, Penalty, Total | As in §5.5/§5.6/§5.7. PH again has no `B` column and prints `E` before `D`. |
+| D, E, B, Penalty, SJ Penalty, Total | As in §5.5/§5.6/§5.7. PH again has no non-blank `B` value and prints `E` before `D`. |
 
 No `Qualification`/`Qualification Rank` columns — no further round to
 qualify into.
@@ -596,9 +599,9 @@ qualify into.
 double-vault list and the individual Vault Final (§5.6, though *not*
 Junior's All-Around Final, §5.7 — check the page), a team-final vault
 routine is only performed once per athlete, so `SCORES-TEAM-VT.csv` uses
-the same plain `Status`/`D`/`E`/`B`/`Penalty`/`Total` shape as every other
-apparatus in this section, **not** the `Status1`/`Status2`/`D1`/`D2`-style
-split. Don't assume "Vault" always means the two-attempt shape — check the
+the same plain `Status`/`D`/`E`/`B`/`Penalty`/`SJ Penalty`/`Total` shape as
+every other apparatus in this section, **not** the
+`Status1`/`Status2`/`D1`/`D2`-style split. Don't assume "Vault" always means the two-attempt shape — check the
 actual page, the same way §3.1 says to check the header row before assuming
 a column layout carries over.
 
@@ -773,14 +776,18 @@ established (parse from wherever the source actually put them, write to
 the fixed-name columns) — this is a parsing-input difference, not an
 output-schema change.
 
-### 7.2 No `B`/Bonus column on non-vault apparatus
+### 7.2 No `B`/Bonus concept on WAG's non-vault apparatus — but the column is still present
 
-Like MAG's PH, none of WAG's `FX`/`BB`/`UB` tables have a bonus column at
-all — but for WAG this is true of every non-vault apparatus, not one
-exception. Their `SCORES-QUAL-<APP>`/`SCORES-EVENT-<APP>`/`SCORES-TEAM-<APP>`
-column set is `Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,Penalty,Total[,Qualification]`
-— §5.5/§5.6/§5.8's tables, minus the `B` column entirely (not just left
-blank).
+Like MAG's PH, none of WAG's `FX`/`BB`/`UB` source pages print a bonus value
+— but for WAG this is true of every non-vault apparatus, not one exception.
+This was originally reflected by omitting the `B` column from WAG's
+`SCORES-QUAL-<APP>`/`SCORES-EVENT-<APP>`/`SCORES-TEAM-<APP>` files entirely
+(not just leaving it blank) — since corrected: per your call, MAG and WAG's
+`SCORES-*` column sets are now kept aligned, so WAG's non-vault files carry
+a `B` column too, always blank, the same way MAG's PH rows already were
+(§5.5). The underlying PDF fact is unchanged (WAG genuinely has no bonus
+concept here) — only the CSV's willingness to represent an always-blank
+column for cross-discipline consistency changed.
 
 ### 7.3 WAG Vault has two extra concepts MAG's schema doesn't need
 
@@ -800,14 +807,17 @@ ad-hoc WAG files, which got both of these wrong — see §7.6):
   this value is immediately needed as a number downstream and the
   legacy WAG files already established that shape as reasonable.
 
-Full `SCORES-QUAL-VT` column set:
+Full `SCORES-QUAL-VT` column set (WAG):
 
 ```
 Round,Apparatus,Rank,Bib,Name,NOC Code,
-Status1,D1,E1,Penalty1,SJ Penalty1,Total1,
-Status2,D2,E2,Penalty2,SJ Penalty2,Total2,
+Status1,D1,E1,B1,Penalty1,SJ Penalty1,Total1,
+Status2,D2,E2,B2,Penalty2,SJ Penalty2,Total2,
 Bonus,Total,Qualification,Qualification Rank
 ```
+
+(`B1`/`B2` included for column alignment with MAG's Vault, §5.5 — always
+blank for WAG, same reasoning as §7.2.)
 
 `SCORES-EVENT-VT` is the same shape minus `Qualification`/`Qualification
 Rank` (no further round to qualify into — same reasoning as §5.6), but keeps
@@ -816,12 +826,15 @@ Both `QUAL`/`EVENT` are built by joining a single-vault list and a
 double-vault list exactly per §4 — WAG has the identical two-listing
 structure, DNF/DNS conventions included.
 
-**`SCORES-TEAM-VT` has neither `SJ Penalty` nor `Bonus`.** Confirmed by
-rendering the actual page: Team Final vault is single-attempt for WAG
-(matching MAG, §5.8), with plain `Status,D,E,Penalty,Total` and no
-`SJ Pen.`/`*` at all. Don't assume Vault always carries these two extra
-concepts — they showed up on the two double-attempt reports and nowhere
-else.
+**`SCORES-TEAM-VT` never had `SJ Penalty` or `Bonus` in the source.**
+Confirmed by rendering the actual page: Team Final vault is single-attempt
+for WAG (matching MAG, §5.8). The CSV still carries a blank `SJ Penalty`
+column here for alignment with the rest of §5.8's table (`B` too — WAG's
+`SCORES-TEAM-VT.csv` is `Status,D,E,B,Penalty,SJ Penalty,Total`, both always
+blank), but there is no `*`/`SJ Pen.` on the actual page and no `Bonus`
+column at all on this particular report — don't assume Vault always carries
+the `Bonus` concept specifically; it only showed up on the two double-attempt
+reports.
 
 ### 7.4 The shared-footer-code trap bit again — verify by title, not just by grep count
 

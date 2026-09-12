@@ -1,9 +1,9 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,Total
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,1,790,RIGON Ivan,ITA,COMPLETED,4.8,8.433,0.0,,13.233
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,1,801,SOLEBAN Sami,NED,COMPLETED,5.2,8.033,0.0,,13.233
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,3,816,SMIRNOV Daniil,WG2,COMPLETED,4.4,8.733,0.0,,13.133
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,4,800,PATON Jayden,NED,COMPLETED,4.8,8.200,0.0,,13.000
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,5,789,MAZZOLA Pietro,ITA,COMPLETED,4.3,7.500,0.1,,11.900
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,6,774,GAL Kristof,HUN,COMPLETED,4.7,7.166,0.0,,11.866
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,7,853,LE KHAC Tomasz,POL,COMPLETED,4.7,6.700,0.0,,11.400
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,8,828,SCHUMACHER Ben,SUI,COMPLETED,3.0,7.600,0.0,-0.30,10.300
+Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,1,790,RIGON Ivan,ITA,COMPLETED,4.8,8.433,0.0,,,13.233
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,1,801,SOLEBAN Sami,NED,COMPLETED,5.2,8.033,0.0,,,13.233
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,3,816,SMIRNOV Daniil,WG2,COMPLETED,4.4,8.733,0.0,,,13.133
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,4,800,PATON Jayden,NED,COMPLETED,4.8,8.200,0.0,,,13.000
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,5,789,MAZZOLA Pietro,ITA,COMPLETED,4.3,7.500,0.1,,,11.900
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,6,774,GAL Kristof,HUN,COMPLETED,4.7,7.166,0.0,,,11.866
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,7,853,LE KHAC Tomasz,POL,COMPLETED,4.7,6.700,0.0,,,11.400
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,HB,8,828,SCHUMACHER Ben,SUI,COMPLETED,3.0,7.600,0.0,-0.30,,10.300

@@ -1,10 +1,10 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,Total
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,1,791,RUGGERI Riccardo,ITA,COMPLETED,5.3,8.400,0.0,,13.700
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,2,789,MAZZOLA Pietro,ITA,COMPLETED,5.2,8.466,0.0,,13.666
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,3,843,GOLOVIN Volodymyr,UKR,COMPLETED,5.5,7.666,0.0,,13.166
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,4,785,GUSMAN Aviv,ISR,COMPLETED,5.0,8.000,0.0,-0.30,12.700
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,5,717,KARTASHOU Tsimur,WG1,COMPLETED,4.7,7.800,0.0,,12.500
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,6,800,PATON Jayden,NED,COMPLETED,4.9,7.533,0.0,-0.20,12.233
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,7,853,LE KHAC Tomasz,POL,COMPLETED,4.8,7.600,0.1,-0.30,12.200
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,8,844,HAVRYLCHENKO Valentyn,UKR,COMPLETED,5.4,6.533,0.0,-0.10,11.833
-37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,9,757,CHOWDHURY Uzair,GBR,COMPLETED,5.1,6.133,0.0,,11.233
+Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,1,791,RUGGERI Riccardo,ITA,COMPLETED,5.3,8.400,0.0,,,13.700
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,2,789,MAZZOLA Pietro,ITA,COMPLETED,5.2,8.466,0.0,,,13.666
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,3,843,GOLOVIN Volodymyr,UKR,COMPLETED,5.5,7.666,0.0,,,13.166
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,4,785,GUSMAN Aviv,ISR,COMPLETED,5.0,8.000,0.0,-0.30,,12.700
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,5,717,KARTASHOU Tsimur,WG1,COMPLETED,4.7,7.800,0.0,,,12.500
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,6,800,PATON Jayden,NED,COMPLETED,4.9,7.533,0.0,-0.20,,12.233
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,7,853,LE KHAC Tomasz,POL,COMPLETED,4.8,7.600,0.1,-0.30,,12.200
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,8,844,HAVRYLCHENKO Valentyn,UKR,COMPLETED,5.4,6.533,0.0,-0.10,,11.833
+37th Junior European Championships,MAG,JR,2026-08-22,EVENT,FX,9,757,CHOWDHURY Uzair,GBR,COMPLETED,5.1,6.133,0.0,,,11.233

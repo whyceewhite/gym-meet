@@ -1,9 +1,9 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,Total
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,1,607,DOLGOPYAT Artem,ISR,COMPLETED,5.8,8.666,0.1,-0.10,14.466
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,2,648,DUKHNO Arsenii,WG2,COMPLETED,5.9,8.433,0.0,,14.333
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,3,567,HEPWORTH Harry,GBR,COMPLETED,6.1,8.200,0.1,-0.10,14.300
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,4,534,KOVTUN Illia,CRO,COMPLETED,5.5,8.500,0.1,,14.100
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,5,520,SHARAMKOU Yahor,WG1,COMPLETED,5.8,8.266,0.0,,14.066
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,6,666,MURABITO Luca,SUI,COMPLETED,5.5,8.266,0.0,,13.766
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,7,597,MONTGOMERY Eamon,IRL,COMPLETED,5.4,8.433,0.0,-0.30,13.533
-37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,8,653,IAKUBOV Mukhammadzhon,WG2,COMPLETED,5.5,7.533,0.0,,13.033
+Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,1,607,DOLGOPYAT Artem,ISR,COMPLETED,5.8,8.666,0.1,-0.10,,14.466
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,2,648,DUKHNO Arsenii,WG2,COMPLETED,5.9,8.433,0.0,,,14.333
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,3,567,HEPWORTH Harry,GBR,COMPLETED,6.1,8.200,0.1,-0.10,,14.300
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,4,534,KOVTUN Illia,CRO,COMPLETED,5.5,8.500,0.1,,,14.100
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,5,520,SHARAMKOU Yahor,WG1,COMPLETED,5.8,8.266,0.0,,,14.066
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,6,666,MURABITO Luca,SUI,COMPLETED,5.5,8.266,0.0,,,13.766
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,7,597,MONTGOMERY Eamon,IRL,COMPLETED,5.4,8.433,0.0,-0.30,,13.533
+37th Senior European Championships,MAG,SR,2026-08-21,EVENT,FX,8,653,IAKUBOV Mukhammadzhon,WG2,COMPLETED,5.5,7.533,0.0,,,13.033

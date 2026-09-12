@@ -118,8 +118,9 @@ round(s) a column actually appears in.
 | Status | ✓ | ✓ | ✓ | ✓ | `COMPLETED`, `DNS`, or `INVALID_VAULT` — always written explicitly, never blank. Mirrors `Score.status` being `NOT NULL` | `Score.status` |
 | D | ✓ | ✓ | ✓ | ✓ | Difficulty score | `Score.difficulty` |
 | E | ✓ | ✓ | ✓ | ✓ | Execution score. MAG PH and every WAG apparatus print `E` before `D` in the source; the CSV always writes to these fixed column names regardless of source order | `Score.execution` |
-| B | ✓ | ✓ | ✓ | ✓ | Bonus. **MAG only** — WAG's `FX`/`BB`/`UB` have no bonus concept and omit this column entirely (not just leave it blank). Blank on every MAG PH row (PH has no bonus, but the column is still present for header consistency across MAG apparatus) | `Score.bonus` |
+| B | ✓ | ✓ | ✓ | ✓ | Bonus. Populated for MAG (blank on every MAG PH row specifically — PH has no bonus). Present but always blank for WAG — kept for column alignment between disciplines rather than omitted, since neither MAG nor WAG's non-vault apparatus concept differs enough to justify a different shape | `Score.bonus` |
 | Penalty | ✓ | ✓ | ✓ | ✓ | Blank when no penalty applied — never `0` | `Score.penalty` |
+| SJ Penalty | ✓ | ✓ | ✓ | ✓ | Superior Jury Penalty. Present for column alignment with Vault (§ below); not observed with a non-blank value on any non-vault apparatus for either discipline so far | *(no `Score` field for a Superior Jury penalty yet — a real gap, not just an unmapped reference column)* |
 | Total | ✓ | ✓ | ✓ | ✓ | Blank when `Status` is `DNS` | `Score.score` |
 | Qualification | ✓ | | | | `Q`/`R1`/`R2`/`R3`/`NR`/blank, matching `QualificationResult` exactly. Only meaningful where there's a further round to qualify into | `Score.qualificationResult` |
 
@@ -140,18 +141,18 @@ double-vault listing (only those attempting a second vault) — see
 | Status1 | ✓ | ✓ | Status of attempt 1: `COMPLETED`, `DNS`, or `INVALID_VAULT`. Always populated | `Score.status` |
 | D1 | ✓ | ✓ | | `Score.difficulty` |
 | E1 | ✓ | ✓ | | `Score.execution` |
-| B1 | ✓ | ✓ | **MAG only** | `Score.bonus` |
+| B1 | ✓ | ✓ | Bonus, attempt 1. Populated for MAG, always blank for WAG (column alignment, same reasoning as the non-vault table's `B`) | `Score.bonus` |
 | Penalty1 | ✓ | ✓ | | `Score.penalty` |
-| SJ Penalty1 | ✓ | ✓ | **WAG only** — Superior Jury Penalty, distinct from the ordinary `Penalty1` | *(no `Score` field for a Superior Jury penalty yet — a real gap, not just an unmapped reference column)* |
+| SJ Penalty1 | ✓ | ✓ | Superior Jury Penalty, attempt 1 — distinct from the ordinary `Penalty1`. Populated for WAG; always blank for MAG so far (column alignment) | *(no `Score` field for a Superior Jury penalty yet — a real gap, not just an unmapped reference column)* |
 | Total1 | ✓ | ✓ | | `Score.score` |
 | Status2 | ✓ | ✓ | Status of attempt 2, **four-state**: blank = no second attempt was expected at all (maps to `Score.secondStatus` being null — genuinely different from the other three, not an omission); `COMPLETED`; `DNS` = a second attempt was expected (on the double-vault list) but not completed; `INVALID_VAULT` | `Score.secondStatus` |
 | D2 | ✓ | ✓ | | `Score.secondDifficulty` |
 | E2 | ✓ | ✓ | | `Score.secondExecution` |
-| B2 | ✓ | ✓ | **MAG only** | `Score.secondBonus` |
+| B2 | ✓ | ✓ | Bonus, attempt 2. Same MAG/WAG split as `B1` | `Score.secondBonus` |
 | Penalty2 | ✓ | ✓ | | `Score.secondPenalty` |
-| SJ Penalty2 | ✓ | ✓ | **WAG only** | *(same gap as `SJ Penalty1`)* |
+| SJ Penalty2 | ✓ | ✓ | Superior Jury Penalty, attempt 2. Same WAG/MAG split as `SJ Penalty1` | *(same gap as `SJ Penalty1`)* |
 | Total2 | ✓ | ✓ | Blank whenever `Status2` is blank or `DNS` | `Score.secondScore` |
-| Bonus | ✓ | ✓ | **WAG only.** The source prints this as a `*` on the combined `Total` (worth +0.2), decoded here into its own column (`0.2` or blank) with `Total` holding the clean number | *(doesn't cleanly fit `Score.bonus`/`secondBonus`, both of which are per-attempt — this applies to the combined result. Needs a decision, not yet mapped)* |
+| Bonus | ✓ | ✓ | **WAG only, and distinct from `B1`/`B2` above** — this is a bonus applied to the *combined* two-vault result, not either individual attempt. The source prints it as a `*` on the combined `Total` (worth +0.2), decoded here into its own column (`0.2` or blank) with `Total` holding the clean number. Not yet added to MAG — no equivalent concept has shown up there | *(doesn't cleanly fit `Score.bonus`/`secondBonus`, both of which are per-attempt — this applies to the combined result. Needs a decision, not yet mapped)* |
 | Total | ✓ | ✓ | The athlete's official counting result — `Total1` alone for a single-vault athlete, the published average for a completed two-vault athlete, blank when there's no valid combined result | `Score.totalScore` |
 | Qualification | ✓ | | Only ever set from the double-vault list; blank for single-vault-only athletes | `Score.qualificationResult` |
 | Qualification Rank | ✓ | | Rank **within the double-vault list specifically** — distinct from `Rank`. Blank for single-vault-only athletes | *(`Score.rank` is single-valued and already used for `Rank` above — see `instructions-results-parsing.md` §6 item 4 for the open question of whether this is worth its own field)* |
