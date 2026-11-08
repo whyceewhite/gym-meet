@@ -1,0 +1,36 @@
+{
+    "event" : {
+        "title" : "2026 Xfinity U.S. Gymnastics Championships",
+        "disciplines" : "MAG",
+        "ageCategory" : "JR17",
+        "level" : "NATIONAL_CHAMPIONSHIPS",
+        "startDate" : "2026-08-06",
+        "endDate" : "2026-08-08",
+        "city" : "Phoenix",
+        "country" : "USA",
+        "figEventNumber" : "",
+        "venue" : "Mortgage Matchup Center",
+        "apparatusSuppliers" : ""
+    },
+    "participants" : [
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-PARTICIPANTS.csv"
+    ],
+    "judges" : [],
+    "scores" : [
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SCORES-AA-FX.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SCORES-AA-HB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SCORES-AA-PB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SCORES-AA-PH.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SCORES-AA-SR.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SCORES-AA-VT.csv"
+    ],
+    "summaries" : [
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-AA.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-FX.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-HB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-PB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-PH.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-SR.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-JR17-SUMMARY-FINAL-VT.csv"
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "event" : {
+        "title" : "2026 Xfinity U.S. Gymnastics Championships",
+        "disciplines" : "MAG",
+        "ageCategory" : "SR",
+        "level" : "NATIONAL_CHAMPIONSHIPS",
+        "startDate" : "2026-08-06",
+        "endDate" : "2026-08-08",
+        "city" : "Phoenix",
+        "country" : "USA",
+        "figEventNumber" : "",
+        "venue" : "Mortgage Matchup Center",
+        "apparatusSuppliers" : ""
+    },
+    "participants" : [
+        "2026-US-CHAMPIONSHIPS-MAG-SR-PARTICIPANTS.csv"
+    ],
+    "judges" : [],
+    "scores" : [
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SCORES-AA-FX.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SCORES-AA-HB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SCORES-AA-PB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SCORES-AA-PH.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SCORES-AA-SR.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SCORES-AA-VT.csv"
+    ],
+    "summaries" : [
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-AA.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-FX.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-HB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-PB.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-PH.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-SR.csv",
+        "2026-US-CHAMPIONSHIPS-MAG-SR-SUMMARY-FINAL-VT.csv"
+    ]
+}

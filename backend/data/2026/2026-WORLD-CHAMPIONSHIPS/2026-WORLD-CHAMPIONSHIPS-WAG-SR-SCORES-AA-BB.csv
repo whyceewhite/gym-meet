@@ -1,25 +1,25 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,1,405,NEMOUR Kaylia,ALG,COMPLETED,6.600,7.900,,,,14.500
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,2,446,ZHANG Qingying,CHN,COMPLETED,6.300,7.933,,,,14.233
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,3,602,BLAKELY Skye,USA,COMPLETED,6.100,8.200,,-0.1,,14.200
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,4,470,COLAS Elena,FRA,COMPLETED,5.900,8.033,,,,13.933
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,5,442,KE Qinqin,CHN,COMPLETED,6.500,7.333,,,,13.833
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,6,509,PEROTTI Giulia,ITA,COMPLETED,5.800,7.966,,,,13.766
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,7,517,SUGIHARA Aiko,JPN,COMPLETED,5.600,7.966,,,,13.566
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,8,467,PETISCO Alba,ESP,COMPLETED,5.600,7.866,,,,13.466
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,9,620,ROSHCHINA Liudmila,RUS,COMPLETED,5.700,7.733,,,,13.433
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,10,511,TONELLI Sofia,ITA,COMPLETED,5.600,7.700,,,,13.300
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,11,432,SARAIVA Flavia,BRA,COMPLETED,5.900,7.333,,,,13.233
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,12,473,PRAT Maiana,FRA,COMPLETED,4.900,8.000,,,,12.900
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,13,415,SCOTT Breanna,AUS,COMPLETED,5.700,7.200,,,,12.900
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,14,546,VISSER Naomi,NED,COMPLETED,5.200,7.333,,,,12.533
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,15,606,PEASE Claire,USA,COMPLETED,5.400,7.133,,,,12.533
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,16,513,KISHI Rina,JPN,COMPLETED,5.600,6.900,,,,12.500
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,17,434,BLACK Elsabeth,CAN,COMPLETED,5.600,6.766,,,,12.366
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,18,478,KINSELLA Alice,GBR,COMPLETED,5.300,6.866,,,,12.166
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,19,495,MAYER Greta,HUN,COMPLETED,5.300,6.733,,,,12.033
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,20,480,MARTIN Abigail,GBR,COMPLETED,5.300,6.200,,,,11.500
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,21,615,GLOTOVA Alena,RUS,COMPLETED,5.200,5.866,,,,11.066
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,22,431,OLIVEIRA Lorrane,BRA,COMPLETED,5.500,5.566,,,,11.066
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,23,425,VAELEN Lisa,BEL,COMPLETED,5.300,5.700,,,,11.000
-54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,BB,24,438,REDICK Lia Grace,CAN,COMPLETED,4.800,5.666,,,,10.466
+Event Name,Discipline,Age Category,Session Start Date,Round,Part,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,1,405,NEMOUR Kaylia,ALG,COMPLETED,6.600,7.900,,,,14.500
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,2,446,ZHANG Qingying,CHN,COMPLETED,6.300,7.933,,,,14.233
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,3,602,BLAKELY Skye,USA,COMPLETED,6.100,8.200,,-0.1,,14.200
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,4,470,COLAS Elena,FRA,COMPLETED,5.900,8.033,,,,13.933
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,5,442,KE Qinqin,CHN,COMPLETED,6.500,7.333,,,,13.833
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,6,509,PEROTTI Giulia,ITA,COMPLETED,5.800,7.966,,,,13.766
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,7,517,SUGIHARA Aiko,JPN,COMPLETED,5.600,7.966,,,,13.566
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,8,467,PETISCO Alba,ESP,COMPLETED,5.600,7.866,,,,13.466
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,9,620,ROSHCHINA Liudmila,RUS,COMPLETED,5.700,7.733,,,,13.433
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,10,511,TONELLI Sofia,ITA,COMPLETED,5.600,7.700,,,,13.300
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,11,432,SARAIVA Flavia,BRA,COMPLETED,5.900,7.333,,,,13.233
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,12,473,PRAT Maiana,FRA,COMPLETED,4.900,8.000,,,,12.900
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,13,415,SCOTT Breanna,AUS,COMPLETED,5.700,7.200,,,,12.900
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,14,546,VISSER Naomi,NED,COMPLETED,5.200,7.333,,,,12.533
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,15,606,PEASE Claire,USA,COMPLETED,5.400,7.133,,,,12.533
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,16,513,KISHI Rina,JPN,COMPLETED,5.600,6.900,,,,12.500
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,17,434,BLACK Elsabeth,CAN,COMPLETED,5.600,6.766,,,,12.366
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,18,478,KINSELLA Alice,GBR,COMPLETED,5.300,6.866,,,,12.166
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,19,495,MAYER Greta,HUN,COMPLETED,5.300,6.733,,,,12.033
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,20,480,MARTIN Abigail,GBR,COMPLETED,5.300,6.200,,,,11.500
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,21,615,GLOTOVA Alena,RUS,COMPLETED,5.200,5.866,,,,11.066
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,22,431,OLIVEIRA Lorrane,BRA,COMPLETED,5.500,5.566,,,,11.066
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,23,425,VAELEN Lisa,BEL,COMPLETED,5.300,5.700,,,,11.000
+54th Artistic Gymnastics World Championships,WAG,SR,2026-10-23,AA,,BB,24,438,REDICK Lia Grace,CAN,COMPLETED,4.800,5.666,,,,10.466

@@ -14,9 +14,11 @@ erDiagram
     ATHLETE ||--o{ ATHLETE_NAME_VARIANT : "also known as"
     PARTICIPANT ||--o{ SCORE : scores
     PARTICIPANT ||--o{ ALL_AROUND_RESULT : "all-around result"
+    PARTICIPANT ||--o{ APPARATUS_RESULT : "multi-part apparatus result"
     SESSION ||--o{ SCORE : scored
     SESSION ||--o{ TEAM_RESULT : "team standings"
     SESSION ||--o{ ALL_AROUND_RESULT : "all-around standings"
+    SESSION ||--o{ APPARATUS_RESULT : "multi-part apparatus standings"
     SESSION ||--o{ JUDGE : judged
 ```
 
@@ -209,7 +211,7 @@ Additional names by which the athlete has had.
 | discipline | Discipline | No | The program competing in this round. Disambiguates same-named rounds across programs — e.g. a WAG `EVENT` session and a MAG `EVENT` session on Floor are different `Session`s (distinguished together with `apparatus`, below). |
 | ageCategory | AgeCategory | No | The age division competing in this round. |
 | apparatus | Apparatus, nullable | Yes | Which apparatus this session is for. Set only when `round` is `EVENT` — an Apparatus Final is its own session per apparatus. Null for every other round, since `QUAL`/`AA`/`TEAM` each cover all apparatus within one session (see `Score.apparatus` for the per-apparatus split of scores within those). |
-| part | Integer, nullable | Yes | Which occurrence of this round this session is, for a round split across more than one session — e.g. US Championships' two-day All-Around, where `round` is `AA` on both sessions and `part` is `1` and `2`, respectively. Null for the ordinary case of a round held in a single session. |
+| part | Integer, nullable | Yes | Which occurrence of this round this session is, for a round split across more than one session — e.g. US Championships' two-day All-Around, where `round` is `AA` on both sessions and `part` is `1` and `2`, respectively. Null means the round as a whole: for the ordinary single-session round that's the only session, and for a split round it's an additional **whole-round session** holding the combined results (see below). |
 
 Unique key: `(event_id, round, discipline, ageCategory, apparatus, part)`.
 Note this constraint alone does not reliably reject a duplicate session of
@@ -219,6 +221,15 @@ nulls as equal, and every real session has at least one of `apparatus`
 across sessions) null — the two are never both set at once in practice.
 That protection is enforced in application code
 (`SessionService.createSession`) instead.
+
+**Rounds split into parts.** When a round is contested over several sessions
+and decided on the combined total (US Championships: Day 1 + Day 2), it has
+one session per part (`part` = 1, 2, …) holding the judged `Score`s and each
+day's `AllAroundResult`, plus one whole-round session (`part` null) holding the
+combined standings: an `AllAroundResult` per athlete for the combined
+all-around and an `ApparatusResult` (§5.3) per athlete per apparatus for the
+combined apparatus standings. The whole-round session holds no `Score`s of its
+own. Its `date` is the first part's date, since it covers several days.
 
 ### `Judge`
 
@@ -267,7 +278,7 @@ the fields directly on `Score` describe the result and its rankings.
 | secondRoutine | Routine | Yes | Vault's second attempt. Null means no second attempt was expected at all (the athlete only vaulted once); a second attempt that was expected but not performed is a `Routine` with status `DNS`. Same columns as `routine`, prefixed `second_`. |
 | combinedBonus | Double | Yes | A bonus applied to the combined two-vault result rather than to either attempt (e.g. WAG's +0.2). Null otherwise. |
 | totalScore | Double | Yes | The result the apparatus final is decided on. For a two-vault entry, the combined result as published (the attempts' average plus `combinedBonus`); otherwise equal to `routine.score`. Null when there's no valid result (e.g. the first vault or an expected second vault was `DNS`). |
-| rank | Integer | Yes | Published placement on this apparatus within this `Session`, ranked on `routine.score` — for vault in qualification, the single-vault list ranking the whole field. In an apparatus final, the final's own placement. Copied as published, including tie-breaks, never recomputed. |
+| rank | Integer | Yes | Published placement on this apparatus within this `Session`, ranked on `routine.score` — for vault in qualification, the single-vault list ranking the whole field. In an apparatus final, the final's own placement. Where a session's only published vault ranking is a two-vault list (US Championships' Day 1 vault event), it's that ranking, on `totalScore`, and null for single-vault entrants. Null where the source publishes no per-session placement (US Championships Day 2). Copied as published, including tie-breaks, never recomputed. |
 | qualificationRank | Integer | Yes | Published placement in the ranking that decides qualification to the apparatus final. Set on every `QUAL` row: for vault it's the double-vault list rank (null for single-vault entrants); for every other apparatus it equals `rank`. Null outside `QUAL`. |
 | qualificationResult | QualificationResult | Yes | Outcome of qualifying to the apparatus final, read against `qualificationRank` (not `rank`). The two-per-country rule shows up here as `NR`, never as a changed rank. Only set on `QUAL` `Session`s. |
 | countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§5.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§5.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
@@ -348,9 +359,10 @@ number to put anywhere else.
 
 ## 5. Derived summary results
 
-Two facts in this model are aggregates over `Score` rows rather than
-judged results in their own right: a team's total in a `TEAM` (or
-qualifying) session, and an athlete's all-around total. Both *could* be computed
+Three facts in this model are aggregates rather than judged results in their
+own right: a team's total in a `TEAM` (or qualifying) session, an athlete's
+all-around total, and — for a round split into parts — an athlete's combined
+total on one apparatus across the parts. Both *could* be computed
 on read instead of stored — team totals from `Score.routine.score` where
 `countsTowardTeamResult` is true, all-around totals by summing a participant's
 apparatus `Score.routine.score` values for the session (no drop-lowest rule involved at
@@ -364,8 +376,8 @@ rounding difference, or a case where exactly which scores counted toward a team
 total doesn't perfectly match reality. Storing the published aggregate directly
 avoids depending on that always being right.
 
-This does mean both entities carry a sync risk: if a `Score` gets
-corrected after the fact, the corresponding `TeamResult`/`AllAroundResult` row
+This does mean these entities carry a sync risk: if a `Score` gets
+corrected after the fact, the corresponding `TeamResult`/`AllAroundResult`/`ApparatusResult` row
 doesn't update itself. That's a real operational concern for whatever
 imports/corrects data, not something the schema can prevent on its own —
 flagged here rather than solved.
@@ -390,9 +402,28 @@ Unique key: `(session_id, noc)`
 |---|---|---|---|
 | id | Long | No | Generated primary key. |
 | participantId | Long, FK → `Participant` | No | The athlete this result is for. |
-| sessionId | Long, FK → `Session` | No | The round this all-around total applies to — typically a `QUAL` or `AA` `Session`. |
-| totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.routine.score` values for this `Session` (for vault, the first vault only). Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all). |
+| sessionId | Long, FK → `Session` | No | The round this all-around total applies to — typically a `QUAL` or `AA` `Session`. For a round split into parts, one result per part session plus the combined result on the whole-round session (§3, `Session`). |
+| totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.routine.score` values for this `Session` (for vault, the first vault only); on a whole-round session, the published combined total across the parts. Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all — US Championships is an exception and prints a partial total, which is stored as published). |
 | rank | Integer | Yes | The athlete's all-around placement within the `Session`. |
 | qualificationResult | QualificationResult | Yes | Outcome of qualifying to the all-around final, when this `AllAroundResult` is on a `QUAL` `Session`. |
 
 Unique key: `(participant_id, session_id)`
+
+### 5.3 `ApparatusResult`
+
+An athlete's combined result on one apparatus across a round split into parts
+(US Championships' two-day apparatus standings, which decide the apparatus
+titles). Not a `Score` — no routine is judged here; the routines are the
+`Score`s on each part's session. Only exists on a whole-round session (§3,
+`Session`).
+
+| Field | Type | Nullable | Description |
+|---|---|---|---|
+| id | Long | No | Generated primary key. |
+| participantId | Long, FK → `Participant` | No | The athlete this result is for. |
+| sessionId | Long, FK → `Session` | No | The whole-round session (`part` null) of a round split into parts. |
+| apparatus | Apparatus | No | The apparatus this standing is for. |
+| totalScore | Double | Yes | The published combined total: the sum of the athlete's per-part results on this apparatus — for vault, each part's `Score.totalScore` (two-vault result where the athlete contested the vault title). |
+| rank | Integer | Yes | Published placement in the combined standings, including tie-breaks. |
+
+Unique key: `(participant_id, session_id, apparatus)`

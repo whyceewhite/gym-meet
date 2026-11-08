@@ -99,6 +99,18 @@ class SessionServiceTest {
         assertNotEquals(day1.getId(), day2.getId());
     }
 
+    @Test
+    void testCreateSession_WholeRoundSessionAlongsideParts_AllSucceed() {
+        Session day1 = sessionService.createSession(sessionOf(Round.AA, null, 1));
+        Session day2 = sessionService.createSession(sessionOf(Round.AA, null, 2));
+        Session wholeRound = sessionService.createSession(sessionOf(Round.AA, null, null));
+
+        assertNotNull(wholeRound.getId());
+        assertNotEquals(day1.getId(), wholeRound.getId());
+        assertNotEquals(day2.getId(), wholeRound.getId());
+        assertThrows(ConflictException.class, () -> sessionService.createSession(sessionOf(Round.AA, null, null)));
+    }
+
     private Session sessionOf(Round round, Apparatus apparatus, Integer part) {
         Session session = new Session();
         session.setEvent(testEvent);

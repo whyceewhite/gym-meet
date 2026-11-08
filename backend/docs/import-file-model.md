@@ -18,6 +18,8 @@ cross-check/reference value, not an oversight in this document.
 | `<PREFIX>-JUDGES.csv` | Judging panels, all rounds | Discipline + Age Category |
 | `<PREFIX>-SCORES-<ROUND>-<APP>.csv` | Individual results, one apparatus | Discipline + Age Category + Round + Apparatus |
 | `<PREFIX>-SUMMARY-<ROUND>-{TEAM,AA}.csv` | Top-line team/all-around standings | Discipline + Age Category + Round |
+| `<PREFIX>-SUMMARY-FINAL-<APP>.csv` | Combined standings on one apparatus for a round split into parts (US Championships' two-day apparatus titles) | Discipline + Age Category + Apparatus |
+| `<PREFIX>-IMPORT.json` | Manifest: the event's metadata plus every file above that belongs to this discipline+age | Discipline + Age Category |
 
 `<PREFIX>` is `<EVENT-SLUG>-<DISCIPLINE>-<AGE-CATEGORY>`, e.g.
 `2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR`. `<ROUND>` is one of `QUAL` / `EVENT` /
@@ -45,7 +47,8 @@ content, so the file is meaningful on its own without its filename intact.
 | Discipline | `MAG` / `WAG`. Present in every file mainly to resolve which `Session` (or, for `PARTICIPANTS`, which `Athlete`) the row belongs to. | `Session.discipline` (also sets `Athlete.discipline` when importing `PARTICIPANTS`) |
 | Age Category | `SR` / `JR` / `JR16` / `JR17`. `Event` itself has no age category field — a single `Event` row in this data set happens to be scoped to one age category, but that's convention, not a schema guarantee. | `Session.ageCategory` |
 | Event Start Date | `Event.startDate`. Exists to disambiguate one year's edition from another, since `Event Name` alone doesn't carry a year. Present on `PARTICIPANTS`, `JUDGES`, `SUMMARY`. | `Event.startDate` |
-| Session Start Date | The calendar date this specific `Round` (and, for `EVENT`, this specific apparatus) was actually competed — sourced from the PDF's Competition Schedule pages, **never** from a page footer's report-generation timestamp (the two can disagree by a day or more). Present on `SCORES` only, in place of `Event Start Date`. Named "Start" because a large-field round can in principle span more than one calendar day, even though every round in the current data set is single-day. | `Session.date` |
+| Session Start Date | The calendar date this specific `Round` (and, for `EVENT`, this specific apparatus; for a round split into parts, this part) was actually competed — sourced from the PDF's Competition Schedule pages, **never** from a page footer's report-generation timestamp (the two can disagree by a day or more). Present on `SCORES` only, in place of `Event Start Date`. Named "Start" because a large-field round can in principle span more than one calendar day. | `Session.date` |
+| Part | Which part of a round split across several sessions this row belongs to (`1`, `2`, … — US Championships' Day 1 and Day 2). Blank for an ordinary single-session round, and on `SUMMARY` rows holding the combined standings of a split round (the whole-round session). Present on `SCORES` and `SUMMARY`, right after `Round`. | `Session.part` |
 
 ## `EVENT.csv`
 
@@ -76,11 +79,12 @@ One row per athlete entry.
 | NOC Code | Country code the participant is competing under | `Participant.noc` |
 | Bib Number | Assigned bib number to uniquely identify the participant in the competition | `Participant.bibNumber` |
 | FIG License | FIG license number assigned to the gymnast | `Athlete.licenseNumber` |
-| Name | Combined `SURNAME Given Name`, exactly as printed | |
+| Name | Combined name exactly as printed — `SURNAME Given Name` in FIG sources, `Given Surname` in US Championships | |
 | Surname | Participant's surname | `Athlete.surname` |
 | Given Name | Participant's given name | `Athlete.givenName` |
 | Birth Year | Participant's birth year | `Athlete.birthYear` (only when `Birth Date` is blank) |
 | Birth Date | Participant's full birth date (`YYYY-MM-DD`), when the entry list publishes one (FIG World Championships does; European Championships prints only a year). Blank otherwise | `Athlete.birthDate` |
+| Club | **US Championships only.** The athlete's gym/club as printed | *(not stored — no `Participant`/`Athlete` field yet)* |
 
 ## `JUDGES.csv`
 
@@ -169,7 +173,29 @@ Team Final and All-Around Final vault routines are performed once, not
 twice — same columns and same Entity Mapping as the non-vault apparatus
 table above (`Status`→`Score.routine.status`, `D`→`Score.routine.difficulty`,
 etc.), **not** the `1`/`2` split. Don't assume "Vault" always means the
-double-attempt shape — check the actual page.
+double-attempt shape — check the actual page: US Championships' `AA` vault
+uses the **double-attempt** shape (without `Qualification` columns) for the
+levels that hold a two-vault vault event, since the same session decides the
+vault title.
+
+### Bonus breakdown columns (US Championships)
+
+USA Gymnastics MAG scoring itemizes bonuses that FIG folds into one `B`.
+Those files carry the standard columns (`B` is the sum of the parts) plus
+the itemized parts as trailing columns, so nothing printed is lost. Absent
+from FIG files.
+
+| Column | Description | Entity Mapping |
+|---|---|---|
+| D+ | Difficulty bonus | `Score.routine.bonusDetail` entry, description "Difficulty bonus" |
+| E+ | Execution bonus (printed `0.0` on every routine in 2026) | `Score.routine.bonusDetail` entry, description "Execution bonus" |
+| S+ | Stick bonus | `Score.routine.bonusDetail` entry, description "Stick bonus" |
+
+On the double-attempt vault shape they're `D+1`/`E+1`/`S+1` and
+`D+2`/`E+2`/`S+2`, mapping to `routine` and `secondRoutine` respectively.
+`E+2` is always blank: the second-vault listings don't print it. US `ND`
+(neutral deduction) is written to the standard `Penalty` column. WAG files
+carry the breakdown columns too, always blank.
 
 ## `SUMMARY-<ROUND>-{TEAM,AA}.csv`
 
@@ -181,9 +207,17 @@ has both files for every age category — a `SUMMARY-FINAL-TEAM`/
 separate Final report for it (see "File families" above; the first
 `SUMMARY-FINAL-AA` files come from the 2026 World Championships).
 
+For a round split into parts (US Championships), `SUMMARY-FINAL-AA` holds a
+row per athlete per part (`Part` = 1, 2) plus a row per athlete with `Part`
+blank for the combined standings — the result the title is decided on. The
+combined rows leave the `<APP> Total` columns blank (the source prints only
+the combined grand total), and a part's `Rank` is blank where the source
+publishes no per-part placement.
+
 | Column | Description | Entity Mapping |
 |---|---|---|
 | Round | The round this summary is from: [Round](../src/main/java/doubletuck/meet/domain/Round.java). Note: `SUMMARY-FINAL-TEAM`'s filename segment is `FINAL` while this column's value is `TEAM` | `Session.round` |
+| Part | See the metadata prefix. Blank on combined rows of a split round | `Session.part` (blank → the whole-round session) |
 | Rank | Placement in the standings | `TeamResult.rank` / `AllAroundResult.rank` |
 | Bib | Identifies the athlete. **All-Around summary only** | |
 | Name | Athlete name as printed. **All-Around summary only** | |
@@ -192,3 +226,23 @@ separate Final report for it (see "File families" above; the first
 | SJ Penalty | Superior Jury penalty applied to the row as a whole, distinct from an individual routine's `Penalty` | |
 | Total | Grand total | `TeamResult.totalScore` / `AllAroundResult.totalScore` |
 | Qualification | [QualificationResult](../src/main/java/doubletuck/meet/domain/QualificationResult.java). Omitted entirely from a `FINAL` summary — no further round to qualify into. The 2026 Worlds All-Around qualification also uses `R4` | `TeamResult.qualificationResult` / `AllAroundResult.qualificationResult` |
+
+## `SUMMARY-FINAL-<APP>.csv`
+
+Combined standings on one apparatus for a round split into parts — US
+Championships' two-day apparatus titles. One row per athlete in the source's
+two-day apparatus report, which lists only athletes who competed on that
+apparatus on both days; for vault, only the two-vault entrants who contested
+the vault title. All rows belong to the whole-round session, so `Part` is
+always blank.
+
+| Column | Description | Entity Mapping |
+|---|---|---|
+| Event Name, Discipline, Age Category, Event Start Date, Round, Part | Metadata prefix | `Session` (whole-round: `part` null) |
+| Apparatus | Two-letter code | `ApparatusResult.apparatus` |
+| Rank | Combined placement, as published | `ApparatusResult.rank` |
+| Bib | Joins to `PARTICIPANTS.csv` | *(join key)* |
+| Name | As printed | *(not stored — verification only)* |
+| NOC Code | | *(not stored)* |
+| Part 1 Total, Part 2 Total | Each part's result as printed in the combined report — for vault, the two-vault result. Cross-check against that part's `SCORES` row `Total` | *(not stored — already `Score.totalScore` on each part)* |
+| Total | Combined total | `ApparatusResult.totalScore` |

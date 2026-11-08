@@ -1,0 +1,32 @@
+{
+    "event" : {
+        "title" : "2026 Xfinity U.S. Gymnastics Championships",
+        "disciplines" : "WAG",
+        "ageCategory" : "SR",
+        "level" : "NATIONAL_CHAMPIONSHIPS",
+        "startDate" : "2026-08-07",
+        "endDate" : "2026-08-09",
+        "city" : "Phoenix",
+        "country" : "USA",
+        "figEventNumber" : "",
+        "venue" : "Mortgage Matchup Center",
+        "apparatusSuppliers" : ""
+    },
+    "participants" : [
+        "2026-US-CHAMPIONSHIPS-WAG-SR-PARTICIPANTS.csv"
+    ],
+    "judges" : [],
+    "scores" : [
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SCORES-AA-BB.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SCORES-AA-FX.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SCORES-AA-UB.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SCORES-AA-VT.csv"
+    ],
+    "summaries" : [
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-AA.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-BB.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-FX.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-UB.csv",
+        "2026-US-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-VT.csv"
+    ]
+}

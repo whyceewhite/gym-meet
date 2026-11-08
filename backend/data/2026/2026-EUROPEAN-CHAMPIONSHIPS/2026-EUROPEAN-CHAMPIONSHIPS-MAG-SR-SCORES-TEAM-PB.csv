@@ -1,25 +1,25 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,1,568,FRASER Joe,GBR,COMPLETED,5.6,8.600,0.0,,,14.200
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,2,648,DUKHNO Arsenii,WG2,COMPLETED,5.6,8.466,0.1,,,14.166
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,3,649,MARINOV Daniel,WG2,COMPLETED,5.9,8.166,0.0,,,14.066
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,4,650,SIEEDIN Savelii,WG2,COMPLETED,5.4,8.566,0.0,,,13.966
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,5,589,MESZAROS Krisztofer,HUN,COMPLETED,5.5,8.433,0.0,,,13.933
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,6,664,SEIFERT Noe,SUI,COMPLETED,5.7,8.200,0.0,,,13.900
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,7,581,STELMAKH Radomyr,GER,COMPLETED,5.3,8.566,0.0,,,13.866
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,8,661,LANGENEGGER Florian,SUI,COMPLETED,5.2,8.600,0.0,,,13.800
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,9,578,EDER Timo,GER,COMPLETED,5.2,8.433,0.1,,,13.733
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,10,560,CARVALHO Kevin,FRA,COMPLETED,5.1,8.500,0.1,,,13.700
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,11,594,HAJDU Tas,HUN,COMPLETED,5.1,8.366,0.1,,,13.566
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,12,514,KUAVITA Noah,BEL,COMPLETED,5.2,8.300,0.0,,,13.500
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,13,579,EICHHORN Gabriel,GER,COMPLETED,5.2,8.166,0.0,,,13.366
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,14,569,RUSHWORTH Jonas,GBR,COMPLETED,5.5,7.833,0.0,,,13.333
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,15,561,CASSAM CHENAI Pierre,FRA,COMPLETED,4.8,8.466,0.0,,,13.266
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,16,591,TOMCSANYI Benedek,HUN,COMPLETED,4.6,8.566,0.0,,,13.166
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,17,612,ABBADINI Yumin,ITA,COMPLETED,4.5,8.566,0.0,,,13.066
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,18,515,MARTINEZ Victor,BEL,COMPLETED,5.3,7.666,0.0,,,12.966
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,19,613,DE ROSA Edoardo,ITA,COMPLETED,4.9,7.800,0.0,,,12.700
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,20,564,SAKOUHI Nael,FRA,COMPLETED,5.1,7.433,0.0,,,12.533
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,21,614,FEDERICI Ares,ITA,COMPLETED,5.1,7.266,0.0,,,12.366
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,22,513,CUYLE Nicola,BEL,COMPLETED,!4.4,7.866,0.0,,,12.266
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,23,566,TULLOCH Courtney,GBR,COMPLETED,5.3,6.566,0.0,,,11.866
-37th Senior European Championships,MAG,SR,2026-08-23,TEAM,PB,24,663,PIFFARETTI Mattia,SUI,COMPLETED,!4.8,7.000,0.0,,,11.800
+Event Name,Discipline,Age Category,Session Start Date,Round,Part,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,1,568,FRASER Joe,GBR,COMPLETED,5.6,8.600,0.0,,,14.200
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,2,648,DUKHNO Arsenii,WG2,COMPLETED,5.6,8.466,0.1,,,14.166
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,3,649,MARINOV Daniel,WG2,COMPLETED,5.9,8.166,0.0,,,14.066
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,4,650,SIEEDIN Savelii,WG2,COMPLETED,5.4,8.566,0.0,,,13.966
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,5,589,MESZAROS Krisztofer,HUN,COMPLETED,5.5,8.433,0.0,,,13.933
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,6,664,SEIFERT Noe,SUI,COMPLETED,5.7,8.200,0.0,,,13.900
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,7,581,STELMAKH Radomyr,GER,COMPLETED,5.3,8.566,0.0,,,13.866
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,8,661,LANGENEGGER Florian,SUI,COMPLETED,5.2,8.600,0.0,,,13.800
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,9,578,EDER Timo,GER,COMPLETED,5.2,8.433,0.1,,,13.733
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,10,560,CARVALHO Kevin,FRA,COMPLETED,5.1,8.500,0.1,,,13.700
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,11,594,HAJDU Tas,HUN,COMPLETED,5.1,8.366,0.1,,,13.566
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,12,514,KUAVITA Noah,BEL,COMPLETED,5.2,8.300,0.0,,,13.500
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,13,579,EICHHORN Gabriel,GER,COMPLETED,5.2,8.166,0.0,,,13.366
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,14,569,RUSHWORTH Jonas,GBR,COMPLETED,5.5,7.833,0.0,,,13.333
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,15,561,CASSAM CHENAI Pierre,FRA,COMPLETED,4.8,8.466,0.0,,,13.266
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,16,591,TOMCSANYI Benedek,HUN,COMPLETED,4.6,8.566,0.0,,,13.166
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,17,612,ABBADINI Yumin,ITA,COMPLETED,4.5,8.566,0.0,,,13.066
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,18,515,MARTINEZ Victor,BEL,COMPLETED,5.3,7.666,0.0,,,12.966
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,19,613,DE ROSA Edoardo,ITA,COMPLETED,4.9,7.800,0.0,,,12.700
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,20,564,SAKOUHI Nael,FRA,COMPLETED,5.1,7.433,0.0,,,12.533
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,21,614,FEDERICI Ares,ITA,COMPLETED,5.1,7.266,0.0,,,12.366
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,22,513,CUYLE Nicola,BEL,COMPLETED,!4.4,7.866,0.0,,,12.266
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,23,566,TULLOCH Courtney,GBR,COMPLETED,5.3,6.566,0.0,,,11.866
+37th Senior European Championships,MAG,SR,2026-08-23,TEAM,,PB,24,663,PIFFARETTI Mattia,SUI,COMPLETED,!4.8,7.000,0.0,,,11.800

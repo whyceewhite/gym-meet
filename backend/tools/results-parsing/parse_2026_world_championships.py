@@ -201,7 +201,7 @@ def judges(disc):
            'Function', 'Name', 'Surname', 'Given Name', 'NOC Code'], rows)
 
 # ---------------------------------------------------------------- apparatus tables
-SCORE_HDR = ['Event Name', 'Discipline', 'Age Category', 'Session Start Date', 'Round', 'Apparatus',
+SCORE_HDR = ['Event Name', 'Discipline', 'Age Category', 'Session Start Date', 'Round', 'Part', 'Apparatus',
              'Rank', 'Bib', 'Name', 'NOC Code']
 MARK = r'(?:\s+(Q|R\d|NR))?'
 
@@ -210,7 +210,7 @@ def meta(disc, rnd, app):
     if isinstance(date, dict):
         date = date[app]
     return {'Event Name': EVENT_NAME, 'Discipline': disc, 'Age Category': 'SR',
-            'Session Start Date': date, 'Round': rnd, 'Apparatus': app}
+            'Session Start Date': date, 'Round': rnd, 'Part': '', 'Apparatus': app}
 
 def split_bp(vals, ctx):
     """Pen./Bonus share a column pair; sign tells them apart (bonus > 0, penalty < 0)."""
@@ -501,14 +501,14 @@ def aa_report(disc, rnd):
     return athletes
 
 def summary_aa(disc, rnd, athletes):
-    hdr = ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Round', 'Rank', 'Bib', 'Name',
+    hdr = ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Round', 'Part', 'Rank', 'Bib', 'Name',
            'NOC Code'] + [f'{a} Total' for a in SUMMARY_APPS[disc]] + ['SJ Penalty', 'Total']
     if rnd == 'QUAL':
         hdr.append('Qualification')
     rows = []
     for a in athletes:
         r = {'Event Name': EVENT_NAME, 'Discipline': disc, 'Age Category': 'SR', 'Event Start Date': EVENT_START,
-             'Round': rnd, 'Rank': a['Rank'], 'Bib': a['Bib'],
+             'Round': rnd, 'Part': '', 'Rank': a['Rank'], 'Bib': a['Bib'],
              'Name': check_name(f'{disc} {rnd} AA summary', a['Bib'], a['Name'], a['NOC']),
              'NOC Code': a['NOC'], 'SJ Penalty': '', 'Total': a['Total'], 'Qualification': a['Q']}
         for app in SUMMARY_APPS[disc]:
@@ -578,14 +578,14 @@ def team_report(disc, rnd):
     return teams
 
 def summary_team(disc, rnd, teams):
-    hdr = ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Round', 'Rank', 'NOC Code'] + \
+    hdr = ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Round', 'Part', 'Rank', 'NOC Code'] + \
           [f'{a} Total' for a in SUMMARY_APPS[disc]] + ['SJ Penalty', 'Total']
     if rnd == 'QUAL':
         hdr.append('Qualification')
     rows = []
     for t in teams:
         r = {'Event Name': EVENT_NAME, 'Discipline': disc, 'Age Category': 'SR', 'Event Start Date': EVENT_START,
-             'Round': rnd, 'Rank': t['Rank'], 'NOC Code': t['NOC'], 'SJ Penalty': '',
+             'Round': rnd, 'Part': '', 'Rank': t['Rank'], 'NOC Code': t['NOC'], 'SJ Penalty': '',
              'Total': '' if t['Total'] == 'DNF' else t['Total'], 'Qualification': t['Q']}
         for a, app in enumerate(APPS[disc]):
             r[f'{app} Total'] = t['totals'][a]

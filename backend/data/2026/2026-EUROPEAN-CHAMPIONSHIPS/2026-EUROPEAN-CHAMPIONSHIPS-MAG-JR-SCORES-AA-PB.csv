@@ -1,25 +1,25 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,1,843,GOLOVIN Volodymyr,UKR,COMPLETED,!5.9,8.600,0.1,,,14.600
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,2,816,SMIRNOV Daniil,WG2,COMPLETED,!4.8,8.800,0.0,,,13.600
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,3,758,ATKINS George,GBR,COMPLETED,4.7,8.666,0.0,,,13.366
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,4,828,SCHUMACHER Ben,SUI,COMPLETED,4.7,8.500,0.0,,,13.200
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,5,757,CHOWDHURY Uzair,GBR,COMPLETED,5.3,7.666,0.0,,,12.966
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,6,715,ROLIN Maxime,BEL,COMPLETED,4.5,8.400,0.0,,,12.900
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,7,817,MUSAEV Radmir,WG2,COMPLETED,4.7,8.166,0.0,,,12.866
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,8,800,PATON Jayden,NED,COMPLETED,4.1,8.633,0.0,,,12.733
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,9,703,BALAZS Jeremy,AUT,COMPLETED,3.9,8.766,0.0,,,12.666
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,10,830,BUCKLEY Michael,SUI,COMPLETED,3.9,8.733,0.0,,,12.633
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,11,741,CARRERES Otger,ESP,COMPLETED,!4.2,8.333,0.1,,,12.633
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,12,784,TIROSH Tomer,ISR,COMPLETED,!4.4,8.100,0.0,,,12.500
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,13,791,RUGGERI Riccardo,ITA,COMPLETED,4.2,8.233,0.0,,,12.433
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,14,773,AKINDURO Axel Andras,HUN,COMPLETED,3.7,8.666,0.0,,,12.366
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,15,717,KARTASHOU Tsimur,WG1,COMPLETED,3.7,8.566,0.0,,,12.266
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,16,844,HAVRYLCHENKO Valentyn,UKR,COMPLETED,4.1,8.166,0.0,,,12.266
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,17,702,WACHTER Samuel,AUT,COMPLETED,3.8,8.333,0.0,,,12.133
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,18,853,LE KHAC Tomasz,POL,COMPLETED,4.6,7.533,0.0,,,12.133
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,19,713,STRYPSTEIN Noe,BEL,COMPLETED,3.7,8.400,0.0,,,12.100
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,20,774,GAL Kristof,HUN,COMPLETED,4.3,7.566,0.0,,,11.866
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,21,801,SOLEBAN Sami,NED,COMPLETED,4.1,7.666,0.0,,,11.766
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,22,763,ALSHANOV Davyd,GER,COMPLETED,4.3,7.300,0.0,,,11.600
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,23,789,MAZZOLA Pietro,ITA,COMPLETED,4.0,7.100,0.0,,,11.100
-37th Junior European Championships,MAG,JR,2026-08-23,AA,PB,24,777,WARD Robert,IRL,COMPLETED,3.2,6.900,0.0,,,10.100
+Event Name,Discipline,Age Category,Session Start Date,Round,Part,Apparatus,Rank,Bib,Name,NOC Code,Status,D,E,B,Penalty,SJ Penalty,Total
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,1,843,GOLOVIN Volodymyr,UKR,COMPLETED,!5.9,8.600,0.1,,,14.600
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,2,816,SMIRNOV Daniil,WG2,COMPLETED,!4.8,8.800,0.0,,,13.600
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,3,758,ATKINS George,GBR,COMPLETED,4.7,8.666,0.0,,,13.366
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,4,828,SCHUMACHER Ben,SUI,COMPLETED,4.7,8.500,0.0,,,13.200
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,5,757,CHOWDHURY Uzair,GBR,COMPLETED,5.3,7.666,0.0,,,12.966
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,6,715,ROLIN Maxime,BEL,COMPLETED,4.5,8.400,0.0,,,12.900
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,7,817,MUSAEV Radmir,WG2,COMPLETED,4.7,8.166,0.0,,,12.866
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,8,800,PATON Jayden,NED,COMPLETED,4.1,8.633,0.0,,,12.733
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,9,703,BALAZS Jeremy,AUT,COMPLETED,3.9,8.766,0.0,,,12.666
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,10,830,BUCKLEY Michael,SUI,COMPLETED,3.9,8.733,0.0,,,12.633
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,11,741,CARRERES Otger,ESP,COMPLETED,!4.2,8.333,0.1,,,12.633
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,12,784,TIROSH Tomer,ISR,COMPLETED,!4.4,8.100,0.0,,,12.500
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,13,791,RUGGERI Riccardo,ITA,COMPLETED,4.2,8.233,0.0,,,12.433
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,14,773,AKINDURO Axel Andras,HUN,COMPLETED,3.7,8.666,0.0,,,12.366
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,15,717,KARTASHOU Tsimur,WG1,COMPLETED,3.7,8.566,0.0,,,12.266
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,16,844,HAVRYLCHENKO Valentyn,UKR,COMPLETED,4.1,8.166,0.0,,,12.266
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,17,702,WACHTER Samuel,AUT,COMPLETED,3.8,8.333,0.0,,,12.133
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,18,853,LE KHAC Tomasz,POL,COMPLETED,4.6,7.533,0.0,,,12.133
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,19,713,STRYPSTEIN Noe,BEL,COMPLETED,3.7,8.400,0.0,,,12.100
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,20,774,GAL Kristof,HUN,COMPLETED,4.3,7.566,0.0,,,11.866
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,21,801,SOLEBAN Sami,NED,COMPLETED,4.1,7.666,0.0,,,11.766
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,22,763,ALSHANOV Davyd,GER,COMPLETED,4.3,7.300,0.0,,,11.600
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,23,789,MAZZOLA Pietro,ITA,COMPLETED,4.0,7.100,0.0,,,11.100
+37th Junior European Championships,MAG,JR,2026-08-23,AA,,PB,24,777,WARD Robert,IRL,COMPLETED,3.2,6.900,0.0,,,10.100

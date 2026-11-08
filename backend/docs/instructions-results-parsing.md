@@ -257,6 +257,9 @@ Full suffix reference:
 | `SCORES-TEAM-<APP>` | Results By Apparatus, Team Final round (per-athlete detail feeding the team score) | One apparatus, one round |
 | `SUMMARY-QUAL-TEAM` | Team Results, top-line team totals only, Qualification round | Every team, one round |
 | `SUMMARY-FINAL-TEAM` | Team Final Results, top-line team totals only, Team Final round | Every qualified team, one round |
+| `SUMMARY-QUAL-AA` / `SUMMARY-FINAL-AA` | All-Around Results, top-line athlete totals | Every athlete, one round (for a round split into parts: each part plus the combined standings, §9) |
+| `SUMMARY-FINAL-<APP>` | Combined standings on one apparatus for a round split into parts (§9) | One apparatus |
+| `IMPORT.json` | Manifest of the event metadata and every file above for one discipline+age | — |
 
 `SUMMARY-QUAL-TEAM`/`SUMMARY-FINAL-TEAM` use `QUAL`/`FINAL` rather than the
 `SCORES`-side `QUAL`/`TEAM` vocabulary for the *first* `<ROUND>` segment —
@@ -363,7 +366,8 @@ Date` instead of `Event Start Date`:
 | Column | Notes |
 |---|---|
 | Event Name, Discipline, Age Category | As above |
-| Session Start Date | The calendar date this specific `Round` (and, for `EVENT`, this specific apparatus — see below) was actually competed, sourced from the PDF's **Competition Schedule** pages, cross-referenced by round name and time window — **never** from a page footer's report-generation timestamp (§5.2b). Named "Start" rather than plain "Date" on purpose: most rounds are single-day in this data set, but a large-field round (e.g. a Worlds-sized Qualification) can genuinely span two calendar days, and the column name shouldn't imply otherwise even though `Session.date` (`data-model.md`) is presently a single field, not a range. If a future competition's round really does span multiple days, that's a `Session`/schema question to revisit, not something to paper over with this column. |
+| Session Start Date | The calendar date this specific `Round` (and, for `EVENT`, this specific apparatus — see below; for a round split into parts, this part) was actually competed, sourced from the PDF's **Competition Schedule** pages, cross-referenced by round name and time window — **never** from a page footer's report-generation timestamp (§5.2b). Named "Start" rather than plain "Date" on purpose: most rounds are single-day in this data set, but a large-field round (e.g. a Worlds-sized Qualification) can genuinely span two calendar days, and the column name shouldn't imply otherwise even though `Session.date` (`data-model.md`) is presently a single field, not a range. If a future competition's round really does span multiple days, that's a `Session`/schema question to revisit, not something to paper over with this column. |
+| Part | Right after `Round` on every `SCORES-*` and `SUMMARY-*` file. `1`, `2`, … for each part of a round split across several sessions (US Championships' Day 1/Day 2, §9); blank for an ordinary single-session round and for the combined rows of a split round. Maps to `Session.part`. |
 
 **`SUMMARY-*.csv` uses `Event Start Date`, not `Session Start Date`,
 deliberately** — these files are already scoped to one round by their
@@ -1150,3 +1154,98 @@ Checks that must all pass (they did, with zero exceptions):
 - The last reserve can land on the same text line as the `Legend:` label
   (MAG apparatus finals' `R6`) — a first pass silently dropped it.
 - WAG has a `Vice-President` (→ `JudgeFunction.VICE_PRESIDENT`).
+
+## 9. US Championships (USA Gymnastics ProScore) differences
+
+`2026-US-CHAMPIONSHIPS-ALL-RESULTS.pdf` is a USA Gymnastics ProScore
+printout, not a FIG results book: no footer codes, no NOCs, no FIG licences,
+and names printed `Given Surname`. The parser is
+[`tools/results-parsing/parse_2026_us_championships.py`](../tools/results-parsing/parse_2026_us_championships.py)
+— run it with the PDF path; it reads `EVENT.csv` and the existing
+`PARTICIPANTS` files (names, Surname/Given Name split and club, keyed by
+bib) from the same folder and exits non-zero if any check below fails.
+
+### 9.1 Competition format: one round in two parts
+
+Each level competes the All-Around on two days. Day 1 is `Round=AA`,
+`Part=1`; Day 2 is `Part=2`. The titles are decided on two-day combined
+totals — the AA title on the combined AA total, each apparatus title on the
+combined apparatus total — so the data model holds those combined standings
+on a whole-round session (`Part` blank; `data-model.md` §3 `Session`, §5.3):
+
+- `SUMMARY-FINAL-AA`: one row per athlete per part, plus a `Part`-blank row
+  with the combined total and rank.
+- `SUMMARY-FINAL-<APP>`: the combined apparatus standings (`Part` blank),
+  with each day's figure alongside.
+
+Day 2 has no per-day placements in the source, so `Rank` is blank on every
+`Part=2` row. Athletes who only competed on Day 1 (several MAG Seniors) have
+Day 1 rows only and no combined rows.
+
+### 9.2 Reports used
+
+| Report | Gives |
+|---|---|
+| Day 1 "Meet Results" | Day 1 routines (D/E, D+/E+, S+/ND, Final), apparatus places, AA total and place |
+| Day 1 "Event Results - Vault" (MAG SR, WAG SR, WAG JR) | Day 1 two-vault list: both attempts, the day's vault result, and the Day 1 vault rank |
+| Day 2 "Meet Results - Multi" | Day 2 routines ("Finals" block) and the combined AA total/rank; its "Prelims" block repeats Day 1 and is cross-checked against it |
+| Day 2 "Event Results - Multi - <apparatus>" | Combined apparatus standings; for vault, both days' attempts |
+| "USAG 10-Point Results" | National-team selection points — **not parsed** |
+
+**The two-day reports number the days backwards:** `#1` is Day 2 and `#2`
+is Day 1 (printed as the first column). Map by the heading, not by order.
+
+### 9.3 Layout gotchas
+
+- **Missing values print as underscores** (`_._`, `_.__`, `__.___`). An
+  apparatus whose Final is `__.___` / `_.__` means the athlete wasn't entered
+  on it (a specialist) — **no row is written**, even though Day 1 still prints
+  a place for it (e.g. `45=`). A routine printed `0.00 / 0.000` was scratched
+  → `Status=DNS`, blank scores and rank.
+- **Two-day Meet Results omit the D/E pair for skipped apparatus** but still
+  print placeholder D+/E+ and S+/ND pairs. Assign each line's values to
+  apparatus by: every apparatus if the count matches, otherwise only the
+  apparatus with a printed Final.
+- **Day 1 apparatus places are positional** — the vault place is blank for
+  levels with a vault event — so match each place to the Final value it sits
+  under, never by order.
+- **Tie markers** differ by report (`1T`, `45=`, `2*`); the stored rank is
+  the number alone.
+- **Asterisks before names** (`*Danila Leykin`) are stripped.
+- **Vault.** MAG juniors vault once each day (their two-day vault report
+  prints the empty second slot as `x/0.000`). MAG Seniors, WAG Seniors and WAG
+  Juniors have a two-vault vault event each day, so their `SCORES-AA-VT`
+  uses the double-attempt shape: vault 1 is the AA vault (counts for the AA),
+  vault 2 and the day's two-vault result come from the vault lists. Day 1
+  second vaults come from Day 1's vault list, because the two-day vault
+  report omits athletes who didn't contest the vault title on both days
+  (Day 1-only athletes, and e.g. WAG JR bib 31, who vaulted once on Day 2).
+  Single vaulters don't contest the vault title and aren't in the two-day
+  vault report. WAG's +0.2 (`Bns`) goes to `Combined Bonus`; MAG has none.
+- **Bonuses.** MAG prints D+ (difficulty bonus), E+ (execution bonus),
+  S+ (stick bonus) and ND (neutral deduction). `B` = D+ + E+ + S+, `Penalty`
+  = ND, and D+/E+/S+ are kept as trailing breakdown columns
+  (`import-file-model.md`). WAG prints only ND (and the vault `Bns`).
+- **AA totals for partial all-arounders are printed** (e.g. a pommel
+  specialist's AA total is his pommel score) and kept as published.
+- No `NOC` is printed; every participant is written as `USA` (a national
+  championship, and `Participant.noc` is required).
+
+### 9.4 Checks (all pass)
+
+1. D + E + D+ + E+ + S+ + ND = Final for every routine; apparatus Finals sum
+   to the AA total.
+2. Day 2's "Prelims" block equals Day 1's results; Day 1 + Day 2 AA = the
+   combined total.
+3. Each routine's day score equals the two-day apparatus report's figure
+   for that day, for every athlete that report lists; the report's combined
+   total equals the sum of its two days.
+4. Vault 1 is identical in the AA results and the vault lists; each vault
+   list's day result equals (V1 + V2)/2 + Bns; Day 1's vault list and the
+   two-day vault report agree.
+5. Every printed bib/name matches `PARTICIPANTS`.
+
+Re-deriving the earlier hand-built files with this parser reproduced every
+one of their 1,215 routine values exactly; the differences were the
+intended ones (not-entered rows dropped, `UNKNOWN` → `DNS`, second vaults
+and Day 1 vault ranks added).
