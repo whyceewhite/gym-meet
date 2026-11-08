@@ -443,7 +443,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 |---|---|
 | Round | `QUAL` / `EVENT` / `TEAM` / `AA` |
 | Apparatus | The two-letter code (`FX`/`PH`/`SR`/`PB`/`HB`/`VT` for MAG, `FX`/`BB`/`UB`/`VT` for WAG), or **blank** for a Superior Jury row (President/Member — not tied to one apparatus). **Not** the spelled-out name the icon stands for (`Floor Exercise`, `Rings`, ...) — identifying the panel's apparatus by icon (§3.4) is a separate step from writing the column value, and the first pass at this file wrote the spelled-out label straight through for all four MAG/WAG `JUDGES.csv` files before it was caught and fixed. Map to the short code explicitly; don't let the icon lookup's own label leak into the output. |
-| Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`/`T1`/`T2`, `L`/`L1`/`L2`, `R1`–`R6`, `President`, `Vice-President`, `Member` — each must resolve through `JudgeFunction.find` (case-insensitive, spaces/hyphens → underscores). Reserves are `R<n>`, not `RES <n>`; a single unnumbered reserve is `R1` |
+| Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`/`T1`/`T2`, `L`/`L1`/`L2`, `R`/`R1`–`R6`, `President`, `Vice-President`, `Member` — each must resolve through `JudgeFunction.find` (code or long name, case-insensitive). Reserves are `R<n>`, not `RES <n>`; a single reserve the source doesn't number is plain `R`, the same way `L`/`T` work |
 | Name | Combined name as printed |
 | Surname | **Derived, every time.** There is no separate master file for judges (unlike athletes), so this file derives the split itself using the rule in §5.10. |
 | Given Name | Derived, same rule |

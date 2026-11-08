@@ -1,5 +1,7 @@
 package doubletuck.meet.domain;
 
+import lombok.Getter;
+
 /**
  * QUAL = Qualification. EVENT = an Apparatus Final (also called an "Event
  * Final"). AA = All-Around Final. TEAM = Team Final.
@@ -12,19 +14,27 @@ package doubletuck.meet.domain;
  * apparatus (the previous design here), matching how {@link Score} already
  * carries its own apparatus rather than duplicating it onto the round.
  */
+@Getter
 public enum Round {
 
-    QUAL,
-    EVENT,
-    AA,
-    TEAM;
+    QUAL("Qualification"),
+    EVENT("Apparatus Final"),
+    AA("All-Around Final"),
+    TEAM("Team Final");
+
+    private final String longName;
+
+    Round(String longName) {
+        this.longName = longName;
+    }
 
     public static Round find(String text) {
 
         if (text != null && !text.isEmpty()) {
             text = text.trim();
             for (Round round : Round.values()) {
-                if (round.name().equalsIgnoreCase(text)) {
+                if (round.name().equalsIgnoreCase(text)
+                        || round.longName.equalsIgnoreCase(text)) {
                     return round;
                 }
             }

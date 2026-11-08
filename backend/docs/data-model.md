@@ -31,6 +31,11 @@ result within a `Session`.
 Every enum used below is defined once here and referenced by name in the entity
 tables, rather than spelled out inline at each use.
 
+Enums that are shown to users carry a `longName` display label (the **Long
+Name** column below), exposed through `getLongName()`. Their `find(text)`
+matches either the code or the long name, case-insensitively, so an import
+file can use either one.
+
 #### `Discipline`
 
 | Value | Description |
@@ -40,28 +45,28 @@ tables, rather than spelled out inline at each use.
 
 #### `EventLevel`
 
-| Value | Description |
-|---|---|
-| OLYMPIC_GAMES | |
-| WORLD_CHAMPIONSHIPS | |
-| YOUTH_OLYMPIC_GAMES | |
-| CONTINENTAL_GAMES | e.g. Mediterranean Games, Pan American Games |
-| CONTINENTAL_CHAMPIONSHIPS | e.g. European Championships |
-| WORLD_CUP | |
-| WORLD_CHALLENGE_CUP | |
-| INTERNATIONAL_TOURNAMENTS | Invitational events with international entries, below World Cup status |
-| NATIONAL_CHAMPIONSHIPS | A federation's own domestic championship, e.g. US Championships |
-| DOMESTIC_COMPETITION | Other domestic, non-championship competition |
-| UNKNOWN | Used instead of leaving `Event.level` null when the tier can't be confidently classified at import time |
+| Value | Long Name | Description |
+|---|---|---|
+| OLYMPIC_GAMES | Olympic Games | |
+| WORLD_CHAMPIONSHIPS | World Championships | |
+| YOUTH_OLYMPIC_GAMES | Youth Olympic Games | |
+| CONTINENTAL_GAMES | Continental Games | e.g. Mediterranean Games, Pan American Games |
+| CONTINENTAL_CHAMPIONSHIPS | Continental Championships | e.g. European Championships |
+| WORLD_CUP | World Cup | |
+| WORLD_CHALLENGE_CUP | World Challenge Cup | |
+| INTERNATIONAL_TOURNAMENTS | International Tournament | Invitational events with international entries, below World Cup status |
+| NATIONAL_CHAMPIONSHIPS | National Championships | A federation's own domestic championship, e.g. US Championships |
+| DOMESTIC_COMPETITION | Domestic Competition | Other domestic, non-championship competition |
+| UNKNOWN | Unknown | Used instead of leaving `Event.level` null when the tier can't be confidently classified at import time |
 
 #### `Round`
 
-| Value | Description |
-|---|---|
-| QUAL | Qualification |
-| EVENT | An Apparatus Final (also called an "Event Final") |
-| AA | All-around final |
-| TEAM | Team final |
+| Value | Long Name | Description |
+|---|---|---|
+| QUAL | Qualification | Qualification |
+| EVENT | Apparatus Final | An Apparatus Final (also called an "Event Final") |
+| AA | All-Around Final | All-around final |
+| TEAM | Team Final | Team final |
 
 An Apparatus Final is genuinely its own event — its own start list, its own
 scores, its own medal ceremony — even though several are typically held on
@@ -84,16 +89,16 @@ carries its own `apparatus` rather than duplicating it onto the round.
 
 #### `Apparatus`
 
-| Value | Description |
-|---|---|
-| VT | Vault |
-| UB | Uneven bars (WAG) |
-| BB | Balance beam (WAG) |
-| FX | Floor exercise |
-| PH | Pommel horse (MAG) |
-| SR | Still rings (MAG) |
-| PB | Parallel bars (MAG) |
-| HB | Horizontal/high bar (MAG) |
+| Value | Long Name | Description |
+|---|---|---|
+| VT | Vault | Vault |
+| UB | Uneven Bars | Uneven bars (WAG) |
+| BB | Balance Beam | Balance beam (WAG) |
+| FX | Floor Exercise | Floor exercise |
+| PH | Pommel Horse | Pommel horse (MAG) |
+| SR | Still Rings | Still rings (MAG) |
+| PB | Parallel Bars | Parallel bars (MAG) |
+| HB | Horizontal Bar | Horizontal/high bar (MAG) |
 
 No `AA` value — all-around is a computed summary (`AllAroundResult`, §6.2), not a
 judged apparatus result. (`Round.AA` is a different enum for the All-Around
@@ -101,22 +106,23 @@ Final round itself — the two `AA`s aren't related beyond sharing a name.)
 
 #### `ScoreStatus`
 
-| Value | Description |
-|---|---|
-| COMPLETED | The attempt was performed and scored normally. |
-| DNS | The athlete did not start / did not perform this apparatus. |
-| INVALID_VAULT | The vault attempt was performed but ruled invalid (e.g. a board or landing-zone violation) and received no scored result. Applies to vault attempts only. |
+| Value | Long Name | Description |
+|---|---|---|
+| COMPLETED | Completed | The attempt was performed and scored normally. |
+| DNS | Did Not Start | The athlete did not start / did not perform this apparatus. |
+| INVALID_VAULT | Invalid Vault | The vault attempt was performed but ruled invalid (e.g. a board or landing-zone violation) and received no scored result. Applies to vault attempts only. |
+| UNKNOWN | Unknown | |
 
 #### `QualificationResult`
 
-| Value | Description |
-|---|---|
-| Q | Qualified to the next round. |
-| R1 | First reserve. Would advance if a qualified athlete withdraws. |
-| R2 | Second reserve. |
-| R3 | Third reserve. |
-| R4 | Fourth reserve (e.g. World Championships All-Around qualification). |
-| NR | Had a score to qualify, but removed because of maximum of two per country in a final rule. |
+| Value | Long Name | Description |
+|---|---|---|
+| Q | Qualified | Qualified to the next round. |
+| R1 | First Reserve | First reserve. Would advance if a qualified athlete withdraws. |
+| R2 | Second Reserve | Second reserve. |
+| R3 | Third Reserve | Third reserve. |
+| R4 | Fourth Reserve | Fourth reserve (e.g. World Championships All-Around qualification). |
+| NR | NOC Reserve | Had a score to qualify, but removed because of maximum of two per country in a final rule. "NOC Reserve" is FIG's own legend wording. |
 
 #### `Country`
 
@@ -124,37 +130,29 @@ No enumerator or type will be used. This value is typically the ISO-3166 three-l
 
 #### `JudgeFunction`
 
-| Value | Description |
-|---|---|
-| PRESIDENT | |
-| VICE_PRESIDENT | |
-| MEMBER | |
-| D1 | |
-| D2 | |
-| E1 | |
-| E2 | |
-| E3 | |
-| E4 | |
-| E5 | |
-| E6 | |
-| E7 | |
-| L | Line judge. |
-| L1 | Line judge 1. |
-| L2 | Line judge 2. |
-| T | Time judge. |
-| T1 | Time judge 1. |
-| T2 | Time judge 2. |
-| SV | Apparatus supervisor. |
-| R1 | First reserve judge. A source listing a single unnumbered reserve is recorded as `R1`. |
-| R2 | Second reserve judge. |
-| R3 | Third reserve judge. |
-| R4 | Fourth reserve judge. |
-| R5 | Fifth reserve judge. |
-| R6 | Sixth reserve judge. |
+| Value | Long Name | Description |
+|---|---|---|
+| PRESIDENT | President | Superior Jury |
+| VICE_PRESIDENT | Vice President | Superior Jury |
+| MEMBER | Member | Superior Jury |
+| D1 | Difficulty Judge 1 | |
+| D2 | Difficulty Judge 2 | |
+| E1–E7 | Execution Judge 1–7 | One constant per execution judge, `E1` through `E7` |
+| L | Line Judge | A panel's only line judge |
+| L1 | Line Judge 1 | |
+| L2 | Line Judge 2 | |
+| T | Time Judge | A panel's only time judge |
+| T1 | Time Judge 1 | |
+| T2 | Time Judge 2 | |
+| SV | Supervisor | Apparatus supervisor |
+| R | Reserve Judge | A single reserve the source doesn't number |
+| R1–R6 | Reserve Judge 1–6 | Numbered reserve judges, `R1` through `R6` |
 
-Codes as written in the `*-JUDGES.csv` files. `JudgeFunction.find` matches
-case-insensitively and treats spaces and hyphens as underscores (e.g.
-"Vice-President" → `VICE_PRESIDENT`). The `L`, `T` and `SV` meanings were
+Codes as written in the `*-JUDGES.csv` files. When matching a code,
+`JudgeFunction.find` also treats spaces and hyphens as underscores (e.g.
+"Vice-President" → `VICE_PRESIDENT`). The unnumbered `L`/`T`/`R` forms are
+used when the source lists only one of that role without a number. The
+`L`, `T` and `SV` meanings were
 confirmed by the 2026 World Championships Judges Assignments, which spell
 them out ("Line Judge 1", "Time Judge", "Floor Exercise Supervisor").
 

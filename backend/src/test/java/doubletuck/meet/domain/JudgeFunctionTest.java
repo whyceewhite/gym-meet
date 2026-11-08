@@ -17,10 +17,24 @@ class JudgeFunctionTest {
             "E7, E7",
             "SV, SV",
             "' t1 ', T1",
+            "R, R",
             "R1, R1",
             "R6, R6"
     })
-    void testFind(String text, JudgeFunction expected) {
+    void testFind_ByName(String text, JudgeFunction expected) {
+        assertEquals(expected, JudgeFunction.find(text));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Vice President, VICE_PRESIDENT",
+            "Difficulty Judge 2, D2",
+            "time judge 1, T1",
+            "Line Judge, L",
+            "Reserve Judge, R",
+            "Reserve Judge 3, R3"
+    })
+    void testFind_ByLongName(String text, JudgeFunction expected) {
         assertEquals(expected, JudgeFunction.find(text));
     }
 
@@ -29,5 +43,11 @@ class JudgeFunctionTest {
         assertNull(JudgeFunction.find("RES 1"));
         assertNull(JudgeFunction.find(""));
         assertNull(JudgeFunction.find(null));
+    }
+
+    @Test
+    void testLongName() {
+        assertEquals("Vice President", JudgeFunction.VICE_PRESIDENT.getLongName());
+        assertEquals("Reserve Judge", JudgeFunction.R.getLongName());
     }
 }
