@@ -4,7 +4,8 @@ public enum ScoreStatus {
 
     COMPLETED,
     DNS,
-    INVALID_VAULT;
+    INVALID_VAULT,
+    UNKNOWN;
 
     public static ScoreStatus find(String text) {
 
