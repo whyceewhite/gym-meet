@@ -1,9 +1,9 @@
-Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status1,D1,E1,B1,Penalty1,SJ Penalty1,Total1,Status2,D2,E2,B2,Penalty2,SJ Penalty2,Total2,Total
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,1,107,DAVTYAN Artur,ARM,COMPLETED,5.200,9.500,0.1,,,14.800,COMPLETED,5.200,9.600,0.1,,,14.900,14.850
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,2,192,JARMAN Jake,GBR,COMPLETED,5.600,9.300,,,,14.900,COMPLETED,5.200,9.200,,,,14.400,14.650
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,3,269,SPONEVIK Sebastian,NOR,COMPLETED,5.200,9.133,,,,14.333,COMPLETED,5.200,9.200,,,,14.400,14.366
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,4,310,CHEPURNYI Nazar,UKR,COMPLETED,5.200,9.100,,,,14.300,COMPLETED,5.200,9.200,,,,14.400,14.350
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,4,327,DUKHNO Arsenii,RUS,COMPLETED,5.200,9.200,,,,14.400,COMPLETED,5.200,9.100,,,,14.300,14.350
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,6,191,HEPWORTH Harry,GBR,COMPLETED,5.200,9.000,,,,14.200,COMPLETED,5.600,8.333,,,,13.933,14.066
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,7,276,YULO Carlos Edriel,PHI,COMPLETED,5.600,8.033,,-0.3,,13.333,COMPLETED,5.200,9.233,,,,14.433,13.883
-54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,8,239,KAWAKAMI Shohei,JPN,COMPLETED,5.200,8.000,,,,13.200,COMPLETED,5.200,8.566,,-0.3,,13.466,13.333
+Event Name,Discipline,Age Category,Session Start Date,Round,Apparatus,Rank,Bib,Name,NOC Code,Status1,D1,E1,B1,Penalty1,SJ Penalty1,Total1,Status2,D2,E2,B2,Penalty2,SJ Penalty2,Total2,Combined Bonus,Total
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,1,107,DAVTYAN Artur,ARM,COMPLETED,5.200,9.500,0.1,,,14.800,COMPLETED,5.200,9.600,0.1,,,14.900,,14.850
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,2,192,JARMAN Jake,GBR,COMPLETED,5.600,9.300,,,,14.900,COMPLETED,5.200,9.200,,,,14.400,,14.650
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,3,269,SPONEVIK Sebastian,NOR,COMPLETED,5.200,9.133,,,,14.333,COMPLETED,5.200,9.200,,,,14.400,,14.366
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,4,310,CHEPURNYI Nazar,UKR,COMPLETED,5.200,9.100,,,,14.300,COMPLETED,5.200,9.200,,,,14.400,,14.350
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,4,327,DUKHNO Arsenii,RUS,COMPLETED,5.200,9.200,,,,14.400,COMPLETED,5.200,9.100,,,,14.300,,14.350
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,6,191,HEPWORTH Harry,GBR,COMPLETED,5.200,9.000,,,,14.200,COMPLETED,5.600,8.333,,,,13.933,,14.066
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,7,276,YULO Carlos Edriel,PHI,COMPLETED,5.600,8.033,,-0.3,,13.333,COMPLETED,5.200,9.233,,,,14.433,,13.883
+54th Artistic Gymnastics World Championships,MAG,SR,2026-10-25,EVENT,VT,8,239,KAWAKAMI Shohei,JPN,COMPLETED,5.200,8.000,,,,13.200,COMPLETED,5.200,8.566,,-0.3,,13.466,,13.333

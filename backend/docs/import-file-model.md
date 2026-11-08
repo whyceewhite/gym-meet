@@ -112,59 +112,64 @@ round(s) a column actually appears in.
 |---|:-:|:-:|:-:|:-:|---|---|
 | Round | ✓ | ✓ | ✓ | ✓ | Which round this result is from | `Session.round` |
 | Apparatus | ✓ | ✓ | ✓ | ✓ | Two-letter code | `Score.apparatus` (also `Session.apparatus` for `EVENT` round specifically) |
-| Rank | ✓ | ✓ | ✓ | ✓ | Duplicate values for ties are legitimate, copied as printed | `Score.rank` |
+| Rank | ✓ | ✓ | ✓ | ✓ | Published apparatus placement. Duplicate values for ties are legitimate, copied as printed. Blank where the source prints no per-apparatus rank (e.g. the 2026 Worlds Team Final) | `Score.rank` |
 | Bib | ✓ | ✓ | ✓ | ✓ | Identifies the athlete, joins to `PARTICIPANTS.csv` | *(join key to `Participant.bibNumber` — not re-stored on `Score`)* |
 | Name | ✓ | ✓ | ✓ | ✓ | As printed on this report — cross-check against `PARTICIPANTS.csv` by Bib rather than trusting a possibly-truncated column here | *(not stored — verification only)* |
 | NOC Code | ✓ | ✓ | ✓ | ✓ | | *(not stored — already on `Participant.noc`)* |
-| Status | ✓ | ✓ | ✓ | ✓ | `COMPLETED`, `DNS`, or `INVALID_VAULT` — always written explicitly, never blank. Mirrors `Score.status` being `NOT NULL` | `Score.status` |
-| D | ✓ | ✓ | ✓ | ✓ | Difficulty score | `Score.difficulty` |
-| E | ✓ | ✓ | ✓ | ✓ | Execution score. Some sources print `E` before `D` (MAG PH and every WAG apparatus at the 2026 Europeans); the CSV always writes to these fixed column names regardless of source order | `Score.execution` |
-| B | ✓ | ✓ | ✓ | ✓ | Bonus. Populated for MAG (blank on every MAG PH row specifically — PH has no bonus). Present but always blank for WAG — kept for column alignment between disciplines rather than omitted, since neither MAG nor WAG's non-vault apparatus concept differs enough to justify a different shape | `Score.bonus` |
-| Penalty | ✓ | ✓ | ✓ | ✓ | Blank when no penalty applied — never `0` | `Score.penalty` |
-| SJ Penalty | ✓ | ✓ | ✓ | ✓ | Superior Jury Penalty. Present for column alignment with Vault (§ below); not observed with a non-blank value on any non-vault apparatus for either discipline so far | *(no `Score` field for a Superior Jury penalty yet — a real gap, not just an unmapped reference column)* |
-| Total | ✓ | ✓ | ✓ | ✓ | Blank when `Status` is `DNS` | `Score.score` |
+| Status | ✓ | ✓ | ✓ | ✓ | `COMPLETED`, `DNS`, or `INVALID_VAULT` — always written explicitly, never blank. Mirrors `Routine.status` being required | `Score.routine.status` |
+| D | ✓ | ✓ | ✓ | ✓ | Difficulty score | `Score.routine.difficulty` |
+| E | ✓ | ✓ | ✓ | ✓ | Execution score. Some sources print `E` before `D` (MAG PH and every WAG apparatus at the 2026 Europeans); the CSV always writes to these fixed column names regardless of source order | `Score.routine.execution` |
+| B | ✓ | ✓ | ✓ | ✓ | Bonus. Populated for MAG (blank on every MAG PH row specifically — PH has no bonus). Present but always blank for WAG — kept for column alignment between disciplines rather than omitted | `Score.routine.bonus` |
+| Penalty | ✓ | ✓ | ✓ | ✓ | Blank when no penalty applied — never `0` | `Score.routine.penalty` |
+| SJ Penalty | ✓ | ✓ | ✓ | ✓ | Superior Jury Penalty, distinct from `Penalty`. Not observed with a non-blank value on any non-vault apparatus so far | `Score.routine.sjPenalty` |
+| Total | ✓ | ✓ | ✓ | ✓ | Blank when `Status` is `DNS` | `Score.routine.score` (and `Score.totalScore`, which equals it for a single routine) |
 | Qualification | ✓ | | | | `Q`/`R1`–`R4`/`NR`/blank, matching `QualificationResult` exactly. Only meaningful where there's a further round to qualify into | `Score.qualificationResult` |
+| Qualification Rank | ✓ | | | | Placement in the ranking that decides the apparatus final. On every non-vault apparatus that's the same ranking as `Rank`, so the value is always equal to `Rank` — written out anyway so every `QUAL` file pairs `Qualification` with its own rank, vault included | `Score.qualificationRank` |
 
 ### Vault, double-attempt shape (`QUAL` and `EVENT` rounds only)
 
 Built by joining a single-vault listing (everyone, one row per bib) and a
 double-vault listing (only those attempting a second vault) — see
-`instructions-results-parsing.md` §4 for the join logic.
+`instructions-results-parsing.md` §4 for the join logic. In `QUAL`, the two
+listings are two different rankings over the same attempts: `Rank` ranks the
+whole field on the first vault (the one that counts for all-around and team);
+`Qualification Rank` ranks only the two-vault entrants on their combined
+result, which decides the Vault final.
 
 | Column | QUAL | EVENT | Description | Entity Mapping |
 |---|:-:|:-:|---|---|
 | Round | ✓ | ✓ | | `Session.round` |
 | Apparatus | ✓ | ✓ | | `Score.apparatus` |
-| Rank | ✓ | ✓ | Always comes from the single-vault list | `Score.rank` |
+| Rank | ✓ | ✓ | `QUAL`: from the single-vault list (whole field, ranked on vault 1). `EVENT`: the final's placement | `Score.rank` |
 | Bib | ✓ | ✓ | | *(join key)* |
 | Name | ✓ | ✓ | | *(not stored — verification only)* |
 | NOC Code | ✓ | ✓ | | *(not stored)* |
-| Status1 | ✓ | ✓ | Status of attempt 1: `COMPLETED`, `DNS`, or `INVALID_VAULT`. Always populated | `Score.status` |
-| D1 | ✓ | ✓ | | `Score.difficulty` |
-| E1 | ✓ | ✓ | | `Score.execution` |
-| B1 | ✓ | ✓ | Bonus, attempt 1. Populated for MAG, always blank for WAG (column alignment, same reasoning as the non-vault table's `B`) | `Score.bonus` |
-| Penalty1 | ✓ | ✓ | | `Score.penalty` |
-| SJ Penalty1 | ✓ | ✓ | Superior Jury Penalty, attempt 1 — distinct from the ordinary `Penalty1`. Populated for WAG; always blank for MAG so far (column alignment) | *(no `Score` field for a Superior Jury penalty yet — a real gap, not just an unmapped reference column)* |
-| Total1 | ✓ | ✓ | | `Score.score` |
-| Status2 | ✓ | ✓ | Status of attempt 2, **four-state**: blank = no second attempt was expected at all (maps to `Score.secondStatus` being null — genuinely different from the other three, not an omission); `COMPLETED`; `DNS` = a second attempt was expected (on the double-vault list) but not completed; `INVALID_VAULT` | `Score.secondStatus` |
-| D2 | ✓ | ✓ | | `Score.secondDifficulty` |
-| E2 | ✓ | ✓ | | `Score.secondExecution` |
-| B2 | ✓ | ✓ | Bonus, attempt 2. Same MAG/WAG split as `B1` | `Score.secondBonus` |
-| Penalty2 | ✓ | ✓ | | `Score.secondPenalty` |
-| SJ Penalty2 | ✓ | ✓ | Superior Jury Penalty, attempt 2. Same WAG/MAG split as `SJ Penalty1` | *(same gap as `SJ Penalty1`)* |
-| Total2 | ✓ | ✓ | Blank whenever `Status2` is blank or `DNS` | `Score.secondScore` |
-| Bonus | ✓ | ✓ | **WAG only, and distinct from `B1`/`B2` above** — this is a bonus applied to the *combined* two-vault result, not either individual attempt. Some sources print it as a `*` on the combined `Total` (worth +0.2), others as its own `Vault Bonus` column; either way it lands here as `0.2` or blank, with `Total` holding the clean number. Not yet added to MAG — no equivalent concept has shown up there | *(doesn't cleanly fit `Score.bonus`/`secondBonus`, both of which are per-attempt — this applies to the combined result. Needs a decision, not yet mapped)* |
-| Total | ✓ | ✓ | The athlete's official counting result — `Total1` alone for a single-vault athlete, the published average for a completed two-vault athlete, blank when there's no valid combined result | `Score.totalScore` |
+| Status1 | ✓ | ✓ | Status of attempt 1: `COMPLETED`, `DNS`, or `INVALID_VAULT`. Always populated | `Score.routine.status` |
+| D1 | ✓ | ✓ | | `Score.routine.difficulty` |
+| E1 | ✓ | ✓ | | `Score.routine.execution` |
+| B1 | ✓ | ✓ | Bonus applied to attempt 1 itself. Populated for MAG, always blank for WAG so far | `Score.routine.bonus` |
+| Penalty1 | ✓ | ✓ | | `Score.routine.penalty` |
+| SJ Penalty1 | ✓ | ✓ | Superior Jury Penalty, attempt 1 — distinct from the ordinary `Penalty1`. Seen for WAG at the 2026 Europeans | `Score.routine.sjPenalty` |
+| Total1 | ✓ | ✓ | | `Score.routine.score` |
+| Status2 | ✓ | ✓ | Status of attempt 2, **four-state**: blank = no second attempt was expected at all (`Score.secondRoutine` is null); `COMPLETED`; `DNS` = a second attempt was expected (on the double-vault list) but not completed; `INVALID_VAULT` | `Score.secondRoutine.status` |
+| D2 | ✓ | ✓ | | `Score.secondRoutine.difficulty` |
+| E2 | ✓ | ✓ | | `Score.secondRoutine.execution` |
+| B2 | ✓ | ✓ | Bonus applied to attempt 2 itself. Same MAG/WAG split as `B1` | `Score.secondRoutine.bonus` |
+| Penalty2 | ✓ | ✓ | | `Score.secondRoutine.penalty` |
+| SJ Penalty2 | ✓ | ✓ | Superior Jury Penalty, attempt 2 | `Score.secondRoutine.sjPenalty` |
+| Total2 | ✓ | ✓ | Blank whenever `Status2` is blank or `DNS` | `Score.secondRoutine.score` |
+| Combined Bonus | ✓ | ✓ | A bonus applied to the *combined* two-vault result, not either attempt — distinct from `B1`/`B2`. Some sources print it as a `*` on the combined `Total` (WAG's +0.2), others as its own `Vault Bonus` column; either way it lands here as a number or blank, with `Total` holding the clean number. Present for MAG too (always blank so far) for column alignment | `Score.combinedBonus` |
+| Total | ✓ | ✓ | The result the Vault final is decided on — `Total1` alone for a single-vault athlete, the published average plus `Combined Bonus` for a completed two-vault athlete, blank when there's no valid combined result | `Score.totalScore` |
 | Qualification | ✓ | | Only ever set from the double-vault list; blank for single-vault-only athletes | `Score.qualificationResult` |
-| Qualification Rank | ✓ | | Rank **within the double-vault list specifically** — distinct from `Rank`. Blank for single-vault-only athletes | *(`Score.rank` is single-valued and already used for `Rank` above — see `instructions-results-parsing.md` §6 item 4 for the open question of whether this is worth its own field)* |
+| Qualification Rank | ✓ | | Rank **within the double-vault list** — distinct from `Rank`. Blank for single-vault-only athletes | `Score.qualificationRank` |
 
 ### Vault, single-attempt shape (`TEAM` and `AA` rounds)
 
 Team Final and All-Around Final vault routines are performed once, not
 twice — same columns and same Entity Mapping as the non-vault apparatus
-table above (`Status`→`Score.status`, `D`→`Score.difficulty`, etc.), **not**
-the `1`/`2` split. Don't assume "Vault" always means the double-attempt
-shape — check the actual page.
+table above (`Status`→`Score.routine.status`, `D`→`Score.routine.difficulty`,
+etc.), **not** the `1`/`2` split. Don't assume "Vault" always means the
+double-attempt shape — check the actual page.
 
 ## `SUMMARY-<ROUND>-{TEAM,AA}.csv`
 

@@ -100,7 +100,7 @@ carries its own `apparatus` rather than duplicating it onto the round.
 | PB | Parallel Bars | Parallel bars (MAG) |
 | HB | Horizontal Bar | Horizontal/high bar (MAG) |
 
-No `AA` value — all-around is a computed summary (`AllAroundResult`, §6.2), not a
+No `AA` value — all-around is a computed summary (`AllAroundResult`, §5.2), not a
 judged apparatus result. (`Round.AA` is a different enum for the All-Around
 Final round itself — the two `AA`s aren't related beyond sharing a name.)
 
@@ -252,38 +252,49 @@ Unique key: `(event_id, athlete_id)`
 
 ### `Score`
 
+One athlete's result on one apparatus in one `Session`. The judged
+performance itself lives in an embedded [`Routine`](#routine-embedded) — one for
+every apparatus, plus a second only for a vault entry with two attempts — while
+the fields directly on `Score` describe the result and its rankings.
+
 | Field | Type | Nullable | Description |
 |---|---|---|---|
 | id | Long | No | Generated primary key. |
 | participantId | Long, FK → `Participant` | No | The athlete this score belongs to. |
 | sessionId | Long, FK → `Session` | No | The round this score was earned in. |
-| apparatus | Apparatus | No | Which apparatus this row scores. One row per apparatus per `Session`, always — vault's second attempt is columns on this same row, not a second apparatus value (§5). |
-| totalScore | Double | Yes | The official, ranked result for this apparatus. Equal to `score` when there's one scored attempt; for vault with two attempts, the combined result as published by the source (§5). Null when `status` is `DNS`. |
-| difficulty | Double | Yes | Difficulty (D) score of the counting attempt. |
-| execution | Double | Yes | Execution (E) score of the counting attempt. |
-| penalty | Double | Yes | Penalty/neutral deduction applied to the counting attempt. |
-| bonus | Double | Yes | Total bonus applied to the counting attempt. See `bonusDetail` for the itemized breakdown. |
-| bonusDetail | JSON | Yes | Itemized breakdown backing `bonus`, shaped as `[{ "bonus": 0.0, "description": "" }]`. Exists because not every bonus point is FIG-standard — domestic MAG meets (US Championships-style) have awarded one-off incentive bonuses (a "difficulty bonus," say) that are real, scored, and reflected in the published total, but specific to that meet/season and never part of the international Code of Points. Free-text `description` avoids needing a fixed enum of bonus types that a federation could redefine every season. |
-| score | Double | Yes | The counting attempt's own result, before combining with a second attempt. Equal to `totalScore` except on a two-vault entry. Null when `status` is `DNS`. |
-| status | ScoreStatus | No | Whether the counting attempt was completed, not started, or invalidated. |
-| secondDifficulty | Double | Yes | Difficulty (D) score of the second vault attempt. Null on every row except a two-vault entry. |
-| secondExecution | Double | Yes | Execution (E) score of the second vault attempt. |
-| secondPenalty | Double | Yes | Penalty/neutral deduction applied to the second vault attempt. |
-| secondBonus | Double | Yes | Total bonus applied to the second vault attempt. |
-| secondBonusDetail | JSON | Yes | Itemized breakdown backing `secondBonus`, same shape as `bonusDetail`. |
-| secondScore | Double | Yes | The second vault attempt's own result. |
-| secondStatus | ScoreStatus | Yes | Status of the second vault attempt. Null means no second attempt occurred at all — distinct from `status`, which is always set. |
-| rank | Integer | Yes | Placement for this apparatus within this `Session`. |
-| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the next round on this apparatus. Typically only set on `QUAL` `Session`s. |
-| countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§6.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§6.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
+| apparatus | Apparatus | No | Which apparatus this row scores. One row per apparatus per `Session`, always — vault's second attempt is `secondRoutine` on this same row, not a second apparatus value (§4). |
+| routine | Routine | No | The routine performed — for vault, the first attempt. Its `score` is what counts toward team and all-around results. Columns: `difficulty`, `execution`, `bonus`, `bonus_detail`, `penalty`, `sj_penalty`, `score`, `status_code`. |
+| secondRoutine | Routine | Yes | Vault's second attempt. Null means no second attempt was expected at all (the athlete only vaulted once); a second attempt that was expected but not performed is a `Routine` with status `DNS`. Same columns as `routine`, prefixed `second_`. |
+| combinedBonus | Double | Yes | A bonus applied to the combined two-vault result rather than to either attempt (e.g. WAG's +0.2). Null otherwise. |
+| totalScore | Double | Yes | The result the apparatus final is decided on. For a two-vault entry, the combined result as published (the attempts' average plus `combinedBonus`); otherwise equal to `routine.score`. Null when there's no valid result (e.g. the first vault or an expected second vault was `DNS`). |
+| rank | Integer | Yes | Published placement on this apparatus within this `Session`, ranked on `routine.score` — for vault in qualification, the single-vault list ranking the whole field. In an apparatus final, the final's own placement. Copied as published, including tie-breaks, never recomputed. |
+| qualificationRank | Integer | Yes | Published placement in the ranking that decides qualification to the apparatus final. Set on every `QUAL` row: for vault it's the double-vault list rank (null for single-vault entrants); for every other apparatus it equals `rank`. Null outside `QUAL`. |
+| qualificationResult | QualificationResult | Yes | Outcome of qualifying to the apparatus final, read against `qualificationRank` (not `rank`). The two-per-country rule shows up here as `NR`, never as a changed rank. Only set on `QUAL` `Session`s. |
+| countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§5.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§5.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
 
 Unique key: `(participant_id, session_id, apparatus)`.
+
+#### `Routine` (embedded)
+
+Not an entity — a group of columns embedded in `Score` twice (`routine`,
+`secondRoutine`), so every per-attempt field is defined once.
+
+| Field | Type | Nullable | Description |
+|---|---|---|---|
+| difficulty | Double | Yes | Difficulty (D) score. |
+| execution | Double | Yes | Execution (E) score. |
+| bonus | Double | Yes | Total bonus applied to this routine. See `bonusDetail` for the itemized breakdown. |
+| bonusDetail | JSON | Yes | Itemized breakdown backing `bonus`, shaped as `[{ "bonus": 0.0, "description": "" }]`. Exists because bonus rules change between Code of Points cycles and not every bonus point is FIG-standard — domestic MAG meets (US Championships-style) have awarded one-off incentive bonuses (a "difficulty bonus," say) that are real, scored, and reflected in the published total, but specific to that meet/season. Free-text `description` avoids needing a fixed enum of bonus types that can be redefined every quad. |
+| penalty | Double | Yes | Penalty/neutral deduction applied to this routine. |
+| sjPenalty | Double | Yes | Superior Jury penalty applied to this routine, distinct from `penalty`. |
+| score | Double | Yes | This routine's own result. Null when `status` is `DNS`. |
+| status | ScoreStatus | No | Whether the routine was completed, not started, or (vault) invalidated. Required whenever the `Routine` exists. |
 
 ## 4. Vault: two scored attempts, one row
 
 Vault is the only apparatus where an athlete can post two separately-judged
-attempts that combine into one official result. Two shapes were considered and
-set aside before landing on the one in §4.5:
+attempts that combine into one result. Two shapes were considered and set aside
+before landing on the one below:
 
 - **Two apparatus rows (`VT1`/`VT2`), no combined row** — simple, but leaves
   nothing representing the combined two-vault result, which is what decides
@@ -297,48 +308,56 @@ set aside before landing on the one in §4.5:
   most vault entries) behind a JSON lookup for what's normally a plain, commonly
   queried column.
 
-**Settled on: a second, identically-shaped set of columns on the same row** —
-null on every row except a two-vault entry. Wasteful in the sense that those
-columns sit empty for every non-vault apparatus and every single-vault entry, but
-that trade was made deliberately: the data stays visible as plain columns rather
+**Settled on: a second embedded `Routine` on the same row** — null on every row
+except a vault entry where a second attempt was expected. Those columns sit
+empty for every other row, but the data stays visible as plain columns rather
 than needing a JSON reach-in, and every apparatus's result — vaulted once,
-vaulted twice, or not vaulted at all — is exactly one `Score` row, never
-two or three.
+vaulted twice, or not vaulted at all — is exactly one `Score` row.
 
-A single-vault entry, and an ordinary beam score, look identical in shape (the
-`second*` columns simply null):
+In qualification, one vault row carries two different rankings over the same
+attempts:
 
-| apparatus | difficulty | execution | score | secondDifficulty | ... | totalScore | rank |
+| Ranking | Ranked on | Who's in it | Stored in |
+|---|---|---|---|
+| Apparatus (single-vault list) | First vault | The whole field | `rank` |
+| Vault-final qualification (double-vault list) | Combined result | Two-vault entrants only | `qualificationRank`, `qualificationResult` |
+
+A single-vault entry and an ordinary beam score look identical in shape:
+
+| apparatus | routine.difficulty | routine.execution | routine.score | secondRoutine | totalScore | rank | qualificationRank |
 |---|---|---|---|---|---|---|---|
-| BB | 5.8 | 8.200 | 14.000 | — | — | 14.000 | 1 |
-| VT (one vault) | 5.0 | 9.033 | 14.033 | — | — | 14.033 | 4 |
+| BB | 5.8 | 8.200 | 14.000 | null | 14.000 | 1 | 1 |
+| VT (one vault) | 5.0 | 9.033 | 14.033 | null | 14.033 | 4 | null |
 
-A two-vault entry populates both sets, and `totalScore` is the combined number as
-published by the source — not independently recomputed by averaging `score` and
-`secondScore`, since FIG folds in a connection/vault-value bonus that isn't
-cleanly re-derivable from the two attempt scores alone, and a source's own
-combined total is authoritative even where it doesn't reconcile to the penny:
+A two-vault entry populates both routines. `totalScore` is the combined number
+as published — the average of the two attempts (truncated to three decimals)
+plus any `combinedBonus`. It's stored rather than recomputed because what earns
+a combined bonus, and how the combination works, is set by the Code of Points
+and changes between quads. The published number is authoritative. Taken from
+the 2026 Europeans WAG qualification (KALMYKOVA Anna), where the first vault was
+the best in the field but the combined result placed third among two-vault
+entrants:
 
-| apparatus | difficulty | execution | score | secondDifficulty | secondExecution | secondScore | totalScore | rank |
-|---|---|---|---|---|---|---|---|---|
-| VT | 5.4 | 8.700 | 14.100 | 4.6 | 8.433 | 13.033 | 13.766 | 3 |
+| routine.score | secondRoutine.score | combinedBonus | totalScore | rank | qualificationRank | qualificationResult |
+|---|---|---|---|---|---|---|
+| 14.100 | 13.033 | 0.2 | 13.766 | 1 | 3 | Q |
 
-`difficulty`/`execution` (and their `second*` counterparts) stay per-attempt —
-FIG doesn't publish a combined D or E for a two-vault result, only combined
-totals, so there's no meaningful single number to put anywhere else.
+`difficulty`/`execution` stay per-routine — FIG doesn't publish a combined D or E
+for a two-vault result, only combined totals, so there's no meaningful single
+number to put anywhere else.
 
 ## 5. Derived summary results
 
 Two facts in this model are aggregates over `Score` rows rather than
 judged results in their own right: a team's total in a `TEAM` (or
 qualifying) session, and an athlete's all-around total. Both *could* be computed
-on read instead of stored — team totals from `Score.score` where
+on read instead of stored — team totals from `Score.routine.score` where
 `countsTowardTeamResult` is true, all-around totals by summing a participant's
-apparatus `Score.score` values for the session (no drop-lowest rule involved at
-all, unlike team scoring). Both use `score`, not `totalScore`: for vault, team
+apparatus `Score.routine.score` values for the session (no drop-lowest rule involved at
+all, unlike team scoring). Both use `routine.score`, not `totalScore`: for vault, team
 and all-around results count only the first vault, never the two-vault
 combined result. Both are stored anyway, for the same reason vault's `totalScore`
-isn't independently recomputed from its two attempts (§5): the officially
+isn't independently recomputed from its two attempts (§4): the officially
 published number is the source of truth, and a live recomputation isn't
 guaranteed to always agree with it — a late correction to one apparatus score, a
 rounding difference, or a case where exactly which scores counted toward a team
@@ -372,7 +391,7 @@ Unique key: `(session_id, noc)`
 | id | Long | No | Generated primary key. |
 | participantId | Long, FK → `Participant` | No | The athlete this result is for. |
 | sessionId | Long, FK → `Session` | No | The round this all-around total applies to — typically a `QUAL` or `AA` `Session`. |
-| totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.score` values for this `Session` (for vault, the first vault only). Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all). |
+| totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.routine.score` values for this `Session` (for vault, the first vault only). Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all). |
 | rank | Integer | Yes | The athlete's all-around placement within the `Session`. |
 | qualificationResult | QualificationResult | Yes | Outcome of qualifying to the all-around final, when this `AllAroundResult` is on a `QUAL` `Session`. |
 

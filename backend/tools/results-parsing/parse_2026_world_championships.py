@@ -267,6 +267,7 @@ def single_row_out(disc, rnd, app, r, ctx, with_q):
                                   'B': r['B'], 'Penalty': r['Penalty'], 'SJ Penalty': '', 'Total': r['Total']}
     if with_q:
         row['Qualification'] = r['Qualification']
+        row['Qualification Rank'] = r['Rank']   # same ranking as Rank on every apparatus but vault
     return row
 
 SINGLE_HDR = SCORE_HDR + ['Status', 'D', 'E', 'B', 'Penalty', 'SJ Penalty', 'Total']
@@ -285,7 +286,7 @@ def single_app(disc, rnd, app):
         for r in rows:
             QUAL_SCORES[disc][(app, r['Bib'])] = r['Total'] or 'DNS'
     if app != 'VT':
-        write(f'{PREFIX[disc]}-SCORES-{rnd}-{app}.csv', SINGLE_HDR + (['Qualification'] if rnd == 'QUAL' else []), out)
+        write(f'{PREFIX[disc]}-SCORES-{rnd}-{app}.csv', SINGLE_HDR + (['Qualification', 'Qualification Rank'] if rnd == 'QUAL' else []), out)
     return rows
 
 def vault_attempt(tokens, ctx):
@@ -350,7 +351,7 @@ BLANK_V = dict(Status='', D='', E='', B='', Penalty='', Total='')
 def vault(disc, rnd):
     ctx = f'{disc} {rnd} VT'
     hdr = SCORE_HDR + [f'{c}{n}' for n in (1, 2) for c in ('Status', 'D', 'E', 'B', 'Penalty', 'SJ Penalty', 'Total')]
-    hdr += (['Bonus'] if disc == 'WAG' else []) + ['Total']
+    hdr += ['Combined Bonus', 'Total']
     double = double_table(disc, rnd)
     rows = []
     if rnd == 'QUAL':
@@ -375,10 +376,8 @@ def vault(disc, rnd):
                 total = '' if r['Total'] in ('DNF', 'DNS') else r['Total']
             row = meta(disc, rnd, 'VT') | {'Rank': s['Rank'], 'Bib': s['Bib'],
                    'Name': check_name(ctx, s['Bib'], s['Name'], s['NOC']), 'NOC Code': s['NOC']}
-            row |= vault_cols(1, v1) | vault_cols(2, v2) | {'Total': total, 'Qualification': q,
-                                                             'Qualification Rank': qrank}
-            if disc == 'WAG':
-                row['Bonus'] = bonus
+            row |= vault_cols(1, v1) | vault_cols(2, v2) | {'Combined Bonus': bonus, 'Total': total,
+                                                             'Qualification': q, 'Qualification Rank': qrank}
             rows.append(row)
         if dbl:
             err(f'{ctx}: double-list bibs not on single list: {list(dbl)}')
@@ -387,8 +386,7 @@ def vault(disc, rnd):
             row = meta(disc, rnd, 'VT') | {'Rank': r['Rank'], 'Bib': r['Bib'],
                    'Name': check_name(ctx, r['Bib'], r['Name'], r['NOC']), 'NOC Code': r['NOC']}
             row |= vault_cols(1, r['v1']) | vault_cols(2, r['v2']) | {'Total': r['Total']}
-            if disc == 'WAG':
-                row['Bonus'] = r['Bonus']
+            row['Combined Bonus'] = r['Bonus']
             rows.append(row)
     write(f'{PREFIX[disc]}-SCORES-{rnd}-VT.csv', hdr, rows)
 

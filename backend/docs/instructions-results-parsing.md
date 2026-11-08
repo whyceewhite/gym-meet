@@ -298,7 +298,7 @@ file type.
   `INVALID_VAULT`.** Every `SCORES-*` file has a `Status` column (or
   `Status1`/`Status2` for the double-vault shape) and every row states one of
   these three values; never leave it blank to mean "completed." This mirrors
-  `Score.status` being a `NOT NULL` column in `data-model.md` — a blank cell
+  `Score.routine.status` being required in `data-model.md` — a blank cell
   would otherwise force the importer to invent a default rather than reading
   it off the row. (Earlier drafts of this file used blank-means-completed to
   keep rows terse; that convention was dropped once the DB's `NOT NULL`
@@ -468,23 +468,25 @@ One row per judge per apparatus panel per round, all rounds in one file.
 | Penalty | Blank when no penalty was applied (not `0`) |
 | SJ Penalty | Superior Jury Penalty — distinct from `Penalty`. Present for column alignment with Vault (§7.3); not observed non-blank on any non-vault apparatus for either discipline so far |
 | Total | Blank when `Status` is `DNS` |
-| Qualification | `Q` / `R1` / `R2` / `R3` / `NR` / blank — matches `QualificationResult` exactly |
+| Qualification | `Q` / `R1`–`R4` / `NR` / blank — matches `QualificationResult` exactly |
+| Qualification Rank | Placement in the ranking that decides the apparatus final. On non-vault apparatus that's the same ranking as `Rank`, so copy `Rank` (blank for a DNS row). Kept anyway so every `QUAL` file pairs `Qualification` with its own rank the same way Vault does. The two-per-country rule never changes a rank — it only turns a would-be `Q` into `NR` |
 
 **Vault** (`VT`) — built by joining the single- and double-vault listings
 (§4):
 
 | Column | Notes |
 |---|---|
-| Round, Apparatus, Rank, Bib, Name, NOC Code | As above. `Rank` always comes from the **single-vault** list. |
-| Status1 | Status of vault attempt 1: `COMPLETED`, `DNS` (never vaulted at all), or `INVALID_VAULT` (see below). Always populated — this is the one status the domain requires non-null (`Score.status`), unlike `Status2`. |
+| Round, Apparatus, Rank, Bib, Name, NOC Code | As above. `Rank` always comes from the **single-vault** list — the whole field ranked on vault 1, which is the vault that counts for all-around and team. |
+| Status1 | Status of vault attempt 1: `COMPLETED`, `DNS` (never vaulted at all), or `INVALID_VAULT` (see below). Always populated — this is the one status the domain requires non-null (`Score.routine.status`), unlike `Status2`. |
 | D1, E1, B1, Penalty1, Total1 | Vault 1 figures, from the single-vault list. `B1` populated for MAG, always blank for WAG so far (§7.2) |
 | SJ Penalty1 | Superior Jury Penalty, attempt 1 — distinct from `Penalty1`. Populated for WAG, always blank for MAG so far (§7.3) — the opposite split from `B1` |
-| Status2 | Status of vault attempt 2, **four-state**: blank = no second attempt was expected at all (this athlete isn't on the double-vault list, and `Score.secondStatus` is genuinely nullable for exactly this case); `COMPLETED` = a real second vault happened; `DNS` = a second vault was intended (athlete is on the double-vault list) but not completed; `INVALID_VAULT` = a second vault was attempted but ruled invalid. Don't collapse "opted out" (blank) and "started but didn't finish" (`DNS`) into the same value. |
+| Status2 | Status of vault attempt 2, **four-state**: blank = no second attempt was expected at all (this athlete isn't on the double-vault list, and `Score.secondRoutine` is null for exactly this case); `COMPLETED` = a real second vault happened; `DNS` = a second vault was intended (athlete is on the double-vault list) but not completed; `INVALID_VAULT` = a second vault was attempted but ruled invalid. Don't collapse "opted out" (blank) and "started but didn't finish" (`DNS`) into the same value. |
 | D2, E2, B2, Penalty2, Total2 | Vault 2 figures, from the double-vault list. Blank whenever `Status2` is blank or `DNS`. Same MAG/WAG `B2` split as `B1` |
 | SJ Penalty2 | Same WAG/MAG split as `SJ Penalty1` |
-| Total | The athlete's official counting result: `Total1` alone for a single-vault athlete, the published average for a completed two-vault athlete, blank when there's no valid combined result (`Status1=DNS` or `Status2=DNS`) |
-| Qualification | `Q`/`R1`/`R2`/`R3`/`NR`/blank — only ever set from the double-vault list; always blank for single-vault-only athletes |
-| Qualification Rank | This athlete's rank **within the double-vault list specifically** (i.e. among just the Vault-final hopefuls) — distinct from `Rank`. Blank for single-vault-only athletes. See §6 for the open question of how this maps to `data-model.md`. |
+| Combined Bonus | A bonus applied to the **combined** two-vault result, not to either attempt (WAG's +0.2 — §7.3, §8.2). Present for MAG too, always blank so far |
+| Total | The result the Vault final is decided on: `Total1` alone for a single-vault athlete, the published average plus `Combined Bonus` for a completed two-vault athlete, blank when there's no valid combined result (`Status1=DNS` or `Status2=DNS`) |
+| Qualification | `Q`/`R1`–`R4`/`NR`/blank — only ever set from the double-vault list; always blank for single-vault-only athletes |
+| Qualification Rank | This athlete's rank **within the double-vault list** (i.e. among just the Vault-final hopefuls, on the combined result) — distinct from `Rank`. Blank for single-vault-only athletes. |
 
 **`INVALID_VAULT` confirmed, with a real example:** WAG-SR-QUAL-VT, Bib 111
 (DEVREKER Lena, BEL) — `D1=0.0`, `E1=0.000`, `Total1=0.000`, and she never
@@ -732,9 +734,10 @@ process:
    `data-model.md`'s `ScoreStatus` enum only has `COMPLETED` / `DNS` /
    `INVALID_VAULT`. Instead it's expressed as `Status1=` (completed) +
    `Status2=DNS` (intended second attempt, not completed), which maps
-   directly onto `Score.status`/`Score.secondStatus` without needing a new
-   enum value. Confirm this is the intended reading of `secondStatus`'s
-   "null means no second attempt occurred at all" note before importing.
+   directly onto `Score.routine.status`/`Score.secondRoutine.status` without
+   needing a new enum value. A null `secondRoutine` means no second attempt
+   was expected at all; an expected-but-missing one is a `secondRoutine`
+   with status `DNS`.
 3. **`INVALID_VAULT` — now observed, see §5.5.** WAG-SR-QUAL-VT Bib 111
    (DEVREKER Lena) is a confirmed case: `D=0.0`/`Total=0.000` on the
    single-vault list, no distinct symbol or footnote at all (the `!`
@@ -742,14 +745,13 @@ process:
    score still stands but is flagged, not invalidated). Only one example
    exists so far; keep watching for whether every invalid vault looks this
    plain or whether this was a simplest-case instance.
-4. **Two ranks for Vault, one `rank` field on `Score`.** §5.5 keeps both
-   `Rank` (whole-field, single-vault-based) and `Qualification Rank`
-   (double-vault-list-only) in the CSV for full provenance. `data-model.md`'s
-   `Score.rank` doesn't distinguish these — for every other apparatus the two
-   concepts are identical, so this only bites Vault. Recommendation: import
-   `Rank` into `Score.rank` (consistent with every other apparatus) and treat
-   `Qualification Rank` as reference data only, not requiring its own column
-   — but confirm this is acceptable before dropping it at import time.
+4. ~~**Two ranks for Vault, one `rank` field on `Score`.**~~ **Resolved.**
+   `Score` now has both: `rank` (the published apparatus ranking — the
+   single-vault list for vault) and `qualificationRank` (the ranking that
+   decides the apparatus final — the double-vault list for vault, equal to
+   `rank` everywhere else), with `qualificationResult` read against
+   `qualificationRank`. Every `SCORES-QUAL-*` file now carries a
+   `Qualification Rank` column, not just Vault. See `data-model.md` §4.
 5. **Birth year, not birth date.** `PARTICIPANTS.csv`'s `Birth Year` is
    coarser than `Athlete.birthDate` (a full `Date`). The entry-list PDF
    simply doesn't publish more precision than a year. Decide at import time
@@ -811,7 +813,8 @@ ad-hoc WAG files, which got both of these wrong — see §7.6):
 - **Bonus is a `*` printed on the combined `Total`, not a per-attempt
   numeric column.** The source's own NOTE spells it out: *"Asterisk (*) at
   Vt Score informs that Bonus(+0.2) was applied."* Decoded into a single
-  `Bonus` column (`0.2` or blank) sitting just before `Total`, with `Total`
+  `Combined Bonus` column (`0.2` or blank; originally named `Bonus`, renamed
+  so it can't be confused with the per-attempt `B1`/`B2`) sitting just before `Total`, with `Total`
   itself holding the clean number (asterisk stripped) — chosen over
   preserving the `*` inline, unlike the `!` inquiry marker (§5.2), because
   this value is immediately needed as a number downstream and the
@@ -823,8 +826,11 @@ Full `SCORES-QUAL-VT` column set (WAG):
 Round,Apparatus,Rank,Bib,Name,NOC Code,
 Status1,D1,E1,B1,Penalty1,SJ Penalty1,Total1,
 Status2,D2,E2,B2,Penalty2,SJ Penalty2,Total2,
-Bonus,Total,Qualification,Qualification Rank
+Combined Bonus,Total,Qualification,Qualification Rank
 ```
+
+MAG's vault files have exactly the same columns — `Combined Bonus` included,
+always blank so far.
 
 (`B1`/`B2` included for column alignment with MAG's Vault, §5.5 — always
 blank for WAG, same reasoning as §7.2.)
@@ -836,14 +842,14 @@ Both `QUAL`/`EVENT` are built by joining a single-vault list and a
 double-vault list exactly per §4 — WAG has the identical two-listing
 structure, DNF/DNS conventions included.
 
-**`SCORES-TEAM-VT` never had `SJ Penalty` or `Bonus` in the source.**
+**`SCORES-TEAM-VT` never had `SJ Penalty` or a combined bonus in the source.**
 Confirmed by rendering the actual page: Team Final vault is single-attempt
 for WAG (matching MAG, §5.8). The CSV still carries a blank `SJ Penalty`
 column here for alignment with the rest of §5.8's table (`B` too — WAG's
 `SCORES-TEAM-VT.csv` is `Status,D,E,B,Penalty,SJ Penalty,Total`, both always
 blank), but there is no `*`/`SJ Pen.` on the actual page and no `Bonus`
 column at all on this particular report — don't assume Vault always carries
-the `Bonus` concept specifically; it only showed up on the two double-attempt
+the combined-bonus concept; it only shows up on the two double-attempt
 reports.
 
 ### 7.4 The shared-footer-code trap bit again — verify by title, not just by grep count
@@ -1090,12 +1096,14 @@ are parsed. Things that changed:
   be empty. Tokens collapse, so tell them apart by **sign**: bonus is always
   positive, penalty always negative.
 - WAG vault prints the +0.2 as its own `Vault Bonus` column (not a `*`,
-  §7.3). It sits *after* the attempt's Vault Score, while MAG's per-attempt
+  §7.3); it goes to `Combined Bonus`. It sits *after* the attempt's Vault Score, while MAG's per-attempt
   bonus sits *before* it — 3-decimal tokens are scores, 1-decimal tokens
   are penalty/bonus.
 - No `SJ Pen.` column appears anywhere, so every `SJ Penalty` is blank.
 - Apparatus Finals tables have trailing `Qualification Rank` and `Start
-  Order` columns, which are not captured.
+  Order` columns, which are not captured — the qualification rank is the
+  finalist's `Qualification Rank` from the `QUAL` file, so it can be joined
+  rather than stored twice.
 - An invalid second vault prints as `0.000 0.000 0.000` with the published
   average halved (`ZAPATA Rayderley`, MAG QUAL) → `Status2=INVALID_VAULT`.
 

@@ -1,6 +1,8 @@
 package doubletuck.meet.domain;
 
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,17 +12,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -48,58 +46,35 @@ public class Score extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Apparatus apparatus;
 
+    @Valid
+    @NotNull(message = "Routine is required")
+    @Embedded
+    @AttributeOverride(name = "status", column = @Column(name = "status_code", nullable = false, length = 20))
+    private Routine routine;
+
+    @Valid
+    @Embedded
+    @AttributeOverride(name = "difficulty", column = @Column(name = "second_difficulty"))
+    @AttributeOverride(name = "execution", column = @Column(name = "second_execution"))
+    @AttributeOverride(name = "bonus", column = @Column(name = "second_bonus"))
+    @AttributeOverride(name = "bonusDetail", column = @Column(name = "second_bonus_detail", columnDefinition = "json"))
+    @AttributeOverride(name = "penalty", column = @Column(name = "second_penalty"))
+    @AttributeOverride(name = "sjPenalty", column = @Column(name = "second_sj_penalty"))
+    @AttributeOverride(name = "score", column = @Column(name = "second_score"))
+    @AttributeOverride(name = "status", column = @Column(name = "second_status_code", length = 20))
+    private Routine secondRoutine;
+
+    @Column(name = "combined_bonus")
+    private Double combinedBonus;
+
     @Column(name = "total_score")
     private Double totalScore;
 
-    @Column(name = "difficulty")
-    private Double difficulty;
-
-    @Column(name = "execution")
-    private Double execution;
-
-    @Column(name = "penalty")
-    private Double penalty;
-
-    @Column(name = "bonus")
-    private Double bonus;
-
-    @Column(name = "bonus_detail", columnDefinition = "json")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<BonusDetail> bonusDetail;
-
-    @Column(name = "score")
-    private Double score;
-
-    @NotNull(message = "Status is required")
-    @Column(name = "status_code", nullable = false, length = 20)
-    @Enumerated(EnumType.STRING)
-    private ScoreStatus status;
-
-    @Column(name = "second_difficulty")
-    private Double secondDifficulty;
-
-    @Column(name = "second_execution")
-    private Double secondExecution;
-
-    @Column(name = "second_penalty")
-    private Double secondPenalty;
-
-    @Column(name = "second_bonus")
-    private Double secondBonus;
-
-    @Column(name = "second_bonus_detail", columnDefinition = "json")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<BonusDetail> secondBonusDetail;
-
-    @Column(name = "second_score")
-    private Double secondScore;
-
-    @Column(name = "second_status_code", length = 20)
-    @Enumerated(EnumType.STRING)
-    private ScoreStatus secondStatus;
-
     @Column(name = "rank")
     private Integer rank;
+
+    @Column(name = "qualification_rank")
+    private Integer qualificationRank;
 
     @Column(name = "qualification_result_code", length = 10)
     @Enumerated(EnumType.STRING)
@@ -108,24 +83,4 @@ public class Score extends BaseEntity {
     @NotNull(message = "Counts toward team result is required")
     @Column(name = "counts_toward_team_result", nullable = false)
     private Boolean countsTowardTeamResult = true;
-
-    public void addBonusDetail(BonusDetail detail) {
-        if (detail == null)
-            return;
-
-        if (bonusDetail == null) {
-            bonusDetail = new ArrayList<>();
-        }
-        bonusDetail.add(detail);
-    }
-
-    public void addSecondBonusDetail(BonusDetail detail) {
-        if (detail == null)
-            return;
-
-        if (secondBonusDetail == null) {
-            secondBonusDetail = new ArrayList<>();
-        }
-        secondBonusDetail.add(detail);
-    }
 }
