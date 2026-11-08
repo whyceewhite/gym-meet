@@ -6,6 +6,7 @@ public enum QualificationResult {
     R1,
     R2,
     R3,
+    R4,
     NR;
 
     public static QualificationResult find(String text) {

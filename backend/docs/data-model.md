@@ -115,6 +115,7 @@ Final round itself — the two `AA`s aren't related beyond sharing a name.)
 | R1 | First reserve. Would advance if a qualified athlete withdraws. |
 | R2 | Second reserve. |
 | R3 | Third reserve. |
+| R4 | Fourth reserve (e.g. World Championships All-Around qualification). |
 | NR | Had a score to qualify, but removed because of maximum of two per country in a final rule. |
 
 #### `Country`
@@ -126,6 +127,7 @@ No enumerator or type will be used. This value is typically the ISO-3166 three-l
 | Value | Description |
 |---|---|
 | PRESIDENT | |
+| VICE_PRESIDENT | |
 | MEMBER | |
 | D1 | |
 | D2 | |
@@ -136,23 +138,25 @@ No enumerator or type will be used. This value is typically the ISO-3166 three-l
 | E5 | |
 | E6 | |
 | E7 | |
-| L | |
-| L1 | |
-| L2 | |
-| T | |
-| T1 | |
-| T2 | |
-| SV | |
-| RES | |
-| RES_1 | |
-| RES_2 | |
-| RES_3 | |
+| L | Line judge. |
+| L1 | Line judge 1. |
+| L2 | Line judge 2. |
+| T | Time judge. |
+| T1 | Time judge 1. |
+| T2 | Time judge 2. |
+| SV | Apparatus supervisor. |
+| R1 | First reserve judge. A source listing a single unnumbered reserve is recorded as `R1`. |
+| R2 | Second reserve judge. |
+| R3 | Third reserve judge. |
+| R4 | Fourth reserve judge. |
+| R5 | Fifth reserve judge. |
+| R6 | Sixth reserve judge. |
 
-Codes as published by the source (`*-JUDGES.csv` exports), uppercased and
-with spaces replaced by underscores (e.g. "RES 1" → `RES_1`). Deliberately
-not further annotated here — several of these (`SV`, `L`/`L1`/`L2`,
-`T`/`T1`/`T2`) don't have a confirmed meaning yet; add descriptions once
-verified rather than guessing.
+Codes as written in the `*-JUDGES.csv` files. `JudgeFunction.find` matches
+case-insensitively and treats spaces and hyphens as underscores (e.g.
+"Vice-President" → `VICE_PRESIDENT`). The `L`, `T` and `SV` meanings were
+confirmed by the 2026 World Championships Judges Assignments, which spell
+them out ("Line Judge 1", "Time Judge", "Floor Exercise Supervisor").
 
 ## 3. Entities
 

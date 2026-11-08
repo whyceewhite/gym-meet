@@ -3,6 +3,7 @@ package doubletuck.meet.domain;
 public enum JudgeFunction {
 
     PRESIDENT,
+    VICE_PRESIDENT,
     MEMBER,
     D1,
     D2,
@@ -20,15 +21,17 @@ public enum JudgeFunction {
     T1,
     T2,
     SV,
-    RES,
-    RES_1,
-    RES_2,
-    RES_3;
+    R1,
+    R2,
+    R3,
+    R4,
+    R5,
+    R6;
 
     public static JudgeFunction find(String text) {
 
         if (text != null && !text.isEmpty()) {
-            text = text.trim();
+            text = text.trim().replaceAll("[\\s-]+", "_");
             for (JudgeFunction judgeFunction : JudgeFunction.values()) {
                 if (judgeFunction.name().equalsIgnoreCase(text)) {
                     return judgeFunction;

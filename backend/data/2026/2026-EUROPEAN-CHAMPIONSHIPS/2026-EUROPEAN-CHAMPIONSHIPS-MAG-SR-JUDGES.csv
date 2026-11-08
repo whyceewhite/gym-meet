@@ -66,9 +66,9 @@ Event Name,Discipline,Age Category,Event Start Date,Round,Apparatus,Function,Nam
 37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E6,CHAPARRO WERT César,CHAPARRO WERT,César,ESP
 37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,E7,POP Andrei,POP,Andrei,FIN
 37th Senior European Championships,MAG,SR,2026-08-19,QUAL,HB,E7,KONSTANTINOVICS Bronislavs,KONSTANTINOVICS,Bronislavs,LAT
-37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,RES 1,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
-37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,RES 2,FRICK Juergen,FRICK,Juergen,AUT
-37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,RES 3,MURADLI Zakariyya,MURADLI,Zakariyya,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,R1,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,R2,FRICK Juergen,FRICK,Juergen,AUT
+37th Senior European Championships,MAG,SR,2026-08-19,QUAL,PB,R3,MURADLI Zakariyya,MURADLI,Zakariyya,AZE
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,,Member,CARRILES Pablo,CARRILES,Pablo,EG
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,,Member,NANKOE Raymond,NANKOE,Raymond,EG
@@ -115,10 +115,10 @@ Event Name,Discipline,Age Category,Event Start Date,Round,Apparatus,Function,Nam
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E6,GAMSAKHURDIA Besarion,GAMSAKHURDIA,Besarion,GEO
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,E7,VILLAPIANO Massimiliano,VILLAPIANO,Massimiliano,ITA
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,E7,TASKINEN Topi,TASKINEN,Topi,FIN
-37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,RES 1,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,R1,AGHAYEV Ahmad,AGHAYEV,Ahmad,AZE
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,VT,L,VOGEL Achim,VOGEL,Achim,GER
-37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,RES 2,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
-37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,RES 3,GORSKIS Maris,GORSKIS,Maris,LAT
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,R2,GYURJINYAN Artur,GYURJINYAN,Artur,ARM
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,SR,R3,GORSKIS Maris,GORSKIS,Maris,LAT
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,SV,GAZIT Ilan,GAZIT,Ilan,EG
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,SV,VAN OORT Robert,VAN OORT,Robert,EG
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,D1,BRATAN Sebastian,BRATAN,Sebastian,EG
@@ -139,9 +139,9 @@ Event Name,Discipline,Age Category,Event Start Date,Round,Apparatus,Function,Nam
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E6,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,E7,JUG Sven,JUG,Sven,SLO
 37th Senior European Championships,MAG,SR,2026-08-19,EVENT,HB,E7,GALEROS Stavros,GALEROS,Stavros,GRE
-37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,RES 1,ZURLINI Antonio,ZURLINI,Antonio,ITA
-37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,RES 2,YANEV Iliya,YANEV,Iliya,BUL
-37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,RES 3,HUMMEL Jens,HUMMEL,Jens,SWE
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,R1,ZURLINI Antonio,ZURLINI,Antonio,ITA
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,R2,YANEV Iliya,YANEV,Iliya,BUL
+37th Senior European Championships,MAG,SR,2026-08-19,EVENT,PB,R3,HUMMEL Jens,HUMMEL,Jens,SWE
 37th Senior European Championships,MAG,SR,2026-08-19,TEAM,,President,FEDARAU Andrey,FEDARAU,Andrey,EG
 37th Senior European Championships,MAG,SR,2026-08-19,TEAM,,Member,CARRILES Pablo,CARRILES,Pablo,EG
 37th Senior European Championships,MAG,SR,2026-08-19,TEAM,,Member,NANKOE Raymond,NANKOE,Raymond,EG
@@ -209,6 +209,6 @@ Event Name,Discipline,Age Category,Event Start Date,Round,Apparatus,Function,Nam
 37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E6,SIRERA GARRIGOS Montserrat,SIRERA GARRIGOS,Montserrat,ESP
 37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,E7,BORDAN Csaba,BORDAN,Csaba,HUN
 37th Senior European Championships,MAG,SR,2026-08-19,TEAM,HB,E7,POP Andrei,POP,Andrei,FIN
-37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,RES 1,SKAR Jorgen Collett,SKAR,Jorgen Collett,NOR
-37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,RES 2,CIZMAR Martin,CIZMAR,Martin,SVK
-37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,RES 3,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,R1,SKAR Jorgen Collett,SKAR,Jorgen Collett,NOR
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,R2,CIZMAR Martin,CIZMAR,Martin,SVK
+37th Senior European Championships,MAG,SR,2026-08-19,TEAM,PB,R3,EECKHOUTTE Sébastien,EECKHOUTTE,Sébastien,FRA

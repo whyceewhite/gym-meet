@@ -432,7 +432,8 @@ One row per athlete entry. Columns:
 | Name | Combined "SURNAME Given Name" exactly as printed |
 | Surname | **Derived, see §5.10.** This file is the *master* record for an athlete's name — derive it once here. |
 | Given Name | Derived, same rule |
-| Birth Year | The PDF entry list gives only a birth **year**, not a full date — see §6 for the gap against `Athlete.birthDate`. |
+| Birth Year | Always populated. The Europeans entry list gives only a birth **year** — see §6 item 5. |
+| Birth Date | `YYYY-MM-DD` when the entry list prints a full date of birth (FIG Worlds, §8.1); blank otherwise. Added after the Europeans files were built, so those files don't have the column yet. |
 
 ### 5.4 `JUDGES.csv`
 
@@ -442,7 +443,7 @@ One row per judge per apparatus panel per round, all rounds in one file.
 |---|---|
 | Round | `QUAL` / `EVENT` / `TEAM` / `AA` |
 | Apparatus | The two-letter code (`FX`/`PH`/`SR`/`PB`/`HB`/`VT` for MAG, `FX`/`BB`/`UB`/`VT` for WAG), or **blank** for a Superior Jury row (President/Member — not tied to one apparatus). **Not** the spelled-out name the icon stands for (`Floor Exercise`, `Rings`, ...) — identifying the panel's apparatus by icon (§3.4) is a separate step from writing the column value, and the first pass at this file wrote the spelled-out label straight through for all four MAG/WAG `JUDGES.csv` files before it was caught and fixed. Map to the short code explicitly; don't let the icon lookup's own label leak into the output. |
-| Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`, `L1`, `L2`, `RES 1`–`RES 3`, `L`, `President`, `Member` — copy exactly as printed, don't normalize |
+| Function | `SV`, `D1`, `D2`, `E1`–`E7`, `T`/`T1`/`T2`, `L`/`L1`/`L2`, `R1`–`R6`, `President`, `Vice-President`, `Member` — each must resolve through `JudgeFunction.find` (case-insensitive, spaces/hyphens → underscores). Reserves are `R<n>`, not `RES <n>`; a single unnumbered reserve is `R1` |
 | Name | Combined name as printed |
 | Surname | **Derived, every time.** There is no separate master file for judges (unlike athletes), so this file derives the split itself using the rule in §5.10. |
 | Given Name | Derived, same rule |
@@ -672,6 +673,15 @@ def split_name(name):
 Note `str.isupper()` correctly treats an accented given name (`Sébastien`,
 `André`) as *not* all-uppercase, since the accented lowercase letter isn't
 uppercase — no special Unicode handling needed.
+
+**Extension needed for the Worlds PDF:** a leading lowercase particle
+(`van POL Vera`, `de MUNCK Loran`, `le ROCH Tanguy`, `LIDE de LEON Alyiah`)
+and a `Mc` prefix (`McDONALD Kate`, `Mc CLENAGHAN Rhys`) both fail
+`isupper()`, which would push the whole name into Given Name. Treat a
+particle (`van`, `der`, `de`, `le`, `Mc`, ...) or a word matching
+`(Mc|Mac)?<no lowercase>` as still part of the surname run. Don't instead
+use "everything up to the *last* uppercase word" — a trailing initial
+(`SOTO RODRIGUEZ Jensuel J`) would then swallow the given name.
 
 **Where to apply this:**
 
@@ -1025,3 +1035,110 @@ using the source's own column *positions* (not token count) to confirm
 which specific apparatus was blank. If this recurs, worth generalizing;
 for one row, hand-verification against the rendered/positional source was
 faster and just as reliable.
+
+## 8. FIG World Championships results book differences
+
+Parsing `2026-WORLD-CHAMPIONSHIPS-ALL-RESULTS.pdf` (one 329-page book, MAG
+and WAG, Seniors only) confirmed the footer-code approach (§2) still works,
+but the report set and several layouts differ from the Europeans PDF. The
+checks in §8.3 are what made the output trustworthy.
+
+The parser is
+[`tools/results-parsing/parse_2026_world_championships.py`](../tools/results-parsing/parse_2026_world_championships.py)
+— run it with the PDF path; it reads `EVENT.csv` from the same folder,
+writes every file next to the PDF, and exits non-zero if any §8.3 check
+fails. It is the starting point for the next FIG results book, but its
+session dates, footer codes and layout assumptions are specific to this one.
+
+### 8.1 Report inventory
+
+Print `footer code + page title` for every physical page first (§2) — this
+book also has Medallists, Start Lists, Lists of Qualifiers and **Tie Break
+Report** pages (`_77A`–`_77D`) interleaved with the results, none of which
+are parsed. Things that changed:
+
+- **Entry list** (`GARM----..._32D` / `GARW----..._32D`, "Entry List by Bib
+  Number") prints a full **Date of Birth**, so `PARTICIPANTS.csv` gets a
+  `Birth Date` column (§5.3). There is no printed Order column; `Order` is
+  the row's position in the bib-ordered list.
+- **No per-apparatus report for the Team Final or All-Around Final.** The
+  per-athlete scores for those rounds exist only inside the Team Results
+  (`GARMTEAM..._73C`, `GARWTEAM..._73D`) and All-Around Results
+  (`GARM1AA..._73G`, `GARW1AA..._73H`) reports. `SCORES-TEAM-<APP>` and
+  `SCORES-AA-<APP>` are built from those (§8.3). Team-final rows have no
+  per-apparatus rank, so `Rank` is blank there; the AA report prints one
+  (`(Rk)`), so `SCORES-AA-<APP>` has it.
+- `SUMMARY-FINAL-AA` exists for the first time (the AA Final report), with
+  the `SUMMARY-QUAL-AA` columns minus `Qualification`.
+- Two reports share `GARM1AA...QUAL..._73G`: "Men's Qualifications" (every
+  athlete, any apparatus count) and "Men's All-Around Qualification" (the
+  AA ranking). Select by the printed title (§2 rule 5); only the second
+  feeds `SUMMARY-QUAL-AA`. The AA ranking still lists non-all-arounders at
+  the bottom with `DNS` apparatus and a `DNF`/`DNS` total — kept as rows
+  with blank `Rank`/`Total`, as printed.
+- Vault qualification: the double-vault list is `_73J` ("Vault
+  Qualification"), the single-vault list is `_73I` titled "Qualifications -
+  Vault 1".
+- The AA qualification marker includes **`R4`** (added to
+  `QualificationResult` for this).
+
+### 8.2 Column changes on the apparatus tables
+
+- **D is printed before E everywhere**, including MAG PH and all WAG
+  apparatus (the opposite of §7.1). Keep reading the header (§3.1).
+- MAG tables have separate `Pen.` and `Bonus` columns, either of which can
+  be empty. Tokens collapse, so tell them apart by **sign**: bonus is always
+  positive, penalty always negative.
+- WAG vault prints the +0.2 as its own `Vault Bonus` column (not a `*`,
+  §7.3). It sits *after* the attempt's Vault Score, while MAG's per-attempt
+  bonus sits *before* it — 3-decimal tokens are scores, 1-decimal tokens
+  are penalty/bonus.
+- No `SJ Pen.` column appears anywhere, so every `SJ Penalty` is blank.
+- Apparatus Finals tables have trailing `Qualification Rank` and `Start
+  Order` columns, which are not captured.
+- An invalid second vault prints as `0.000 0.000 0.000` with the published
+  average halved (`ZAPATA Rayderley`, MAG QUAL) → `Status2=INVALID_VAULT`.
+
+### 8.3 Parsing the Team/All-Around report blocks
+
+Each athlete spans three lines: `D` (D value + score per apparatus), `E`,
+and `BP` for MAG / `EP` or `E P` for WAG. Apparatus are identified by
+**column position**, not token order, because an athlete can skip any
+apparatus:
+
+- Team reports: match each D/score (or `DNS`) item to the team line's
+  `(rank) total` columns by **right edge** — `DNS` is right-aligned under the
+  score, so matching by start position put one in the wrong apparatus.
+- E values go to the nearest D item; bonus/penalty values go to the
+  closest D item at or left of them.
+- Column order follows the icon legend: FX PH SR VT PB HB (MAG), VT UB BB FX
+  (WAG). This was verified against the per-apparatus qualification tables,
+  not just read off the legend (§7.8).
+- pdftotext occasionally drops a row's NOC and total onto the next line or
+  joins NOC to the name with one space; the identity regex has to tolerate
+  both.
+
+Checks that must all pass (they did, with zero exceptions):
+
+1. `D + E + B + Penalty == Score` for every routine in every table.
+2. Every Team/AA qualification-report score equals the same athlete's
+   per-apparatus `SCORES-QUAL-<APP>` total (proves the column mapping).
+3. Team apparatus totals equal the best three athlete scores; AA totals
+   equal the apparatus sum; vault averages equal (V1+V2)/2 + Bonus.
+4. Single- and double-vault lists agree on vault 1.
+5. Row counts match an independent regex count; `PARTICIPANTS` totals
+   match the "Number of Entries by NOC" page (231 men, 221 women).
+
+### 8.4 Judges Assignments
+
+- Grid order (rendered all eight pages): MAG FX/PH, SR/VT, PB/HB; WAG
+  VT/UB, BB/FX.
+- Apparatus supervisors appear in the Superior Jury block
+  (`<Apparatus> Supervisor`) → `Function=SV` with that apparatus. Superior
+  Jury rows have no NOC.
+- Functions are spelled out: `Time Judge [n]` → `T`/`T1`/`T2`,
+  `Line Judge [n]` → `L`/`L1`/`L2`. Reserves are a shared list (`R1`…`R6`)
+  → `R<n>`, apparatus blank.
+- The last reserve can land on the same text line as the `Legend:` label
+  (MAG apparatus finals' `R6`) — a first pass silently dropped it.
+- WAG has a `Vice-President` (→ `JudgeFunction.VICE_PRESIDENT`).

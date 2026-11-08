@@ -79,7 +79,8 @@ One row per athlete entry.
 | Name | Combined `SURNAME Given Name`, exactly as printed | |
 | Surname | Participant's surname | `Athlete.surname` |
 | Given Name | Participant's given name | `Athlete.givenName` |
-| Birth Year | Participant's birth year | `Athlete.birthYear` |
+| Birth Year | Participant's birth year | `Athlete.birthYear` (only when `Birth Date` is blank) |
+| Birth Date | Participant's full birth date (`YYYY-MM-DD`), when the entry list publishes one (FIG World Championships does; European Championships prints only a year). Blank otherwise | `Athlete.birthDate` |
 
 ## `JUDGES.csv`
 
@@ -90,7 +91,7 @@ one file per discipline+age.
 |---|---|---|
 | Round | The round of competition the judge is evaluating: [Round](../src/main/java/doubletuck/meet/domain/Round.java) | `Judge.round`  |
 | Apparatus | The apparatus the judge is evaluating: [Apparatus](../src/main/java/doubletuck/meet/domain/Apparatus.java) | `Judge.apparatus` |
-| Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java) | `Judge.function` |
+| Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java). Superior Jury roles are written as printed (`President`, `Vice-President`, `Member`) and resolve through `JudgeFunction.find`; reserve judges are `R1`…`R6` | `Judge.function` |
 | Name | Combined name of judge as printed | |
 | Surname | Judge's surname | `Judge.surname` |
 | Given Name | Judge's given name | `Judge.givenName` |
@@ -117,12 +118,12 @@ round(s) a column actually appears in.
 | NOC Code | ✓ | ✓ | ✓ | ✓ | | *(not stored — already on `Participant.noc`)* |
 | Status | ✓ | ✓ | ✓ | ✓ | `COMPLETED`, `DNS`, or `INVALID_VAULT` — always written explicitly, never blank. Mirrors `Score.status` being `NOT NULL` | `Score.status` |
 | D | ✓ | ✓ | ✓ | ✓ | Difficulty score | `Score.difficulty` |
-| E | ✓ | ✓ | ✓ | ✓ | Execution score. MAG PH and every WAG apparatus print `E` before `D` in the source; the CSV always writes to these fixed column names regardless of source order | `Score.execution` |
+| E | ✓ | ✓ | ✓ | ✓ | Execution score. Some sources print `E` before `D` (MAG PH and every WAG apparatus at the 2026 Europeans); the CSV always writes to these fixed column names regardless of source order | `Score.execution` |
 | B | ✓ | ✓ | ✓ | ✓ | Bonus. Populated for MAG (blank on every MAG PH row specifically — PH has no bonus). Present but always blank for WAG — kept for column alignment between disciplines rather than omitted, since neither MAG nor WAG's non-vault apparatus concept differs enough to justify a different shape | `Score.bonus` |
 | Penalty | ✓ | ✓ | ✓ | ✓ | Blank when no penalty applied — never `0` | `Score.penalty` |
 | SJ Penalty | ✓ | ✓ | ✓ | ✓ | Superior Jury Penalty. Present for column alignment with Vault (§ below); not observed with a non-blank value on any non-vault apparatus for either discipline so far | *(no `Score` field for a Superior Jury penalty yet — a real gap, not just an unmapped reference column)* |
 | Total | ✓ | ✓ | ✓ | ✓ | Blank when `Status` is `DNS` | `Score.score` |
-| Qualification | ✓ | | | | `Q`/`R1`/`R2`/`R3`/`NR`/blank, matching `QualificationResult` exactly. Only meaningful where there's a further round to qualify into | `Score.qualificationResult` |
+| Qualification | ✓ | | | | `Q`/`R1`–`R4`/`NR`/blank, matching `QualificationResult` exactly. Only meaningful where there's a further round to qualify into | `Score.qualificationResult` |
 
 ### Vault, double-attempt shape (`QUAL` and `EVENT` rounds only)
 
@@ -152,7 +153,7 @@ double-vault listing (only those attempting a second vault) — see
 | Penalty2 | ✓ | ✓ | | `Score.secondPenalty` |
 | SJ Penalty2 | ✓ | ✓ | Superior Jury Penalty, attempt 2. Same WAG/MAG split as `SJ Penalty1` | *(same gap as `SJ Penalty1`)* |
 | Total2 | ✓ | ✓ | Blank whenever `Status2` is blank or `DNS` | `Score.secondScore` |
-| Bonus | ✓ | ✓ | **WAG only, and distinct from `B1`/`B2` above** — this is a bonus applied to the *combined* two-vault result, not either individual attempt. The source prints it as a `*` on the combined `Total` (worth +0.2), decoded here into its own column (`0.2` or blank) with `Total` holding the clean number. Not yet added to MAG — no equivalent concept has shown up there | *(doesn't cleanly fit `Score.bonus`/`secondBonus`, both of which are per-attempt — this applies to the combined result. Needs a decision, not yet mapped)* |
+| Bonus | ✓ | ✓ | **WAG only, and distinct from `B1`/`B2` above** — this is a bonus applied to the *combined* two-vault result, not either individual attempt. Some sources print it as a `*` on the combined `Total` (worth +0.2), others as its own `Vault Bonus` column; either way it lands here as `0.2` or blank, with `Total` holding the clean number. Not yet added to MAG — no equivalent concept has shown up there | *(doesn't cleanly fit `Score.bonus`/`secondBonus`, both of which are per-attempt — this applies to the combined result. Needs a decision, not yet mapped)* |
 | Total | ✓ | ✓ | The athlete's official counting result — `Total1` alone for a single-vault athlete, the published average for a completed two-vault athlete, blank when there's no valid combined result | `Score.totalScore` |
 | Qualification | ✓ | | Only ever set from the double-vault list; blank for single-vault-only athletes | `Score.qualificationResult` |
 | Qualification Rank | ✓ | | Rank **within the double-vault list specifically** — distinct from `Rank`. Blank for single-vault-only athletes | *(`Score.rank` is single-valued and already used for `Rank` above — see `instructions-results-parsing.md` §6 item 4 for the open question of whether this is worth its own field)* |
@@ -172,8 +173,8 @@ Top-line standings only — one row per NOC (Team) or per athlete
 into it (those live in `SCORES-<ROUND>-<APP>.csv` instead). Not every round
 has both files for every age category — a `SUMMARY-FINAL-TEAM`/
 `SUMMARY-FINAL-AA` file only exists where the source PDF has an actual
-separate Final report for it (see "File families" above; no
-`SUMMARY-FINAL-AA` has been seen yet).
+separate Final report for it (see "File families" above; the first
+`SUMMARY-FINAL-AA` files come from the 2026 World Championships).
 
 | Column | Description | Entity Mapping |
 |---|---|---|
@@ -185,4 +186,4 @@ separate Final report for it (see "File families" above; no
 | `<APP> Total` (one column per apparatus) | Already the sum/drop-lowest total printed by the source, not recomputed. Apparatus set and column order is discipline-specific: `FX, PH, SR, VT, PB, HB` for MAG, `FX, BB, UB, VT` for WAG | |
 | SJ Penalty | Superior Jury penalty applied to the row as a whole, distinct from an individual routine's `Penalty` | |
 | Total | Grand total | `TeamResult.totalScore` / `AllAroundResult.totalScore` |
-| Qualification | [QualificationResult](../src/main/java/doubletuck/meet/domain/QualificationResult.java). Omitted entirely from a `FINAL` summary — no further round to qualify into | `TeamResult.qualificationResult` / `AllAroundResult.qualificationResult` |
+| Qualification | [QualificationResult](../src/main/java/doubletuck/meet/domain/QualificationResult.java). Omitted entirely from a `FINAL` summary — no further round to qualify into. The 2026 Worlds All-Around qualification also uses `R4` | `TeamResult.qualificationResult` / `AllAroundResult.qualificationResult` |
