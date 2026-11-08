@@ -286,10 +286,12 @@ attempts that combine into one official result. Two shapes were considered and
 set aside before landing on the one in §4.5:
 
 - **Two apparatus rows (`VT1`/`VT2`), no combined row** — simple, but leaves
-  nothing representing the official, ranked, combined result. Most entrants only
-  vault once, so the gap only bites two-vault entrants — but that's exactly the
-  athletes whose vault result matters most (they're the ones chasing an
-  all-around or event-final spot).
+  nothing representing the combined two-vault result, which is what decides
+  qualification to the Vault final (and the result in the Vault final itself).
+  Only athletes aiming for the Vault final perform a second vault in
+  qualification; everyone else vaults once. All-around and team scores always
+  use the first vault alone, so the combined result only matters for the Vault
+  final.
 - **A `scoreDetail` JSON array** of attempt breakdowns — no wasted columns, but
   it pushes even the ordinary single-attempt case (every other apparatus, and
   most vault entries) behind a JSON lookup for what's normally a plain, commonly
@@ -330,10 +332,12 @@ totals, so there's no meaningful single number to put anywhere else.
 Two facts in this model are aggregates over `Score` rows rather than
 judged results in their own right: a team's total in a `TEAM` (or
 qualifying) session, and an athlete's all-around total. Both *could* be computed
-on read instead of stored — team totals from `Score.totalScore` where
+on read instead of stored — team totals from `Score.score` where
 `countsTowardTeamResult` is true, all-around totals by summing a participant's
-apparatus totals for the session (no drop-lowest rule involved at all, unlike
-team scoring). Both are stored anyway, for the same reason vault's `totalScore`
+apparatus `Score.score` values for the session (no drop-lowest rule involved at
+all, unlike team scoring). Both use `score`, not `totalScore`: for vault, team
+and all-around results count only the first vault, never the two-vault
+combined result. Both are stored anyway, for the same reason vault's `totalScore`
 isn't independently recomputed from its two attempts (§5): the officially
 published number is the source of truth, and a live recomputation isn't
 guaranteed to always agree with it — a late correction to one apparatus score, a
@@ -368,7 +372,7 @@ Unique key: `(session_id, noc)`
 | id | Long | No | Generated primary key. |
 | participantId | Long, FK → `Participant` | No | The athlete this result is for. |
 | sessionId | Long, FK → `Session` | No | The round this all-around total applies to — typically a `QUAL` or `AA` `Session`. |
-| totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.totalScore` rows for this `Session`. Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all). |
+| totalScore | Double | Yes | The athlete's official published all-around total — the sum of their apparatus `Score.score` values for this `Session` (for vault, the first vault only). Null if the athlete didn't complete every apparatus (most formats require completing all apparatus to receive an all-around result at all). |
 | rank | Integer | Yes | The athlete's all-around placement within the `Session`. |
 | qualificationResult | QualificationResult | Yes | Outcome of qualifying to the all-around final, when this `AllAroundResult` is on a `QUAL` `Session`. |
 
