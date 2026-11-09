@@ -55,12 +55,14 @@ public class Session extends BaseEntity {
     private AgeCategory ageCategory;
 
     /**
-     * Which apparatus this session is for. Set only when {@code round} is
+     * Which apparatus this session is for. Set when {@code round} is
      * {@link Round#EVENT} -- an Apparatus Final is its own session per
-     * apparatus. Null for every other round, since Qualification, the
-     * All-Around Final, and the Team Final each cover all apparatus within
-     * one session (see {@link Score#getApparatus()} for the per-apparatus
-     * split of scores within those).
+     * apparatus -- and for {@link Round#QUAL} at an apparatus-format event
+     * (e.g. a World Cup), where qualification is a separate competition per
+     * apparatus with its own day and judges. Null otherwise, since a
+     * championship's Qualification, All-Around Final, and Team Final each
+     * cover all apparatus within one session (see {@link Score#getApparatus()}
+     * for the per-apparatus split of scores within those).
      */
     @Column(name = "apparatus_code", length = 5)
     @Enumerated(EnumType.STRING)

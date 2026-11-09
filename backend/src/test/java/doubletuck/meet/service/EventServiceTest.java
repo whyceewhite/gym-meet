@@ -56,7 +56,7 @@ class EventServiceTest {
         testEvent.setStartDate(LocalDate.of(2026, 4, 20));
         testEvent.setEndDate(LocalDate.of(2026, 4, 26));
         testEvent.setCity("Stuttgart");
-        testEvent.setCountryCode("DEU");
+        testEvent.setCountryCode("GER");
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
     }
@@ -220,7 +220,7 @@ class EventServiceTest {
     }
 
     private EventRequest requestFor(String figEventNumber, String title, LocalDate startDate, LocalDate endDate) {
-        return new EventRequest(figEventNumber, title, startDate, endDate, "Stuttgart", "DEU", null,
+        return new EventRequest(figEventNumber, title, startDate, endDate, "Stuttgart", "GER", null,
                 EventLevel.CONTINENTAL_CHAMPIONSHIPS);
     }
 }

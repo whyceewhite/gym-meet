@@ -24,6 +24,7 @@ public enum JudgeFunction {
     T1("Time Judge 1"),
     T2("Time Judge 2"),
     SV("Supervisor"),
+    DS1("Difficulty Supervisor"),
     R("Reserve Judge"),
     R1("Reserve Judge 1"),
     R2("Reserve Judge 2"),

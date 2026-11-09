@@ -64,7 +64,7 @@ One row per discipline+age sub-event making up the competition.
 | Start Date | The first day of competition of the event | `Event.startDate` |
 | End Date | The final day of competition of the event | `Event.endDate` |
 | City | The city where the event is hosted | `Event.city` |
-| Country | The country code where the event is hosted | `Event.countryCode` |
+| Country | The IOC code of the country hosting the event (`GER`, `NED` — not ISO `DEU`, `NLD`) | `Event.countryCode` |
 | Venue | The name of the venue where the event is hosted | `Event.venue` |
 | FIG Event Number | The FIG number that identifies the event if a FIG associated competition | `Event.figEventNumber` |
 | Apparatus Suppliers | The equipment manufacturer for this competition | |
@@ -76,7 +76,7 @@ One row per athlete entry.
 | Column | Description | Entity Mapping |
 |---|---|---|
 | Order | Entry-list position, as printed | |
-| NOC Code | Country code the participant is competing under | `Participant.noc` |
+| NOC Code | Country code the participant is competing under, as printed — 3 characters, or 4 for FIG's numbered neutral-athlete codes (`AIN1`, `AIN2`). Some entry lists print it only on each country's first row; it applies to the rows below until the next one | `Participant.noc` |
 | Bib Number | Assigned bib number to uniquely identify the participant in the competition | `Participant.bibNumber` |
 | FIG License | FIG license number assigned to the gymnast | `Athlete.licenseNumber` |
 | Name | Combined name exactly as printed — `SURNAME Given Name` in FIG sources, `Given Surname` in US Championships | |
@@ -95,11 +95,11 @@ one file per discipline+age.
 |---|---|---|
 | Round | The round of competition the judge is evaluating: [Round](../src/main/java/doubletuck/meet/domain/Round.java) | `Judge.round`  |
 | Apparatus | The apparatus the judge is evaluating: [Apparatus](../src/main/java/doubletuck/meet/domain/Apparatus.java) | `Judge.apparatus` |
-| Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java). Superior Jury roles are written as printed (`President`, `Vice-President`, `Member`) and resolve through `JudgeFunction.find`; reserve judges are `R` (single, unnumbered) or `R1`…`R6` | `Judge.function` |
+| Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java). Superior Jury roles are written as printed (`President`, `Vice-President`, `Member`) and resolve through `JudgeFunction.find`; reserve judges are `R` (single, unnumbered) or `R1`…`R6`; World Cup panels print `DS1` (Difficulty Supervisor) and, on beam, `pen5` — written as `T2`, see `instructions-results-parsing.md` §10 | `Judge.function` |
 | Name | Combined name of judge as printed | |
 | Surname | Judge's surname | `Judge.surname` |
 | Given Name | Judge's given name | `Judge.givenName` |
-| NOC Code | Country that that the judge is representing | `Judge.nocCode` |
+| NOC Code | Federation the judge is credited to, as printed. Blank when none is printed (e.g. a Superior Jury member) | `Judge.nocCode` |
 
 ## `SCORES-<ROUND>-<APP>.csv`
 
@@ -127,7 +127,7 @@ round(s) a column actually appears in.
 | Penalty | ✓ | ✓ | ✓ | ✓ | Blank when no penalty applied — never `0` | `Score.routine.penalty` |
 | SJ Penalty | ✓ | ✓ | ✓ | ✓ | Superior Jury Penalty, distinct from `Penalty`. Not observed with a non-blank value on any non-vault apparatus so far | `Score.routine.sjPenalty` |
 | Total | ✓ | ✓ | ✓ | ✓ | Blank when `Status` is `DNS` | `Score.routine.score` (and `Score.totalScore`, which equals it for a single routine) |
-| Qualification | ✓ | | | | `Q`/`R1`–`R4`/`NR`/blank, matching `QualificationResult` exactly. Only meaningful where there's a further round to qualify into | `Score.qualificationResult` |
+| Qualification | ✓ | | | | `Q`/`R1`–`R4`/`NR`/blank, matching `QualificationResult` exactly. Only meaningful where there's a further round to qualify into. Where the qualification table prints no markers but the final's start list names the finalists and ordered reserves (2026 Cottbus World Cup), they're taken from the start list | `Score.qualificationResult` |
 | Qualification Rank | ✓ | | | | Placement in the ranking that decides the apparatus final. On every non-vault apparatus that's the same ranking as `Rank`, so the value is always equal to `Rank` — written out anyway so every `QUAL` file pairs `Qualification` with its own rank, vault included | `Score.qualificationRank` |
 
 ### Vault, double-attempt shape (`QUAL` and `EVENT` rounds only)

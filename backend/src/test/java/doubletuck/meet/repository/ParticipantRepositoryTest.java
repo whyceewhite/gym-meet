@@ -5,6 +5,7 @@ import doubletuck.meet.domain.Discipline;
 import doubletuck.meet.domain.Event;
 import doubletuck.meet.domain.EventLevel;
 import doubletuck.meet.domain.Participant;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +123,27 @@ class ParticipantRepositoryTest {
     }
 
     @Test
+    void testSave_NeutralAthleteNoc() {
+        Participant neutral = new Participant();
+        neutral.setEvent(testEvent);
+        neutral.setAthlete(savedAthlete("Kartsev", "Aleksandr"));
+        neutral.setNoc("AIN2");
+        neutral = participantRepository.saveAndFlush(neutral);
+
+        assertEquals("AIN2", participantRepository.findById(neutral.getId()).orElseThrow().getNoc());
+    }
+
+    @Test
+    void testCreate_FailsBecauseNocTooLong() {
+        Participant tooLong = new Participant();
+        tooLong.setEvent(testEvent);
+        tooLong.setAthlete(savedAthlete("Kartsev", "Aleksandr"));
+        tooLong.setNoc("NEUTR");
+
+        assertThrows(ConstraintViolationException.class, () -> participantRepository.saveAndFlush(tooLong));
+    }
+
+    @Test
     void testCreate_FailsBecauseDuplicateEventAndAthlete() {
         Participant duplicate = new Participant();
         duplicate.setEvent(testEvent);
@@ -137,7 +159,7 @@ class ParticipantRepositoryTest {
         event.setStartDate(LocalDate.of(2026, 4, 20));
         event.setEndDate(LocalDate.of(2026, 4, 26));
         event.setCity("Stuttgart");
-        event.setCountryCode("DEU");
+        event.setCountryCode("GER");
         event.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         return eventRepository.save(event);
     }

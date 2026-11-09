@@ -36,8 +36,9 @@ public class TeamResult extends BaseEntity {
     private Session session;
 
     @NotBlank(message = "NOC is required")
-    @Size(min = 3, max = 3, message = "NOC must be a 3-letter code")
-    @Column(name = "noc", nullable = false, length = 3)
+    // 4 characters for FIG's numbered neutral-athlete codes (AIN1, AIN2)
+    @Size(min = 3, max = 4, message = "NOC must be a 3- or 4-character code")
+    @Column(name = "noc", nullable = false, length = 4)
     private String noc;
 
     @Column(name = "total_score")

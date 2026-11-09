@@ -30,7 +30,7 @@ class EventRepositoryTest {
         testEvent.setStartDate(LocalDate.of(2026, 4, 20));
         testEvent.setEndDate(LocalDate.of(2026, 4, 26));
         testEvent.setCity("Stuttgart");
-        testEvent.setCountryCode("DEU");
+        testEvent.setCountryCode("GER");
         testEvent.setVenue("Schleyerhalle");
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
@@ -46,7 +46,7 @@ class EventRepositoryTest {
         assertEquals(LocalDate.of(2026, 4, 20), found.get().getStartDate());
         assertEquals(LocalDate.of(2026, 4, 26), found.get().getEndDate());
         assertEquals("Stuttgart", found.get().getCity());
-        assertEquals("DEU", found.get().getCountryCode());
+        assertEquals("GER", found.get().getCountryCode());
         assertEquals("Schleyerhalle", found.get().getVenue());
         assertEquals(EventLevel.CONTINENTAL_CHAMPIONSHIPS, found.get().getLevel());
     }

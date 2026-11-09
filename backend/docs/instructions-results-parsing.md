@@ -1249,3 +1249,94 @@ Re-deriving the earlier hand-built files with this parser reproduced every
 one of their 1,215 routine values exactly; the differences were the
 intended ones (not-entered rows dropped, `UNKNOWN` → `DNS`, second vaults
 and Day 1 vault ranks added).
+
+## 10. Apparatus World Cup (Cottbus) differences
+
+`2026-APPARATUS-WORLD-CUP-COTTBUS-ALL-RESULTS.pdf` is the organizer's (CABI-Berlin)
+media results book for an FIG Apparatus World Cup. The parser is
+[`tools/results-parsing/parse_2026_apparatus_world_cup_cottbus.py`](../tools/results-parsing/parse_2026_apparatus_world_cup_cottbus.py);
+run it with the book's path. It exits non-zero if any check below fails.
+
+### 10.1 Competition format
+
+An apparatus competition only: **qualification and apparatus finals per
+apparatus, no team or all-around round**, so there are no `SUMMARY-*` files.
+Qualification on each apparatus is its own competition — its own start list,
+day and judging panel — so a World Cup `QUAL` session carries an apparatus,
+like `EVENT` (`data-model.md` §3, `Session.apparatus`). Each apparatus's
+`SCORES-QUAL-<APP>` therefore maps to its own session, with its own date.
+
+Vault qualification has a **single ranking**: every vaulter performs two
+vaults and is ranked on the average, since there's no all-around for a
+single counting vault. `Rank` and `Qualification Rank` are both that ranking.
+
+### 10.2 Sources: a mostly scanned book
+
+Of the book's 69 pages, only the entry lists (pp. 2–7) and the finals judges
+lists (pp. 34, 61) have a text layer. Every results page, start list, medal
+list and qualification judges list is a **scanned image**: `pdftotext` returns
+nothing, and no OCR tool is installed. Render pages with `pdftoppm` (≈110 dpi
+is readable) and transcribe them; to find pages, crop each page's title band
+and stack them into one image (a pure-stdlib PGM→PNG stacker was enough).
+
+The book is also **incomplete**: MAG vault qualification has 22 vaulters but
+only its first results page (ranks 1–11) is included. A separate text PDF of
+the qualification results (`...-MAG-QUAL.pdf`, from USA Gymnastics) covers all
+MAG qualification and WAG floor/beam, and is used instead of the book for
+those. Everything only available as an image is transcribed under
+`tools/results-parsing/transcriptions/2026-APPARATUS-WORLD-CUP-COTTBUS/`
+(format in its README).
+
+### 10.3 Layout gotchas
+
+- **Names print `Given SURNAME`** on entry lists and results (the surname is the
+  trailing run of upper-case words: `Kilan VAN DER AA`, `Husam Moqbel Ali
+  AL-JABERI`), and **`Given, SURNAME`** on judges lists (split on the comma;
+  `Melanie, Jenkins` has a mixed-case surname).
+- **The entry list prints NOC only on each country's first row.**
+- **Neutral athletes and judges are `AIN1` / `AIN2`** — 4 characters, written as
+  printed (`Participant.noc` accepts 3–4).
+- **Q/R markers are missing from five qualification tables** (MAG FX, PH, SR;
+  WAG VT, UB — the ones printed on the first day). The finals start lists name
+  the 8 finalists and 3 ordered reserves, so the markers come from there
+  (`FINALS-START-LISTS.txt`); the parser checks that the Q set equals the
+  final's athletes.
+- **WAG vault's +0.2 combined bonus is printed on the 2nd-vault line**, but it
+  isn't part of that vault's score — it's added to the average (→ `Combined
+  Bonus`). MAG prints a per-vault `0.1` bonus inside each vault score (→ `B1`/`B2`).
+- **Bonus prints as `+0.1`** on non-vault tables; the `+` is dropped.
+- **No Competition Schedule page.** Session dates are inferred from the results
+  pages' print timestamps, which split cleanly: qualification MAG FX/PH/SR and
+  WAG VT/UB on 19 Feb, the rest on 20 Feb; finals in the same split on 21/22 Feb.
+  This is the §5.2a exception used as the only source, so confirm against the
+  organizer's schedule if one turns up.
+- **Judges**: `DS1` heads every panel — the Difficulty Supervisor (World Cup
+  panels are 2 D judges, 5 E judges and 1 supervisor, per the 2025–2028 Apparatus
+  World Cup rules), kept as `JudgeFunction.DS1`. WAG beam also prints a `pen5`:
+  beam requires two time judges and the panel's other one is `Time 1`, so it's
+  written as `T2`. `Line n` / `Time n` → `L1`/`L2`/`T1` (numbered even when
+  there's only one). Superior Jury members aren't listed in this book.
+
+### 10.4 Checks (all pass)
+
+1. D + E + Penalty + Bonus = Total on every routine; each vault adds up, and the
+   published vault total = the average (truncated to 3 decimals) + combined bonus.
+2. Ranks are in order, totals never increase down the table, and tied ranks have
+   equal totals.
+3. Every transcribed qualification page that also exists in the text PDF (8
+   pages, 227 rows) matches it field by field.
+4. Every row's bib, name, birth year and NOC match the entry list; qualification
+   row counts match the start lists' participant counts.
+5. Each final's athletes are exactly the qualification's Q set.
+
+Verified by planting a wrong digit in a transcription (caught by check 3) and in
+a final (caught by check 1).
+
+**Source inconsistency — the medal list is wrong:** the WAG vault final results
+page (printed 21 Feb) has Teja BELAK 3rd (13.516, including the +0.2 combined
+bonus) and Kohane USHIOKU 4th (13.333), but the book's medal list (printed 26
+Feb) gives the bronze to USHIOKU. Other published results confirm BELAK's
+bronze, so the CSV follows the results page. The general lesson: a book's
+summary pages (medal lists, standings) can disagree with its own results
+tables — treat the results table as the source and the summary as a
+cross-check only.

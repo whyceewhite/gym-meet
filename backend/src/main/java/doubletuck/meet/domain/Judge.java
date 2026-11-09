@@ -62,8 +62,8 @@ public class Judge extends BaseEntity {
     @Column(name = "surname", nullable = false, length = 60)
     private String surname;
 
-    @NotBlank(message = "NOC code is required")
+    // Null for officials not credited to a federation, e.g. a Superior Jury member
     @Size(max = 10, message = "NOC code must have 10 or fewer characters")
-    @Column(name = "noc_code", nullable = false, length = 10)
+    @Column(name = "noc_code", length = 10)
     private String nocCode;
 }

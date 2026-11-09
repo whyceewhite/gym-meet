@@ -128,7 +128,7 @@ Final round itself — the two `AA`s aren't related beyond sharing a name.)
 
 #### `Country`
 
-No enumerator or type will be used. This value is typically the ISO-3166 three-letter country code. At times, there will be FIG neutral-athletes who are not associated with a placeholder country for the competition.
+No enumerator or type will be used. Countries are the three-letter **IOC codes** World Gymnastics uses (`GER`, `NED`, `CRO`) — not ISO-3166 (`DEU`, `NLD`, `HRV`) — for both NOCs and an event's host country. At times, there will be FIG neutral athletes who are not associated with a country for the competition; they're published under a placeholder code, which can be four characters (`AIN1`, `AIN2` — Individual Neutral Athletes — at the 2026 Cottbus World Cup; `WG2` at the 2026 Europeans), so `Participant.noc` and `TeamResult.noc` accept 3–4 characters.
 
 #### `JudgeFunction`
 
@@ -147,6 +147,7 @@ No enumerator or type will be used. This value is typically the ISO-3166 three-l
 | T1 | Time Judge 1 | |
 | T2 | Time Judge 2 | |
 | SV | Supervisor | Apparatus supervisor |
+| DS1 | Difficulty Supervisor | The supervisor on a World Cup apparatus panel (2 D judges, 5 E judges, 1 supervisor), whose D-score the Superior Jury compares against the D-panel's |
 | R | Reserve Judge | A single reserve the source doesn't number |
 | R1–R6 | Reserve Judge 1–6 | Numbered reserve judges, `R1` through `R6` |
 
@@ -195,7 +196,7 @@ Additional names by which the athlete has had.
 | startDate | LocalDate | No | First day of competition. |
 | endDate | LocalDate | No | Last day of competition. |
 | city | String | No | Host city. |
-| countryCode | Country | No | Host country. Distinct from any athlete's or team's NOC. |
+| countryCode | Country | No | Host country, as an IOC code (§2, `Country`). Distinct from any athlete's or team's NOC. |
 | venue | String | Yes | Venue/arena name, when published. |
 | level | EventLevel | No | The competitive tier of this event. Always set — `UNKNOWN` is used instead of leaving this null when the tier can't be confidently classified. |
 
@@ -210,7 +211,7 @@ Additional names by which the athlete has had.
 | round | Round | No | The phase of competition this `Session` represents. |
 | discipline | Discipline | No | The program competing in this round. Disambiguates same-named rounds across programs — e.g. a WAG `EVENT` session and a MAG `EVENT` session on Floor are different `Session`s (distinguished together with `apparatus`, below). |
 | ageCategory | AgeCategory | No | The age division competing in this round. |
-| apparatus | Apparatus, nullable | Yes | Which apparatus this session is for. Set only when `round` is `EVENT` — an Apparatus Final is its own session per apparatus. Null for every other round, since `QUAL`/`AA`/`TEAM` each cover all apparatus within one session (see `Score.apparatus` for the per-apparatus split of scores within those). |
+| apparatus | Apparatus, nullable | Yes | Which apparatus this session is for. Set when `round` is `EVENT` — an Apparatus Final is its own session per apparatus — and for `QUAL` at an apparatus-format event (a World Cup), where qualification on each apparatus is its own competition with its own day and judges. Null otherwise, since a championship's `QUAL`/`AA`/`TEAM` each cover all apparatus within one session (see `Score.apparatus` for the per-apparatus split of scores within those). |
 | part | Integer, nullable | Yes | Which occurrence of this round this session is, for a round split across more than one session — e.g. US Championships' two-day All-Around, where `round` is `AA` on both sessions and `part` is `1` and `2`, respectively. Null means the round as a whole: for the ordinary single-session round that's the only session, and for a split round it's an additional **whole-round session** holding the combined results (see below). |
 
 Unique key: `(event_id, round, discipline, ageCategory, apparatus, part)`.
@@ -241,7 +242,7 @@ own. Its `date` is the first part's date, since it covers several days.
 | function | JudgeFunction | No | The judge's role on the panel. |
 | givenName | String | No | Judge's given name, as published by the source. |
 | surname | String | No | Judge's family name, as published by the source. |
-| nocCode | String | No | The federation/NOC this judge is credited to. Not always a 3-letter ISO-3166 country code — a continental union appointing a Superior Jury (e.g. `EG` for European Gymnastics) is credited here too, so no fixed length is enforced. |
+| nocCode | String | Yes | The federation/NOC this judge is credited to. Not always a 3-letter IOC code — a continental union appointing a Superior Jury (e.g. `EG` for European Gymnastics) or a neutral code (`AIN1`) is credited here too, so no fixed length is enforced. Null when the source credits the official to no federation (e.g. the 2026 Worlds Superior Jury). |
 
 Unique key: `(session_id, apparatus, function, surname, givenName)`. Not
 simply `(session_id, apparatus, function)`, since a single function can be
@@ -278,8 +279,8 @@ the fields directly on `Score` describe the result and its rankings.
 | secondRoutine | Routine | Yes | Vault's second attempt. Null means no second attempt was expected at all (the athlete only vaulted once); a second attempt that was expected but not performed is a `Routine` with status `DNS`. Same columns as `routine`, prefixed `second_`. |
 | combinedBonus | Double | Yes | A bonus applied to the combined two-vault result rather than to either attempt (e.g. WAG's +0.2). Null otherwise. |
 | totalScore | Double | Yes | The result the apparatus final is decided on. For a two-vault entry, the combined result as published (the attempts' average plus `combinedBonus`); otherwise equal to `routine.score`. Null when there's no valid result (e.g. the first vault or an expected second vault was `DNS`). |
-| rank | Integer | Yes | Published placement on this apparatus within this `Session`, ranked on `routine.score` — for vault in qualification, the single-vault list ranking the whole field. In an apparatus final, the final's own placement. Where a session's only published vault ranking is a two-vault list (US Championships' Day 1 vault event), it's that ranking, on `totalScore`, and null for single-vault entrants. Null where the source publishes no per-session placement (US Championships Day 2). Copied as published, including tie-breaks, never recomputed. |
-| qualificationRank | Integer | Yes | Published placement in the ranking that decides qualification to the apparatus final. Set on every `QUAL` row: for vault it's the double-vault list rank (null for single-vault entrants); for every other apparatus it equals `rank`. Null outside `QUAL`. |
+| rank | Integer | Yes | Published placement on this apparatus within this `Session`, ranked on `routine.score` — for vault in qualification, the single-vault list ranking the whole field. In an apparatus final, the final's own placement. Where a session's only published vault ranking is a two-vault list (US Championships' Day 1 vault event; World Cup vault qualification, where every vaulter performs two vaults and there is no all-around), it's that ranking, on `totalScore`, and null for single-vault entrants. Null where the source publishes no per-session placement (US Championships Day 2). Copied as published, including tie-breaks, never recomputed. |
+| qualificationRank | Integer | Yes | Published placement in the ranking that decides qualification to the apparatus final. Set on every `QUAL` row: for vault it's the double-vault list rank (null for single-vault entrants); for every other apparatus — and for World Cup vault, which has only the two-vault ranking — it equals `rank`. Null outside `QUAL`. |
 | qualificationResult | QualificationResult | Yes | Outcome of qualifying to the apparatus final, read against `qualificationRank` (not `rank`). The two-per-country rule shows up here as `NR`, never as a changed rank. Only set on `QUAL` `Session`s. |
 | countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§5.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§5.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
 

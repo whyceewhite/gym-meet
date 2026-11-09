@@ -42,7 +42,7 @@ class SessionServiceTest {
         testEvent.setStartDate(LocalDate.of(2026, 4, 20));
         testEvent.setEndDate(LocalDate.of(2026, 4, 26));
         testEvent.setCity("Stuttgart");
-        testEvent.setCountryCode("DEU");
+        testEvent.setCountryCode("GER");
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
     }
@@ -109,6 +109,15 @@ class SessionServiceTest {
         assertNotEquals(day1.getId(), wholeRound.getId());
         assertNotEquals(day2.getId(), wholeRound.getId());
         assertThrows(ConflictException.class, () -> sessionService.createSession(sessionOf(Round.AA, null, null)));
+    }
+
+    @Test
+    void testCreateSession_PerApparatusQualSessions_AllSucceed() {
+        Session fx = sessionService.createSession(sessionOf(Round.QUAL, Apparatus.FX, null));
+        Session vt = sessionService.createSession(sessionOf(Round.QUAL, Apparatus.VT, null));
+
+        assertNotEquals(fx.getId(), vt.getId());
+        assertThrows(ConflictException.class, () -> sessionService.createSession(sessionOf(Round.QUAL, Apparatus.FX, null)));
     }
 
     private Session sessionOf(Round round, Apparatus apparatus, Integer part) {

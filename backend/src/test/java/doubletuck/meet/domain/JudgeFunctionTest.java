@@ -16,6 +16,7 @@ class JudgeFunctionTest {
             "D1, D1",
             "E7, E7",
             "SV, SV",
+            "DS1, DS1",
             "' t1 ', T1",
             "R, R",
             "R1, R1",
@@ -32,7 +33,8 @@ class JudgeFunctionTest {
             "time judge 1, T1",
             "Line Judge, L",
             "Reserve Judge, R",
-            "Reserve Judge 3, R3"
+            "Reserve Judge 3, R3",
+            "Difficulty Supervisor, DS1"
     })
     void testFind_ByLongName(String text, JudgeFunction expected) {
         assertEquals(expected, JudgeFunction.find(text));

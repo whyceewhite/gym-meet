@@ -1,0 +1,36 @@
+{
+    "event" : {
+        "title" : "Apparatus World Cup 2026 Cottbus",
+        "disciplines" : "MAG",
+        "ageCategory" : "SR",
+        "level" : "WORLD_CUP",
+        "startDate" : "2026-02-19",
+        "endDate" : "2026-02-22",
+        "city" : "Cottbus",
+        "country" : "GER",
+        "figEventNumber" : "17934",
+        "venue" : "Lausitz Arena",
+        "apparatusSuppliers" : "Spieth"
+    },
+    "participants" : [
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-PARTICIPANTS.csv"
+    ],
+    "judges" : [
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-JUDGES.csv"
+    ],
+    "scores" : [
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-EVENT-FX.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-EVENT-HB.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-EVENT-PB.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-EVENT-PH.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-EVENT-SR.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-EVENT-VT.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-QUAL-FX.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-QUAL-HB.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-QUAL-PB.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-QUAL-PH.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-QUAL-SR.csv",
+        "2026-APPARATUS-WORLD-CUP-COTTBUS-MAG-SR-SCORES-QUAL-VT.csv"
+    ],
+    "summaries" : []
+}

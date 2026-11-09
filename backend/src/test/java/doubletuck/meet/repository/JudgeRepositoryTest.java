@@ -45,7 +45,7 @@ class JudgeRepositoryTest {
         event.setStartDate(LocalDate.of(2026, 8, 13));
         event.setEndDate(LocalDate.of(2026, 8, 18));
         event.setCity("Stuttgart");
-        event.setCountryCode("DEU");
+        event.setCountryCode("GER");
         event.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         event = eventRepository.save(event);
 
@@ -95,6 +95,22 @@ class JudgeRepositoryTest {
         assertTrue(found.isPresent());
         assertEquals("EG", found.get().getNocCode());
         assertNull(found.get().getApparatus());
+    }
+
+    @Test
+    void testSave_WithoutNocCode_Succeeds() {
+        Judge supervisor = new Judge();
+        supervisor.setSession(testSession);
+        supervisor.setApparatus(Apparatus.FX);
+        supervisor.setFunction(JudgeFunction.SV);
+        supervisor.setGivenName("Yoon Soo");
+        supervisor.setSurname("HAN");
+        supervisor = judgeRepository.saveAndFlush(supervisor);
+
+        Optional<Judge> found = judgeRepository.findById(supervisor.getId());
+
+        assertTrue(found.isPresent());
+        assertNull(found.get().getNocCode());
     }
 
     @Test
