@@ -7,25 +7,29 @@ Usage (needs poppler's pdftotext on PATH):
 
 Writes every PARTICIPANTS / JUDGES / SCORES-* / SUMMARY-* CSV and an IMPORT.json per
 discipline next to the PDF, reading event metadata from the EVENT.csv already there.
-Exits non-zero if any self-check fails (see docs/instructions-results-parsing.md §8.3).
+Exits non-zero if any self-check fails (docs/instructions-results-parsing.md §3; this source format is §5.1).
 
 Written against the FIG/Swiss Timing results-book layout (footer codes like
 GARM1APFX----...QUAL..._73I). Session dates come from that book's Competition Schedule
 and are set below; reusing this for another FIG results book means re-checking those,
-the report footer codes, and the header layouts per §8.
+the report footer codes, and the header layouts per §5.1.
 """
-import csv, json, os, re, subprocess, sys
+import os, re, sys
 from collections import defaultdict
-from decimal import Decimal
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common
+from common import D, split_surname_first as split_name
 
 PDF = sys.argv[1]
 OUT = os.path.dirname(os.path.abspath(PDF))
-PAGES = subprocess.run(['pdftotext', '-layout', PDF, '-'], check=True, capture_output=True,
-                       text=True).stdout.split('\f')
+PAGES = common.pdf_pages(PDF)
+out = common.Output(OUT)
+checks = common.Checks()
+err = checks.err
 
 PREFIX = {'MAG': '2026-WORLD-CHAMPIONSHIPS-MAG-SR', 'WAG': '2026-WORLD-CHAMPIONSHIPS-WAG-SR'}
-with open(os.path.join(OUT, '2026-WORLD-CHAMPIONSHIPS-EVENT.csv'), encoding='utf-8') as f:
-    EVENTS = {r['Prefix']: r for r in csv.DictReader(f)}
+EVENTS = common.read_events(OUT, '2026-WORLD-CHAMPIONSHIPS')
 if len({EVENTS[p]['Title'] for p in PREFIX.values()}) != 1 or \
         len({EVENTS[p]['Start Date'] for p in PREFIX.values()}) != 1:
     raise SystemExit('MAG and WAG rows in EVENT.csv are expected to share a title and start date')
@@ -34,7 +38,7 @@ EVENT_START = EVENTS[PREFIX['MAG']]['Start Date']
 G = {'MAG': 'M', 'WAG': 'W'}
 APPS = {'MAG': ['FX', 'PH', 'SR', 'VT', 'PB', 'HB'], 'WAG': ['VT', 'UB', 'BB', 'FX']}
 SUMMARY_APPS = {'MAG': ['FX', 'PH', 'SR', 'VT', 'PB', 'HB'], 'WAG': ['FX', 'BB', 'UB', 'VT']}
-# From the Competition Schedule page (never from report footers, §5.2b).
+# From the Competition Schedule page (never from report footers, §4.4).
 SESSION_DATE = {
     'MAG': {'QUAL': '2026-10-17', 'TEAM': '2026-10-20', 'AA': '2026-10-22',
             'EVENT': {'FX': '2026-10-24', 'PH': '2026-10-24', 'SR': '2026-10-24',
@@ -42,10 +46,6 @@ SESSION_DATE = {
     'WAG': {'QUAL': '2026-10-18', 'TEAM': '2026-10-21', 'AA': '2026-10-23',
             'EVENT': {'VT': '2026-10-24', 'UB': '2026-10-24', 'BB': '2026-10-25', 'FX': '2026-10-25'}},
 }
-
-errors = []
-def err(msg):
-    errors.append(msg)
 
 # ---------------------------------------------------------------- page lookup
 def footer(i):
@@ -71,35 +71,6 @@ def code(g, kind, rnd, suffix):
 def lines(idx):
     return [l for i in idx for l in PAGES[i].split('\n')]
 
-# ---------------------------------------------------------------- csv helpers
-def write(name, header, rows):
-    with open(os.path.join(OUT, name), 'w', newline='', encoding='utf-8') as f:
-        w = csv.writer(f, lineterminator='\n')
-        w.writerow(header)
-        for r in rows:
-            missing = [h for h in header if h not in r]
-            if missing:
-                raise SystemExit(f'{name}: row missing {missing}: {r}')
-            w.writerow([r[h] for h in header])
-    print(f'{name}: {len(rows)} rows')
-
-def D(s):
-    return Decimal(s) if s else Decimal(0)
-
-def surname_word(w):
-    return re.fullmatch(r"(Mc|Mac)?[^a-z]*[A-Z][^a-z]*", w) is not None
-
-PARTICLES = {'Mc', 'van', 'der', 'den', 'de', 'le', 'la', 'du', 'da', 'di', 'von', 'dos', 'del'}
-
-def split_name(name):
-    """§5.10's leading-uppercase-words rule, extended so lowercase particles (`van POL`,
-    `le ROCH`) and `McDONALD`-style prefixes stay in the surname."""
-    words = name.split(' ')
-    i = 0
-    while i < len(words) and (surname_word(words[i]) or words[i] in PARTICLES):
-        i += 1
-    return ' '.join(words[:i]), ' '.join(words[i:])
-
 # ---------------------------------------------------------------- participants
 MONTHS = {m: i + 1 for i, m in enumerate('JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC'.split())}
 NAMES = {}
@@ -122,9 +93,7 @@ def participants(disc):
                      'Bib Number': bib, 'FIG License': lic, 'Name': name, 'Surname': sur,
                      'Given Name': giv, 'Birth Year': y,
                      'Birth Date': f'{y}-{MONTHS[mon]:02d}-{int(d):02d}'})
-    write(f'{PREFIX[disc]}-PARTICIPANTS.csv',
-          ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Order', 'NOC Code',
-           'Bib Number', 'FIG License', 'Name', 'Surname', 'Given Name', 'Birth Year', 'Birth Date'], rows)
+    out.csv(f'{PREFIX[disc]}-PARTICIPANTS.csv', common.PARTICIPANTS, rows)
 
 def check_name(ctx, bib, name, noc):
     if bib not in NAMES:
@@ -196,13 +165,9 @@ def judges(disc):
             err(f'judges {disc} {rnd}: {block + 1} panel rows')
         print(f'  judges {disc} {rnd}: {len(rows) - n_rnd}')
     # Superior Jury members carry no NOC on these pages.
-    write(f'{PREFIX[disc]}-JUDGES.csv',
-          ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Round', 'Apparatus',
-           'Function', 'Name', 'Surname', 'Given Name', 'NOC Code'], rows)
+    out.csv(f'{PREFIX[disc]}-JUDGES.csv', common.JUDGES, rows)
 
 # ---------------------------------------------------------------- apparatus tables
-SCORE_HDR = ['Event Name', 'Discipline', 'Age Category', 'Session Start Date', 'Round', 'Part', 'Apparatus',
-             'Rank', 'Bib', 'Name', 'NOC Code']
 MARK = r'(?:\s+(Q|R\d|NR))?'
 
 def meta(disc, rnd, app):
@@ -227,8 +192,7 @@ def split_bp(vals, ctx):
     return b, p
 
 def check_sum(ctx, d, e, b, p, total):
-    if D(d) + D(e) + D(b) + D(p) != D(total):
-        err(f'{ctx}: {d}+{e}+{b}+{p} != {total}')
+    checks.check_sum(ctx, total, d, e, b, p)
 
 ROW_RE = re.compile(r'^\s*(\d+)\s+(\d{3})\s+(.+?)\s{2,}([A-Z]{3})\s+(\d+\.\d{3})\s+(\d+\.\d{3})((?:\s+-?\d+\.\d)*)\s+(\d+\.\d{3})' + MARK + r'(?:\s+\d+\s+\d+)?\s*$')
 DNS_RE = re.compile(r'^\s*(\d{3})\s+(.+?)\s{2,}([A-Z]{3})\s+DNS\s*$')
@@ -270,7 +234,6 @@ def single_row_out(disc, rnd, app, r, ctx, with_q):
         row['Qualification Rank'] = r['Rank']   # same ranking as Rank on every apparatus but vault
     return row
 
-SINGLE_HDR = SCORE_HDR + ['Status', 'D', 'E', 'B', 'Penalty', 'SJ Penalty', 'Total']
 QUAL_SCORES = defaultdict(dict)   # disc -> (app, bib) -> total, for cross-checking team/AA reports
 
 def single_app(disc, rnd, app):
@@ -281,12 +244,12 @@ def single_app(disc, rnd, app):
         idx = [i for i in idx if 'Vault 1' in PAGES[i][:600]]
     ctx = f'{disc} {rnd} {app}'
     rows = single_table(idx, ctx)
-    out = [single_row_out(disc, rnd, app, r, ctx, rnd == 'QUAL') for r in rows]
+    rows_out = [single_row_out(disc, rnd, app, r, ctx, rnd == 'QUAL') for r in rows]
     if rnd == 'QUAL':
         for r in rows:
             QUAL_SCORES[disc][(app, r['Bib'])] = r['Total'] or 'DNS'
     if app != 'VT':
-        write(f'{PREFIX[disc]}-SCORES-{rnd}-{app}.csv', SINGLE_HDR + (['Qualification', 'Qualification Rank'] if rnd == 'QUAL' else []), out)
+        out.csv(f'{PREFIX[disc]}-SCORES-{rnd}-{app}.csv', common.score_header(False, rnd == 'QUAL'), rows_out)
     return rows
 
 def vault_attempt(tokens, ctx):
@@ -332,9 +295,8 @@ def double_table(disc, rnd):
             if t: err(f'{ctx}: leftover v2 {t}')
             cur['v2'] = v2
             if cur['Total'] not in ('DNF', 'DNS'):
-                avg = (D(cur['v1']['Total']) + D(v2['Total'])) / 2 + D(cur['Bonus'])
-                if abs(avg - D(cur['Total'])) > Decimal('0.0015'):
-                    err(f'{ctx} bib {cur["Bib"]}: average {avg} != {cur["Total"]}')
+                checks.check_vault_average(f'{ctx} bib {cur["Bib"]}', cur['v1']['Total'], v2['Total'],
+                                           cur['Bonus'], cur['Total'])
             continue
         if re.match(r'^\s*\d+\s+\d{3}\s', l):
             err(f'{ctx}: unparsed {l!r}')
@@ -350,12 +312,10 @@ BLANK_V = dict(Status='', D='', E='', B='', Penalty='', Total='')
 
 def vault(disc, rnd):
     ctx = f'{disc} {rnd} VT'
-    hdr = SCORE_HDR + [f'{c}{n}' for n in (1, 2) for c in ('Status', 'D', 'E', 'B', 'Penalty', 'SJ Penalty', 'Total')]
-    hdr += ['Combined Bonus', 'Total']
+    hdr = common.score_header(True, rnd == 'QUAL')
     double = double_table(disc, rnd)
     rows = []
     if rnd == 'QUAL':
-        hdr += ['Qualification', 'Qualification Rank']
         single = single_app(disc, 'QUAL', 'VT')
         dbl = {r['Bib']: r for r in double}
         if len(dbl) != len(double): err(f'{ctx}: duplicate bib in double list')
@@ -388,7 +348,7 @@ def vault(disc, rnd):
             row |= vault_cols(1, r['v1']) | vault_cols(2, r['v2']) | {'Total': r['Total']}
             row['Combined Bonus'] = r['Bonus']
             rows.append(row)
-    write(f'{PREFIX[disc]}-SCORES-{rnd}-VT.csv', hdr, rows)
+    out.csv(f'{PREFIX[disc]}-SCORES-{rnd}-VT.csv', hdr, rows)
 
 # ---------------------------------------------------------------- team / all-around reports
 NUM = re.compile(r'-?\d+\.\d+')
@@ -514,7 +474,7 @@ def summary_aa(disc, rnd, athletes):
         for app in SUMMARY_APPS[disc]:
             r[f'{app} Total'] = a['apps'][app]['Total']
         rows.append(r)
-    write(f'{PREFIX[disc]}-SUMMARY-{"QUAL" if rnd == "QUAL" else "FINAL"}-AA.csv', hdr, rows)
+    out.csv(f'{PREFIX[disc]}-SUMMARY-{"QUAL" if rnd == "QUAL" else "FINAL"}-AA.csv', hdr, rows)
 
 def team_report(disc, rnd):
     sfx = '73C' if disc == 'MAG' else '73D'
@@ -590,7 +550,7 @@ def summary_team(disc, rnd, teams):
         for a, app in enumerate(APPS[disc]):
             r[f'{app} Total'] = t['totals'][a]
         rows.append(r)
-    write(f'{PREFIX[disc]}-SUMMARY-{"QUAL" if rnd == "QUAL" else "FINAL"}-TEAM.csv', hdr, rows)
+    out.csv(f'{PREFIX[disc]}-SUMMARY-{"QUAL" if rnd == "QUAL" else "FINAL"}-TEAM.csv', hdr, rows)
 
 def scores_from_report(disc, rnd, athletes):
     """Per-apparatus SCORES-<rnd>-<APP> files built from a team/AA report (no separate per-apparatus report)."""
@@ -607,7 +567,7 @@ def scores_from_report(disc, rnd, athletes):
                         'SJ Penalty': '', 'Total': x['Total']})
         if rnd == 'AA':
             rows.sort(key=lambda r: (r['Rank'] == '', int(r['Rank'] or 0)))
-        write(f'{PREFIX[disc]}-SCORES-{rnd}-{app}.csv', SINGLE_HDR, rows)
+        out.csv(f'{PREFIX[disc]}-SCORES-{rnd}-{app}.csv', common.score_header(False, False), rows)
 
 def cross_check_qual(disc, athletes, ctx):
     for a in athletes:
@@ -646,24 +606,6 @@ for disc in ('MAG', 'WAG'):
 
     NAMES.clear()
 
-    files = sorted(os.listdir(OUT))
-    p = PREFIX[disc]
-    e = EVENTS[p]
-    manifest = {
-        'event': {'title': e['Title'], 'disciplines': e['Disciplines'], 'ageCategory': e['Age Category'],
-                  'level': e['Level'], 'startDate': e['Start Date'], 'endDate': e['End Date'], 'city': e['City'],
-                  'country': e['Country'], 'figEventNumber': e['FIG Event Number'], 'venue': e['Venue'],
-                  'apparatusSuppliers': e['Apparatus Suppliers']},
-        'participants': [f for f in files if f.startswith(p + '-PARTICIPANTS')],
-        'judges': [f for f in files if f.startswith(p + '-JUDGES')],
-        'scores': [f for f in files if f.startswith(p + '-SCORES-')],
-        'summaries': [f for f in files if f.startswith(p + '-SUMMARY-')],
-    }
-    with open(os.path.join(OUT, f'{p}-IMPORT.json'), 'w') as f:
-        json.dump(manifest, f, indent=4, separators=(',', ' : '))
-        f.write('\n')
+    out.manifest(PREFIX[disc], EVENTS[PREFIX[disc]])
 
-print(f'\n{len(errors)} errors')
-for e in errors:
-    print(' ', e)
-sys.exit(1 if errors else 0)
+checks.finish()

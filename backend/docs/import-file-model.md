@@ -21,20 +21,53 @@ cross-check/reference value, not an oversight in this document.
 | `<PREFIX>-SUMMARY-FINAL-<APP>.csv` | Combined standings on one apparatus for a round split into parts (US Championships' two-day apparatus titles) | Discipline + Age Category + Apparatus |
 | `<PREFIX>-IMPORT.json` | Manifest: the event's metadata plus every file above that belongs to this discipline+age | Discipline + Age Category |
 
-`<PREFIX>` is `<EVENT-SLUG>-<DISCIPLINE>-<AGE-CATEGORY>`, e.g.
+`<PREFIX>` is exactly the `Prefix` column of the event's `EVENT.csv`:
+`<EVENT-SLUG>-<DISCIPLINE>-<AGE-CATEGORY>`, e.g.
 `2026-EUROPEAN-CHAMPIONSHIPS-MAG-SR`. `<ROUND>` is one of `QUAL` / `EVENT` /
-`TEAM` / `AA`, matching the `Round` enum in `data-model.md` exactly — see
-`instructions-results-parsing.md` §5.1 for the full naming rationale
-(including why `SUMMARY-FINAL-TEAM`'s filename segment is `FINAL` while its
-`Round` column value is `TEAM`).
+`TEAM` / `AA`, matching the `Round` enum in `data-model.md` exactly, and
+`<APP>` is the two-letter `Apparatus` code.
+
+Naming notes:
+
+- `SCORES` files are per-athlete routine detail; `SUMMARY` files are the
+  published roll-up (team or all-around standings, or multi-part combined
+  standings), captured as published rather than computed.
+- A summary's first segment is `QUAL` or `FINAL` ("the decisive standings"),
+  so `SUMMARY-FINAL-TEAM`'s `Round` column is `TEAM` and
+  `SUMMARY-FINAL-AA`'s is `AA` — the filename segment and the column differ on
+  purpose.
+- `SR` is both the Senior age code and the Still Rings apparatus code;
+  position disambiguates (`…-MAG-SR-SCORES-QUAL-SR.csv` is Senior Rings).
+- Older files in git history used `QUALS-<APP>`, `FINALS-<APP>`, `TEAM-<APP>`,
+  `AA-<APP>`, `QUALS-TEAM`, `FINALS-TEAM` for what are now `SCORES-QUAL-`,
+  `SCORES-EVENT-`, `SCORES-TEAM-`, `SCORES-AA-`, `SUMMARY-QUAL-TEAM` and
+  `SUMMARY-FINAL-TEAM`.
 
 Not every `<ROUND>`/file combination exists for every competition — a round
 only gets a `SCORES`/`SUMMARY` file if the source PDF has an actual results
-report for it, independent of what a schedule page might list. See
-`instructions-results-parsing.md` §7.10 for how to tell "Qualification
-directly decides this result" apart from "Qualification only qualifies into
-a separate Final" — the deciding factor is always whether a distinct results
-report exists, never the schedule's session labels.
+report for it, independent of what a schedule page might list
+(`instructions-results-parsing.md` §4.4, §4.9).
+
+## General conventions
+
+These apply to every file below.
+
+- **Empty means empty.** An empty cell for "not applicable / not printed" —
+  never `N/A`, `-` or a placeholder `0`. A penalty that wasn't applied is
+  blank, not `0`.
+- **`Status` is always written** (`COMPLETED`, `DNS`, `INVALID_VAULT`), never
+  blank to mean completed, because `Routine.status` is required. The one
+  exception is `Status2` on vault, where blank means "no second attempt was
+  expected".
+- **Values are copied as printed**: `0.0` stays `0.0`, `5.70` stays `5.70`,
+  `-0.10` keeps its sign, and a leading `!` on a D score (under inquiry) stays
+  part of the value. The exceptions are documented per column (a `+` sign on a
+  bonus and tie markers on ranks are dropped; a vault bonus asterisk becomes
+  `Combined Bonus`).
+- **Ties**: duplicate `Rank` values are copied as printed; ranks are never
+  recomputed.
+- **Every file states its own context** through the metadata prefix below,
+  including a `Round` column that is constant within most files.
 
 ## Self-describing metadata prefix
 
@@ -95,7 +128,7 @@ one file per discipline+age.
 |---|---|---|
 | Round | The round of competition the judge is evaluating: [Round](../src/main/java/doubletuck/meet/domain/Round.java) | `Judge.round`  |
 | Apparatus | The apparatus the judge is evaluating: [Apparatus](../src/main/java/doubletuck/meet/domain/Apparatus.java) | `Judge.apparatus` |
-| Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java). Superior Jury roles are written as printed (`President`, `Vice-President`, `Member`) and resolve through `JudgeFunction.find`; reserve judges are `R` (single, unnumbered) or `R1`…`R6`; World Cup panels print `DS1` (Difficulty Supervisor) and, on beam, `pen5` — written as `T2`, see `instructions-results-parsing.md` §10 | `Judge.function` |
+| Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java). Superior Jury roles are written as printed (`President`, `Vice-President`, `Member`) and resolve through `JudgeFunction.find`; reserve judges are `R` (single, unnumbered) or `R1`…`R6`; World Cup panels print `DS1` (Difficulty Supervisor) and, on beam, `pen5` — written as `T2` (mapping table: `instructions-results-parsing.md` §4.7) | `Judge.function` |
 | Name | Combined name of judge as printed | |
 | Surname | Judge's surname | `Judge.surname` |
 | Given Name | Judge's given name | `Judge.givenName` |
@@ -134,7 +167,7 @@ round(s) a column actually appears in.
 
 Built by joining a single-vault listing (everyone, one row per bib) and a
 double-vault listing (only those attempting a second vault) — see
-`instructions-results-parsing.md` §4 for the join logic. In `QUAL`, the two
+`instructions-results-parsing.md` §4.5 for the join logic. In `QUAL`, the two
 listings are two different rankings over the same attempts: `Rank` ranks the
 whole field on the first vault (the one that counts for all-around and team);
 `Qualification Rank` ranks only the two-vault entrants on their combined

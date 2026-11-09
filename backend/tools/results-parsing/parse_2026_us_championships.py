@@ -7,24 +7,29 @@ Usage (needs poppler's pdftotext on PATH):
 
 Writes PARTICIPANTS / SCORES-AA-<APP> / SUMMARY-FINAL-AA / SUMMARY-FINAL-<APP> CSVs and an
 IMPORT.json per level next to the PDF, reading event metadata from the EVENT.csv already
-there. Exits non-zero if any self-check fails (see docs/instructions-results-parsing.md §9).
+there. Exits non-zero if any self-check fails (docs/instructions-results-parsing.md §3; this source format is §5.2).
 
 Written against the USA Gymnastics ProScore layout: a two-day All-Around (Day 1 = Part 1,
 Day 2 = Part 2) whose titles are decided by two-day combined totals. Athlete names, clubs
 and the Surname/Given Name split come from the existing PARTICIPANTS files, keyed by bib.
 """
-import csv, json, os, re, subprocess, sys
+import csv, os, re, sys
 from collections import defaultdict
 from decimal import Decimal
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common
+from common import D, rank_number as rank_num
+
 PDF = sys.argv[1]
 OUT = os.path.dirname(os.path.abspath(PDF))
-PAGES = subprocess.run(['pdftotext', '-layout', PDF, '-'], check=True, capture_output=True,
-                       text=True).stdout.split('\f')
+PAGES = common.pdf_pages(PDF)
+out_files = common.Output(OUT)
+checks = common.Checks()
+err = checks.err
 
 EVENT_PREFIX = '2026-US-CHAMPIONSHIPS'
-with open(os.path.join(OUT, f'{EVENT_PREFIX}-EVENT.csv'), encoding='utf-8') as f:
-    EVENTS = {r['Prefix']: r for r in csv.DictReader(f)}
+EVENTS = common.read_events(OUT, EVENT_PREFIX)
 
 LEVELS = {'J6': ('MAG', 'JR16'), 'J7': ('MAG', 'JR17'), ('Men', 'SR'): ('MAG', 'SR'),
           ('Women', 'JR'): ('WAG', 'JR'), ('Women', 'SR'): ('WAG', 'SR')}
@@ -33,20 +38,9 @@ MULTI_APP = {'Floor': 'FX', 'Pommel': 'PH', 'Rings': 'SR', 'Vault': 'VT', 'P Bar
              'Bars': 'UB', 'Beam': 'BB'}
 MONTHS = {m: i + 1 for i, m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
 
-errors = []
-def err(msg):
-    errors.append(msg)
-
-def D(s):
-    return Decimal(s) if s not in ('', None) else Decimal(0)
-
 def blank(v):
     """ProScore prints an empty value as underscores (_._, _.__, __.___)."""
     return '' if v is None or v.startswith('_') or v == '' else v
-
-def rank_num(v):
-    """Ties are printed with a marker (1T, 45=, 2*); the stored rank is the number."""
-    return re.sub(r'[T=*]$', '', v)
 
 # ---------------------------------------------------------------- page classification
 def classify(page):
@@ -124,8 +118,7 @@ def routine_block(disc, block, ctx):
             out[app] = dict(Status='DNS', D='', E='', Dp='', Ep='', Sp='', Penalty='', Total='')
             continue
         r['Status'] = 'COMPLETED'
-        if D(d) + D(e) + D(dp) + D(ep) + D(sp) + D(pen) != D(fin):
-            err(f'{ctx} {app}: components {r} != {fin}')
+        checks.check_sum(f'{ctx} {app}', fin, d, e, dp, ep, sp, pen)
         out[app] = r
     aa = blank(finals[n])
     total = sum((D(r['Total']) for r in out.values()), Decimal(0))
@@ -297,24 +290,11 @@ def day1_vault_event(disc, age):
     return out
 
 # ---------------------------------------------------------------- output
-def write(name, header, rows):
-    with open(os.path.join(OUT, name), 'w', newline='', encoding='utf-8') as f:
-        w = csv.writer(f, lineterminator='\n')
-        w.writerow(header)
-        for r in rows:
-            missing = [h for h in header if h not in r]
-            if missing:
-                raise SystemExit(f'{name}: row missing {missing}: {r}')
-            w.writerow([r[h] for h in header])
-    print(f'{name}: {len(rows)} rows')
-
 def bonus_sum(r):
     parts = [r[k] for k in ('Dp', 'Ep', 'Sp') if r.get(k)]
     return f'{sum(D(p) for p in parts):.3f}' if parts else ''
 
-SCORE_HDR = ['Event Name', 'Discipline', 'Age Category', 'Session Start Date', 'Round', 'Part', 'Apparatus',
-             'Rank', 'Bib', 'Name', 'NOC Code']
-SINGLE_COLS = ['Status', 'D', 'E', 'B', 'Penalty', 'SJ Penalty', 'Total']
+SINGLE_COLS = common.ROUTINE
 BREAKDOWN = ['D+', 'E+', 'S+']
 
 def single_cols(r, sfx=''):
@@ -395,9 +375,7 @@ def level(disc, age):
                 if second:
                     s = dict(v['attempts'][1], Ep='', Status='COMPLETED')
                     s['Total'] = f'{D(s["D"]) + D(s["E"]) + D(s["Dp"]) + D(s["Sp"]) + D(s["Penalty"]):.3f}'
-                    avg = (D(r['Total']) + D(s['Total'])) / 2 + D(v['Bonus'])
-                    if abs(avg - D(v['Total'])) > Decimal('0.0015'):
-                        err(f'{ctx}: average {avg} != published {v["Total"]}')
+                    checks.check_vault_average(ctx, r['Total'], s['Total'], v['Bonus'], v['Total'])
                     row |= single_cols(s, '2') | {'Combined Bonus': v['Bonus'], 'Total': v['Total']}
                     if not row['Rank']:
                         row['Rank'] = v['Rank']
@@ -411,11 +389,10 @@ def level(disc, age):
                 rows.append(row)
         rows.sort(key=lambda r: (r['Part'], int(r['Bib'])))
         if app == 'VT' and two_vault:
-            hdr = SCORE_HDR + [f'{c}{n}' for n in (1, 2) for c in SINGLE_COLS] + ['Combined Bonus', 'Total'] + \
-                  [f'{c}{n}' for n in (1, 2) for c in BREAKDOWN]
+            hdr = common.score_header(True, False) + [f'{c}{n}' for n in (1, 2) for c in BREAKDOWN]
         else:
-            hdr = SCORE_HDR + SINGLE_COLS + BREAKDOWN
-        write(f'{prefix}-SCORES-AA-{app}.csv', hdr, rows)
+            hdr = common.score_header(False, False) + BREAKDOWN
+        out_files.csv(f'{prefix}-SCORES-AA-{app}.csv', hdr, rows)
 
     # ---- SUMMARY-FINAL-AA: per part, then the two-day combined standings (Part blank)
     order = ['FX', 'PH', 'SR', 'VT', 'PB', 'HB'] if disc == 'MAG' else ['FX', 'BB', 'UB', 'VT']
@@ -432,7 +409,7 @@ def level(disc, age):
     for bib, a in sorted(d2.items(), key=lambda x: int(x[1]['CombinedRank'])):
         rows.append(base | {'Part': '', 'Rank': a['CombinedRank'], 'Bib': bib, 'Name': people[bib]['Name'],
                             'Total': a['Combined']} | {f'{x} Total': '' for x in order})
-    write(f'{prefix}-SUMMARY-FINAL-AA.csv', hdr, rows)
+    out_files.csv(f'{prefix}-SUMMARY-FINAL-AA.csv', hdr, rows)
 
     # ---- SUMMARY-FINAL-<APP>: two-day combined apparatus standings
     for app in APPS[disc]:
@@ -443,35 +420,18 @@ def level(disc, age):
                 for bib, m in sorted(multi[app].items(), key=lambda x: int(x[1]['Rank']))]
         for r in rows:
             r.pop('SJ Penalty')
-        write(f'{prefix}-SUMMARY-FINAL-{app}.csv', hdr, rows)
+        out_files.csv(f'{prefix}-SUMMARY-FINAL-{app}.csv', hdr, rows)
 
     # ---- PARTICIPANTS in the standard shape (Club kept as a trailing reference column)
-    hdr = ['Event Name', 'Discipline', 'Age Category', 'Event Start Date', 'Order', 'NOC Code', 'Bib Number',
-           'FIG License', 'Name', 'Surname', 'Given Name', 'Birth Year', 'Birth Date', 'Club']
+    hdr = common.PARTICIPANTS + ['Club']
     rows = [p | {'Order': i + 1, 'NOC Code': 'USA', 'Birth Date': p.get('Birth Date', '')}
             for i, p in enumerate(sorted(people.values(), key=lambda p: int(p['Bib Number'])))]
-    write(f'{prefix}-PARTICIPANTS.csv', hdr, rows)
+    out_files.csv(f'{prefix}-PARTICIPANTS.csv', hdr, rows)
 
-    files = sorted(os.listdir(OUT))
-    manifest = {
-        'event': {'title': ev['Title'], 'disciplines': ev['Disciplines'], 'ageCategory': ev['Age Category'],
-                  'level': ev['Level'], 'startDate': ev['Start Date'], 'endDate': ev['End Date'], 'city': ev['City'],
-                  'country': ev['Country'], 'figEventNumber': ev['FIG Event Number'], 'venue': ev['Venue'],
-                  'apparatusSuppliers': ev['Apparatus Suppliers']},
-        'participants': [f for f in files if f.startswith(prefix + '-PARTICIPANTS')],
-        'judges': [f for f in files if f.startswith(prefix + '-JUDGES')],
-        'scores': [f for f in files if f.startswith(prefix + '-SCORES-')],
-        'summaries': [f for f in files if f.startswith(prefix + '-SUMMARY-')],
-    }
-    with open(os.path.join(OUT, f'{prefix}-IMPORT.json'), 'w') as f:
-        json.dump(manifest, f, indent=4, separators=(',', ' : '))
-        f.write('\n')
+    out_files.manifest(prefix, ev)
 
 for disc, age in [('MAG', 'SR'), ('MAG', 'JR16'), ('MAG', 'JR17'), ('WAG', 'SR'), ('WAG', 'JR')]:
     print(f'===== {disc} {age}')
     level(disc, age)
 
-print(f'\n{len(errors)} errors')
-for e in errors:
-    print(' ', e)
-sys.exit(1 if errors else 0)
+checks.finish()
