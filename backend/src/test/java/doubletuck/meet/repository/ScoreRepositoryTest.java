@@ -102,8 +102,19 @@ class ScoreRepositoryTest {
         assertEquals(14.033, found.get().getRoutine().getScore());
         assertEquals(ScoreStatus.COMPLETED, found.get().getRoutine().getStatus());
         assertEquals(14.033, found.get().getTotalScore());
+        assertFalse(found.get().getRoutine().getDifficultyInquiry());
         assertNull(found.get().getSecondRoutine());
         assertTrue(found.get().getCountsTowardTeamResult());
+    }
+
+    @Test
+    void testSave_PersistsDifficultyInquiry() {
+        testScore.getRoutine().setDifficultyInquiry(true);
+        scoreRepository.saveAndFlush(testScore);
+
+        Score found = scoreRepository.findById(testScore.getId()).orElseThrow();
+
+        assertTrue(found.getRoutine().getDifficultyInquiry());
     }
 
     @Test

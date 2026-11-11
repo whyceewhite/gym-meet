@@ -90,6 +90,7 @@ public class EventService {
         event.setCity(request.city());
         event.setCountryCode(request.countryCode());
         event.setVenue(request.venue());
+        event.setApparatusSuppliers(request.apparatusSuppliers());
         event.setLevel(request.level());
     }
 }

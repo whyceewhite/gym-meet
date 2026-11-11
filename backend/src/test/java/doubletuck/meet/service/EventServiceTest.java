@@ -105,7 +105,7 @@ class EventServiceTest {
     @Test
     void testCreate_FailsOnDuplicateTitleAndStartDate_WhenFigEventNumberAbsent() {
         EventRequest request = new EventRequest(null, "2026 European Championships", testEvent.getStartDate(),
-                LocalDate.of(2026, 4, 27), "Different City", "FRA", null,
+                LocalDate.of(2026, 4, 27), "Different City", "FRA", null, null,
                 EventLevel.DOMESTIC_COMPETITION);
 
         assertThrows(ConflictException.class, () -> eventService.create(request));
@@ -114,7 +114,7 @@ class EventServiceTest {
     @Test
     void testCreate_SucceedsWithoutFigEventNumber_WhenTitleAndStartDateAreUnique() {
         EventRequest request = new EventRequest(null, "2026 US Championships", LocalDate.of(2026, 8, 15),
-                LocalDate.of(2026, 8, 18), "Fort Worth", "USA", null,
+                LocalDate.of(2026, 8, 18), "Fort Worth", "USA", null, null,
                 EventLevel.NATIONAL_CHAMPIONSHIPS);
 
         EventResponse created = eventService.create(request);
@@ -220,7 +220,7 @@ class EventServiceTest {
     }
 
     private EventRequest requestFor(String figEventNumber, String title, LocalDate startDate, LocalDate endDate) {
-        return new EventRequest(figEventNumber, title, startDate, endDate, "Stuttgart", "GER", null,
+        return new EventRequest(figEventNumber, title, startDate, endDate, "Stuttgart", "GER", null, null,
                 EventLevel.CONTINENTAL_CHAMPIONSHIPS);
     }
 }

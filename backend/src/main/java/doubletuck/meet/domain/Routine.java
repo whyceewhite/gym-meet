@@ -31,6 +31,10 @@ public class Routine {
     @Column(name = "difficulty")
     private Double difficulty;
 
+    // Results print a "!" before a D score that the coach inquired about
+    @Column(name = "difficulty_inquiry")
+    private Boolean difficultyInquiry = false;
+
     @Column(name = "execution")
     private Double execution;
 

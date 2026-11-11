@@ -32,6 +32,7 @@ class EventRepositoryTest {
         testEvent.setCity("Stuttgart");
         testEvent.setCountryCode("GER");
         testEvent.setVenue("Schleyerhalle");
+        testEvent.setApparatusSuppliers("Spieth");
         testEvent.setLevel(EventLevel.CONTINENTAL_CHAMPIONSHIPS);
         testEvent = eventRepository.save(testEvent);
     }
@@ -48,6 +49,7 @@ class EventRepositoryTest {
         assertEquals("Stuttgart", found.get().getCity());
         assertEquals("GER", found.get().getCountryCode());
         assertEquals("Schleyerhalle", found.get().getVenue());
+        assertEquals("Spieth", found.get().getApparatusSuppliers());
         assertEquals(EventLevel.CONTINENTAL_CHAMPIONSHIPS, found.get().getLevel());
     }
 

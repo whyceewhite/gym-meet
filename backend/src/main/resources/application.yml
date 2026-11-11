@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: gym-meet
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Flyway owns the schema; Hibernate only checks the entities agree with it
+      ddl-auto: validate
+  flyway:
+    locations: classpath:db/migration

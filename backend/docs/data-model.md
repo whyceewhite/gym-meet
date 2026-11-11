@@ -11,6 +11,7 @@ erDiagram
     EVENT ||--o{ SESSION : rounds
     EVENT ||--o{ PARTICIPANT : entrants
     ATHLETE ||--o{ PARTICIPANT : "competes as"
+    CLUB ||--o{ PARTICIPANT : "trains at"
     ATHLETE ||--o{ ATHLETE_NAME_VARIANT : "also known as"
     PARTICIPANT ||--o{ SCORE : scores
     PARTICIPANT ||--o{ ALL_AROUND_RESULT : "all-around result"
@@ -198,6 +199,7 @@ Additional names by which the athlete has had.
 | city | String | No | Host city. |
 | countryCode | Country | No | Host country, as an IOC code (§2, `Country`). Distinct from any athlete's or team's NOC. |
 | venue | String | Yes | Venue/arena name, when published. |
+| apparatusSuppliers | String | Yes | The equipment manufacturer(s) supplying the apparatus, as published (e.g. `Spieth`). |
 | level | EventLevel | No | The competitive tier of this event. Always set — `UNKNOWN` is used instead of leaving this null when the tier can't be confidently classified. |
 
 
@@ -250,6 +252,19 @@ held by more than one judge in the same session with no apparatus to
 further distinguish them — e.g. a `QUAL` session's Superior Jury typically
 has several `MEMBER` judges.
 
+### `Club`
+
+A gym or club an athlete trains with. Only national-level competitions
+(e.g. US Championships) publish it; at best it's tracked at that level.
+
+| Field | Type | Nullable | Description |
+|---|---|---|---|
+| id | Long | No | Generated primary key. |
+| name | String | No | The club's name, as published. |
+| country | Country | No | The country the club is in — the NOC of the national competition it was published by. |
+
+Unique key: `(name, country_code)`.
+
 ### `Participant`
 
 | Field | Type | Nullable | Description |
@@ -259,6 +274,7 @@ has several `MEMBER` judges.
 | athleteId | Long, FK → `Athlete` | No | The athlete competing. |
 | bibNumber | String | Yes | Competition bib/start number, when assigned. |
 | noc | Country | No | Who this athlete is competing for at this event. See §7.2 for why this isn't simply read off `Athlete.country`. |
+| clubId | Long, FK → `Club` | Yes | The club the athlete represented at this event. Held per entry rather than on `Athlete`, since an athlete can change clubs between events. Null when the source doesn't publish one — international results identify athletes by country only. |
 
 Unique key: `(event_id, athlete_id)`
 
@@ -275,7 +291,7 @@ the fields directly on `Score` describe the result and its rankings.
 | participantId | Long, FK → `Participant` | No | The athlete this score belongs to. |
 | sessionId | Long, FK → `Session` | No | The round this score was earned in. |
 | apparatus | Apparatus | No | Which apparatus this row scores. One row per apparatus per `Session`, always — vault's second attempt is `secondRoutine` on this same row, not a second apparatus value (§4). |
-| routine | Routine | No | The routine performed — for vault, the first attempt. Its `score` is what counts toward team and all-around results. Columns: `difficulty`, `execution`, `bonus`, `bonus_detail`, `penalty`, `sj_penalty`, `score`, `status_code`. |
+| routine | Routine | No | The routine performed — for vault, the first attempt. Its `score` is what counts toward team and all-around results. Columns: `difficulty`, `difficulty_inquiry`, `execution`, `bonus`, `bonus_detail`, `penalty`, `sj_penalty`, `score`, `status_code`. |
 | secondRoutine | Routine | Yes | Vault's second attempt. Null means no second attempt was expected at all (the athlete only vaulted once); a second attempt that was expected but not performed is a `Routine` with status `DNS`. Same columns as `routine`, prefixed `second_`. |
 | combinedBonus | Double | Yes | A bonus applied to the combined two-vault result rather than to either attempt (e.g. WAG's +0.2). Null otherwise. |
 | totalScore | Double | Yes | The result the apparatus final is decided on. For a two-vault entry, the combined result as published (the attempts' average plus `combinedBonus`); otherwise equal to `routine.score`. Null when there's no valid result (e.g. the first vault or an expected second vault was `DNS`). |
@@ -294,6 +310,7 @@ Not an entity — a group of columns embedded in `Score` twice (`routine`,
 | Field | Type | Nullable | Description |
 |---|---|---|---|
 | difficulty | Double | Yes | Difficulty (D) score. |
+| difficultyInquiry | Boolean | No (`routine`) | Whether the D score was under inquiry — results print it with a leading `!` (e.g. `!5.5`). `false` unless marked. |
 | execution | Double | Yes | Execution (E) score. |
 | bonus | Double | Yes | Total bonus applied to this routine. See `bonusDetail` for the itemized breakdown. |
 | bonusDetail | JSON | Yes | Itemized breakdown backing `bonus`, shaped as `[{ "bonus": 0.0, "description": "" }]`. Exists because bonus rules change between Code of Points cycles and not every bonus point is FIG-standard — domestic MAG meets (US Championships-style) have awarded one-off incentive bonuses (a "difficulty bonus," say) that are real, scored, and reflected in the published total, but specific to that meet/season. Free-text `description` avoids needing a fixed enum of bonus types that can be redefined every quad. |

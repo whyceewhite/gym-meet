@@ -61,7 +61,8 @@ These apply to every file below.
   expected".
 - **Values are copied as printed**: `0.0` stays `0.0`, `5.70` stays `5.70`,
   `-0.10` keeps its sign, and a leading `!` on a D score (under inquiry) stays
-  part of the value. The exceptions are documented per column (a `+` sign on a
+  part of the value (on import it's stripped and sets
+  `Routine.difficultyInquiry`). The exceptions are documented per column (a `+` sign on a
   bonus and tie markers on ranks are dropped; a vault bonus asterisk becomes
   `Combined Bonus`).
 - **Ties**: duplicate `Rank` values are copied as printed; ranks are never
@@ -100,7 +101,7 @@ One row per discipline+age sub-event making up the competition.
 | Country | The IOC code of the country hosting the event (`GER`, `NED` — not ISO `DEU`, `NLD`) | `Event.countryCode` |
 | Venue | The name of the venue where the event is hosted | `Event.venue` |
 | FIG Event Number | The FIG number that identifies the event if a FIG associated competition | `Event.figEventNumber` |
-| Apparatus Suppliers | The equipment manufacturer for this competition | |
+| Apparatus Suppliers | The equipment manufacturer for this competition | `Event.apparatusSuppliers` |
 
 ## `PARTICIPANTS.csv`
 
@@ -117,7 +118,7 @@ One row per athlete entry.
 | Given Name | Participant's given name | `Athlete.givenName` |
 | Birth Year | Participant's birth year | `Athlete.birthYear` (only when `Birth Date` is blank) |
 | Birth Date | Participant's full birth date (`YYYY-MM-DD`), when the entry list publishes one (FIG World Championships does; European Championships prints only a year). Blank otherwise | `Athlete.birthDate` |
-| Club | **US Championships only.** The athlete's gym/club as printed | *(not stored — no `Participant`/`Athlete` field yet)* |
+| Club | **US Championships only.** The athlete's gym/club as printed | `Participant.club` → `Club.name` (the club's country is the participant's NOC) |
 
 ## `JUDGES.csv`
 
@@ -154,7 +155,7 @@ round(s) a column actually appears in.
 | Name | ✓ | ✓ | ✓ | ✓ | As printed on this report — cross-check against `PARTICIPANTS.csv` by Bib rather than trusting a possibly-truncated column here | *(not stored — verification only)* |
 | NOC Code | ✓ | ✓ | ✓ | ✓ | | *(not stored — already on `Participant.noc`)* |
 | Status | ✓ | ✓ | ✓ | ✓ | `COMPLETED`, `DNS`, or `INVALID_VAULT` — always written explicitly, never blank. Mirrors `Routine.status` being required | `Score.routine.status` |
-| D | ✓ | ✓ | ✓ | ✓ | Difficulty score | `Score.routine.difficulty` |
+| D | ✓ | ✓ | ✓ | ✓ | Difficulty score. A leading `!` marks it under inquiry | `Score.routine.difficulty`, `Score.routine.difficultyInquiry` |
 | E | ✓ | ✓ | ✓ | ✓ | Execution score. Some sources print `E` before `D` (MAG PH and every WAG apparatus at the 2026 Europeans); the CSV always writes to these fixed column names regardless of source order | `Score.routine.execution` |
 | B | ✓ | ✓ | ✓ | ✓ | Bonus. Populated for MAG (blank on every MAG PH row specifically — PH has no bonus). Present but always blank for WAG — kept for column alignment between disciplines rather than omitted | `Score.routine.bonus` |
 | Penalty | ✓ | ✓ | ✓ | ✓ | Blank when no penalty applied — never `0` | `Score.routine.penalty` |
@@ -182,14 +183,14 @@ result, which decides the Vault final.
 | Name | ✓ | ✓ | | *(not stored — verification only)* |
 | NOC Code | ✓ | ✓ | | *(not stored)* |
 | Status1 | ✓ | ✓ | Status of attempt 1: `COMPLETED`, `DNS`, or `INVALID_VAULT`. Always populated | `Score.routine.status` |
-| D1 | ✓ | ✓ | | `Score.routine.difficulty` |
+| D1 | ✓ | ✓ | | `Score.routine.difficulty`, `Score.routine.difficultyInquiry` |
 | E1 | ✓ | ✓ | | `Score.routine.execution` |
 | B1 | ✓ | ✓ | Bonus applied to attempt 1 itself. Populated for MAG, always blank for WAG so far | `Score.routine.bonus` |
 | Penalty1 | ✓ | ✓ | | `Score.routine.penalty` |
 | SJ Penalty1 | ✓ | ✓ | Superior Jury Penalty, attempt 1 — distinct from the ordinary `Penalty1`. Seen for WAG at the 2026 Europeans | `Score.routine.sjPenalty` |
 | Total1 | ✓ | ✓ | | `Score.routine.score` |
 | Status2 | ✓ | ✓ | Status of attempt 2, **four-state**: blank = no second attempt was expected at all (`Score.secondRoutine` is null); `COMPLETED`; `DNS` = a second attempt was expected (on the double-vault list) but not completed; `INVALID_VAULT` | `Score.secondRoutine.status` |
-| D2 | ✓ | ✓ | | `Score.secondRoutine.difficulty` |
+| D2 | ✓ | ✓ | | `Score.secondRoutine.difficulty`, `Score.secondRoutine.difficultyInquiry` |
 | E2 | ✓ | ✓ | | `Score.secondRoutine.execution` |
 | B2 | ✓ | ✓ | Bonus applied to attempt 2 itself. Same MAG/WAG split as `B1` | `Score.secondRoutine.bonus` |
 | Penalty2 | ✓ | ✓ | | `Score.secondRoutine.penalty` |

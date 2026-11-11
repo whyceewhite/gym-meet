@@ -48,4 +48,9 @@ public class Participant extends BaseEntity {
     @Size(min = 3, max = 4, message = "NOC must be a 3- or 4-character code")
     @Column(name = "noc", nullable = false, length = 4)
     private String noc;
+
+    // Held per entry rather than on Athlete, since an athlete can change clubs between events
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "club_id", foreignKey = @ForeignKey(name = "fk_participant_club"))
+    private Club club;
 }

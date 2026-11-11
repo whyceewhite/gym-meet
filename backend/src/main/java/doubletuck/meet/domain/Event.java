@@ -56,6 +56,10 @@ public class Event extends BaseEntity {
     @Column(name = "venue", length = 150)
     private String venue;
 
+    @Size(max = 100, message = "Apparatus suppliers must have 100 or fewer characters")
+    @Column(name = "apparatus_suppliers", length = 100)
+    private String apparatusSuppliers;
+
     @NotNull(message = "Level is required")
     @Column(name = "level_code", nullable = false, length = 30)
     @Enumerated(EnumType.STRING)

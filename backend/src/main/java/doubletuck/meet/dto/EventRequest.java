@@ -32,6 +32,9 @@ public record EventRequest(
         @Size(max = 150, message = "Venue must have 150 or fewer characters")
         String venue,
 
+        @Size(max = 100, message = "Apparatus suppliers must have 100 or fewer characters")
+        String apparatusSuppliers,
+
         @NotNull(message = "Level is required")
         EventLevel level) {
 }

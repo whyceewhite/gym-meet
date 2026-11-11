@@ -15,6 +15,7 @@ public record EventResponse(
         String city,
         String countryCode,
         String venue,
+        String apparatusSuppliers,
         EventLevel level,
         Instant creationTimestamp,
         Instant lastUpdateTimestamp) {
@@ -29,6 +30,7 @@ public record EventResponse(
                 event.getCity(),
                 event.getCountryCode(),
                 event.getVenue(),
+                event.getApparatusSuppliers(),
                 event.getLevel(),
                 event.getCreationTimestamp(),
                 event.getLastUpdateTimestamp());

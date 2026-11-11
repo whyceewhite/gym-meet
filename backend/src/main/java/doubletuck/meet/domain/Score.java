@@ -49,12 +49,14 @@ public class Score extends BaseEntity {
     @Valid
     @NotNull(message = "Routine is required")
     @Embedded
+    @AttributeOverride(name = "difficultyInquiry", column = @Column(name = "difficulty_inquiry", nullable = false))
     @AttributeOverride(name = "status", column = @Column(name = "status_code", nullable = false, length = 20))
     private Routine routine;
 
     @Valid
     @Embedded
     @AttributeOverride(name = "difficulty", column = @Column(name = "second_difficulty"))
+    @AttributeOverride(name = "difficultyInquiry", column = @Column(name = "second_difficulty_inquiry"))
     @AttributeOverride(name = "execution", column = @Column(name = "second_execution"))
     @AttributeOverride(name = "bonus", column = @Column(name = "second_bonus"))
     @AttributeOverride(name = "bonusDetail", column = @Column(name = "second_bonus_detail", columnDefinition = "json"))
