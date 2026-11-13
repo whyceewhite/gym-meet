@@ -443,8 +443,3 @@ the average.
    the newer `Birth Date` column; there is no parser to regenerate them.
 4. **`SV` vs `DS1`** may be the same role (an apparatus supervisor) seen in
    different contexts; kept separate for now.
-5. **No Flyway migrations yet** (the schema exists only through Hibernate in
-   tests). When they're written: the duplicate-session protection for null
-   `apparatus`/`part` lives in `SessionService` and could become a Postgres
-   partial unique index.
-6. **US club names** (`Club` column) have no entity field.

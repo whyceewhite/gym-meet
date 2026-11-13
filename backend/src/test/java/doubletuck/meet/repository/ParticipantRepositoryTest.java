@@ -186,6 +186,7 @@ class ParticipantRepositoryTest {
         athlete.setDiscipline(Discipline.WAG);
         athlete.setSurname(surname);
         athlete.setGivenName(givenName);
+        athlete.setBirthYear((short) 2000);
         return athleteRepository.save(athlete);
     }
 }

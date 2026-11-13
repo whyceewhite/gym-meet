@@ -173,23 +173,12 @@ class SessionRepositoryTest {
     }
 
     /**
-     * Documents a known limitation rather than a desired behavior: {@code
-     * uk_session} includes both {@code apparatus_code} and {@code part}, and
-     * standard SQL unique constraints don't treat two nulls as equal. Every
-     * real session has at least one of the two null -- {@code apparatus} is
-     * set only for {@code EVENT} rounds, {@code part} only for a round split
-     * across sessions (§ Round.java, Session.java), and the two are never
-     * both set at once in practice -- so this constraint alone does *not*
-     * reliably catch a duplicate session of any round type. That protection
-     * lives in {@link doubletuck.meet.service.SessionService} instead (see
-     * {@code SessionServiceTest} for the cases that actually matter: same
-     * apparatus, and same {@code part}). If one of these tests starts
-     * failing (i.e. the duplicate insert starts being rejected), the DB
-     * behavior has improved and the test/comment should be updated to
-     * match, not "fixed" back to throwing.
+     * uk_session is UNIQUE NULLS NOT DISTINCT, so a null apparatus or part
+     * counts as equal to another null and these duplicates are rejected by
+     * the database itself.
      */
     @Test
-    void testCreate_DuplicateQualSession_NotCaughtByDatabaseConstraintAlone() {
+    void testCreate_DuplicateQualSession_CaughtByDatabaseConstraint() {
         Session duplicate = new Session();
         duplicate.setEvent(testEvent);
         duplicate.setDate(LocalDate.of(2026, 4, 21));
@@ -197,11 +186,11 @@ class SessionRepositoryTest {
         duplicate.setDiscipline(Discipline.WAG);
         duplicate.setAgeCategory(AgeCategory.SR);
 
-        assertDoesNotThrow(() -> sessionRepository.saveAndFlush(duplicate));
+        assertThrows(DataIntegrityViolationException.class, () -> sessionRepository.saveAndFlush(duplicate));
     }
 
     @Test
-    void testCreate_DuplicateEventSessionSameApparatus_NotCaughtByDatabaseConstraintAlone() {
+    void testCreate_DuplicateEventSessionSameApparatus_CaughtByDatabaseConstraint() {
         Session fxFinal = new Session();
         fxFinal.setEvent(testEvent);
         fxFinal.setDate(LocalDate.of(2026, 4, 22));
@@ -219,11 +208,11 @@ class SessionRepositoryTest {
         duplicate.setAgeCategory(AgeCategory.SR);
         duplicate.setApparatus(Apparatus.FX);
 
-        assertDoesNotThrow(() -> sessionRepository.saveAndFlush(duplicate));
+        assertThrows(DataIntegrityViolationException.class, () -> sessionRepository.saveAndFlush(duplicate));
     }
 
     @Test
-    void testCreate_DuplicateAaSessionSamePart_NotCaughtByDatabaseConstraintAlone() {
+    void testCreate_DuplicateAaSessionSamePart_CaughtByDatabaseConstraint() {
         Session aaDay1 = new Session();
         aaDay1.setEvent(testEvent);
         aaDay1.setDate(LocalDate.of(2026, 8, 15));
@@ -241,7 +230,21 @@ class SessionRepositoryTest {
         duplicate.setAgeCategory(AgeCategory.SR);
         duplicate.setPart(1);
 
-        assertDoesNotThrow(() -> sessionRepository.saveAndFlush(duplicate));
+        assertThrows(DataIntegrityViolationException.class, () -> sessionRepository.saveAndFlush(duplicate));
+    }
+
+    @Test
+    void testCreate_SplitRoundPartsAndWholeRoundSessionCoexist() {
+        for (Integer part : new Integer[] { 1, 2, null }) {
+            Session aa = new Session();
+            aa.setEvent(testEvent);
+            aa.setDate(LocalDate.of(2026, 8, 15));
+            aa.setRound(Round.AA);
+            aa.setDiscipline(Discipline.WAG);
+            aa.setAgeCategory(AgeCategory.SR);
+            aa.setPart(part);
+            assertDoesNotThrow(() -> sessionRepository.saveAndFlush(aa));
+        }
     }
 
     private Event savedEvent(String title) {

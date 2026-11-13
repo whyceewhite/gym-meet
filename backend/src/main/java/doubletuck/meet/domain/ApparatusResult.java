@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -31,6 +32,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "apparatus_result", uniqueConstraints = {
         @UniqueConstraint(name = "uk_apparatus_result", columnNames = { "participant_id", "session_id", "apparatus_code" })
+}, indexes = {
+        @Index(name = "ix_apparatus_result_session", columnList = "session_id")
 })
 public class ApparatusResult extends BaseEntity {
 

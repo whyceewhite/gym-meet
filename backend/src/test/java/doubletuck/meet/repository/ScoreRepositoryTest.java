@@ -68,6 +68,7 @@ class ScoreRepositoryTest {
         athlete.setDiscipline(Discipline.WAG);
         athlete.setSurname("Biles");
         athlete.setGivenName("Simone");
+        athlete.setBirthYear((short) 2000);
         athlete = athleteRepository.save(athlete);
 
         testParticipant = new Participant();

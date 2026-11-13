@@ -7,6 +7,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,7 +23,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "athlete_name_variant")
+@Table(name = "athlete_name_variant", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_athlete_name_variant", columnNames = { "athlete_id", "surname", "given_name" })
+})
 public class AthleteNameVariant extends BaseEntity {
 
     @NotNull(message = "Athlete is required")

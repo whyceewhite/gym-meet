@@ -112,6 +112,14 @@ class EventServiceTest {
     }
 
     @Test
+    void testCreate_FailsOnDuplicateTitleAndStartDate_WhenFigEventNumberDiffers() {
+        EventRequest request = requestFor("FIG-2026-OTHER", "2026 European Championships",
+                testEvent.getStartDate(), testEvent.getEndDate());
+
+        assertThrows(ConflictException.class, () -> eventService.create(request));
+    }
+
+    @Test
     void testCreate_SucceedsWithoutFigEventNumber_WhenTitleAndStartDateAreUnique() {
         EventRequest request = new EventRequest(null, "2026 US Championships", LocalDate.of(2026, 8, 15),
                 LocalDate.of(2026, 8, 18), "Fort Worth", "USA", null, null,
@@ -207,6 +215,7 @@ class EventServiceTest {
         athlete.setDiscipline(Discipline.WAG);
         athlete.setSurname("Biles");
         athlete.setGivenName("Simone");
+        athlete.setBirthYear((short) 2000);
         athlete = athleteRepository.save(athlete);
 
         Participant participant = new Participant();

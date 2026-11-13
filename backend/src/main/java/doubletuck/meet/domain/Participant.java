@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -26,6 +27,9 @@ import lombok.ToString;
 @Entity
 @Table(name = "participant", uniqueConstraints = {
         @UniqueConstraint(name = "uk_participant", columnNames = { "event_id", "athlete_id" })
+}, indexes = {
+        @Index(name = "ix_participant_athlete", columnList = "athlete_id"),
+        @Index(name = "ix_participant_club", columnList = "club_id")
 })
 public class Participant extends BaseEntity {
 
@@ -49,7 +53,6 @@ public class Participant extends BaseEntity {
     @Column(name = "noc", nullable = false, length = 4)
     private String noc;
 
-    // Held per entry rather than on Athlete, since an athlete can change clubs between events
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id", foreignKey = @ForeignKey(name = "fk_participant_club"))
     private Club club;

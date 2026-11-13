@@ -22,17 +22,8 @@ public class SessionService {
     /**
      * Creates a session, rejecting a duplicate (same event, round, discipline,
      * age category, apparatus, and part) with a {@link ConflictException}.
-     *
-     * <p>This check exists in code, not only as a database constraint,
-     * because {@code apparatus} is null for every round except {@code
-     * EVENT}, and {@code part} is null for the ordinary case of a round
-     * held in a single session -- a plain SQL unique constraint doesn't
-     * catch two rows that are both null in the same column (standard NULL
-     * semantics: null isn't considered equal to null). Session's {@code
-     * uk_session} constraint still catches a duplicate where both columns
-     * are non-null as a redundant safety net, but this check is what
-     * actually protects the common null cases, e.g. two {@code QUAL}
-     * sessions, or two {@code AA} sessions sharing the same {@code part}.
+     * The database's {@code uk_session} constraint rejects one too; this check
+     * reports it as a conflict naming the session rather than a SQL error.
      */
     @Transactional
     public Session createSession(Session session) {
@@ -41,12 +32,10 @@ public class SessionService {
     }
 
     private void checkForDuplicate(Session session) {
-        Optional<Session> duplicate = session.getApparatus() != null
-                ? sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatusAndPart(
-                        session.getEvent(), session.getRound(), session.getDiscipline(), session.getAgeCategory(),
-                        session.getApparatus(), session.getPart())
-                : sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndPart(session.getEvent(),
-                        session.getRound(), session.getDiscipline(), session.getAgeCategory(), session.getPart());
+        // A null apparatus or part matches only a session where it is also null
+        Optional<Session> duplicate = sessionRepository.findByEventAndRoundAndDisciplineAndAgeCategoryAndApparatusAndPart(
+                session.getEvent(), session.getRound(), session.getDiscipline(), session.getAgeCategory(),
+                session.getApparatus(), session.getPart());
 
         if (duplicate.isPresent()) {
             throw new ConflictException("A " + session.getRound() + " session for event "

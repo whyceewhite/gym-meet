@@ -130,7 +130,7 @@ Returned by all endpoints above.
 | startDate | LocalDate | First day of competition (ISO 8601, e.g. `2026-04-20`) |
 | endDate | LocalDate | Last day of competition (ISO 8601, e.g. `2026-04-26`) |
 | city | String | Host city |
-| countryCode | String | Host country code represented by the 3-character ISO-3166 value |
+| countryCode | String | Host country as a 3-character IOC code, as used by World Gymnastics (e.g. `GER`, not ISO-3166 `DEU`) |
 | venue | String | Venue or arena name where the event is hosted and `null` if not known |
 | apparatusSuppliers | String | Equipment manufacturer(s) supplying the apparatus, or `null` if not known |
 | level | String | Competitive tier code of the event (e.g. `CONTINENTAL_CHAMPIONSHIPS`, `WORLD_CUP`) or `UNKNOWN` if not known |
@@ -147,7 +147,7 @@ Returned by all endpoints above.
   "startDate": "2026-04-20",
   "endDate": "2026-04-26",
   "city": "Stuttgart",
-  "countryCode": "DEU",
+  "countryCode": "GER",
   "venue": "Schleyerhalle",
   "apparatusSuppliers": "Spieth",
   "level": "CONTINENTAL_CHAMPIONSHIPS",
@@ -169,7 +169,7 @@ Request body for `POST /event` and `PUT /event/{id}`.
 | startDate | LocalDate | Yes | ISO 8601 | First day of competition |
 | endDate | LocalDate | Yes | ISO 8601 | Last day of competition |
 | city | String | Yes | Max 100 characters | Host city |
-| countryCode | String | Yes | 3-character ISO-3166 code | Host country |
+| countryCode | String | Yes | 3-character IOC code (e.g. `GER`, not ISO-3166 `DEU`) | Host country |
 | venue | String | No | Max 150 characters | Venue/arena name |
 | apparatusSuppliers | String | No | Max 100 characters | Equipment manufacturer(s) supplying the apparatus |
 | level | String | Yes | `EventLevel` enum code | Competitive tier code of the event (e.g. `CONTINENTAL_CHAMPIONSHIPS`, `WORLD_CUP`) or `UNKNOWN` if not known |
@@ -185,7 +185,7 @@ Request body for `POST /event` and `PUT /event/{id}`.
   "startDate": "2026-04-20",
   "endDate": "2026-04-26",
   "city": "Stuttgart",
-  "countryCode": "DEU",
+  "countryCode": "GER",
   "venue": "Schleyerhalle",
   "apparatusSuppliers": "Spieth",
   "level": "CONTINENTAL_CHAMPIONSHIPS"

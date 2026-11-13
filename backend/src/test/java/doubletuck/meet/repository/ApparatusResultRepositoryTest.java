@@ -69,6 +69,7 @@ class ApparatusResultRepositoryTest {
         athlete.setDiscipline(Discipline.MAG);
         athlete.setSurname("Richard");
         athlete.setGivenName("Fred");
+        athlete.setBirthYear((short) 2000);
         athlete = athleteRepository.save(athlete);
 
         testParticipant = new Participant();

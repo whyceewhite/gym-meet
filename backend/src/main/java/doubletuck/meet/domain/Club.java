@@ -13,8 +13,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * A gym or club an athlete trains with. Only published by national-level
- * competitions; international results identify athletes by country alone.
+ * A gym or club an athlete trains with. Most international competitions do not
+ * publish this information and identify athletes by country instead.
  */
 @Getter
 @Setter

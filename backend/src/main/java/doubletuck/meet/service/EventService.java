@@ -69,16 +69,19 @@ public class EventService {
     }
 
     private void checkForDuplicate(EventRequest request, Long excludeId) {
-        Optional<Event> duplicate = (request.figEventNumber() != null && !request.figEventNumber().isBlank())
-                ? eventRepository.findByFigEventNumber(request.figEventNumber())
-                : eventRepository.findByTitleIgnoreCaseAndStartDate(request.title(), request.startDate());
-
-        duplicate.filter(event -> !event.getId().equals(excludeId))
+        if (request.figEventNumber() != null && !request.figEventNumber().isBlank()) {
+            eventRepository.findByFigEventNumber(request.figEventNumber())
+                    .filter(event -> !event.getId().equals(excludeId))
+                    .ifPresent(event -> {
+                        throw new ConflictException(
+                                "An event with FIG event number '" + request.figEventNumber() + "' already exists");
+                    });
+        }
+        eventRepository.findByTitleIgnoreCaseAndStartDate(request.title(), request.startDate())
+                .filter(event -> !event.getId().equals(excludeId))
                 .ifPresent(event -> {
-                    throw new ConflictException((request.figEventNumber() != null && !request.figEventNumber().isBlank())
-                            ? "An event with FIG event number '" + request.figEventNumber() + "' already exists"
-                            : "An event titled '" + request.title() + "' starting " + request.startDate()
-                                    + " already exists");
+                    throw new ConflictException("An event titled '" + request.title() + "' starting "
+                            + request.startDate() + " already exists");
                 });
     }
 

@@ -26,6 +26,8 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Table(name = "session", uniqueConstraints = {
+        // V1 declares this NULLS NOT DISTINCT, which JPA can't express, so that null apparatus/part
+        // values count as equal and a duplicate is rejected
         @UniqueConstraint(name = "uk_session", columnNames = { "event_id", "round_code", "discipline_code", "age_category_code", "apparatus_code", "part" })
 })
 public class Session extends BaseEntity {
@@ -54,16 +56,6 @@ public class Session extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AgeCategory ageCategory;
 
-    /**
-     * Which apparatus this session is for. Set when {@code round} is
-     * {@link Round#EVENT} -- an Apparatus Final is its own session per
-     * apparatus -- and for {@link Round#QUAL} at an apparatus-format event
-     * (e.g. a World Cup), where qualification is a separate competition per
-     * apparatus with its own day and judges. Null otherwise, since a
-     * championship's Qualification, All-Around Final, and Team Final each
-     * cover all apparatus within one session (see {@link Score#getApparatus()}
-     * for the per-apparatus split of scores within those).
-     */
     @Column(name = "apparatus_code", length = 5)
     @Enumerated(EnumType.STRING)
     private Apparatus apparatus;

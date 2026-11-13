@@ -161,6 +161,24 @@ class JudgeRepositoryTest {
     }
 
     @Test
+    void testCreate_FailsBecauseDuplicateSessionWideJudge() {
+        Judge president = new Judge();
+        president.setSession(testSession);
+        president.setFunction(JudgeFunction.PRESIDENT);
+        president.setGivenName("Donatella");
+        president.setSurname("SACCHI");
+        judgeRepository.saveAndFlush(president);
+
+        Judge duplicate = new Judge();
+        duplicate.setSession(testSession);
+        duplicate.setFunction(JudgeFunction.PRESIDENT);
+        duplicate.setGivenName("Donatella");
+        duplicate.setSurname("SACCHI");
+
+        assertThrows(DataIntegrityViolationException.class, () -> judgeRepository.saveAndFlush(duplicate));
+    }
+
+    @Test
     void testCreate_FailsBecauseDuplicateSessionApparatusFunctionAndName() {
         Judge duplicate = new Judge();
         duplicate.setSession(testSession);

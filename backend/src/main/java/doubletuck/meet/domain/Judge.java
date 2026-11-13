@@ -34,6 +34,8 @@ import lombok.ToString;
  */
 @Entity
 @Table(name = "judge", uniqueConstraints = {
+        // V1 declares this NULLS NOT DISTINCT, which JPA can't express, so that null apparatus
+        // values count as equal and a duplicate is rejected
         @UniqueConstraint(name = "uk_judge", columnNames = { "session_id", "apparatus_code", "function_code", "surname", "given_name" })
 })
 public class Judge extends BaseEntity {

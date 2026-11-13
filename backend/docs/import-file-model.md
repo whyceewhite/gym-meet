@@ -116,7 +116,7 @@ One row per athlete entry.
 | Name | Combined name exactly as printed — `SURNAME Given Name` in FIG sources, `Given Surname` in US Championships | |
 | Surname | Participant's surname | `Athlete.surname` |
 | Given Name | Participant's given name | `Athlete.givenName` |
-| Birth Year | Participant's birth year | `Athlete.birthYear` (only when `Birth Date` is blank) |
+| Birth Year | Participant's birth year. Blank where the source prints none (US Championships) | `Athlete.birthYear` |
 | Birth Date | Participant's full birth date (`YYYY-MM-DD`), when the entry list publishes one (FIG World Championships does; European Championships prints only a year). Blank otherwise | `Athlete.birthDate` |
 | Club | **US Championships only.** The athlete's gym/club as printed | `Participant.club` → `Club.name` (the club's country is the participant's NOC) |
 

@@ -32,6 +32,7 @@ class AthleteNameVariantRepositoryTest {
         testAthlete.setDiscipline(Discipline.WAG);
         testAthlete.setSurname("Biles");
         testAthlete.setGivenName("Simone");
+        testAthlete.setBirthYear((short) 2000);
         testAthlete = athleteRepository.save(testAthlete);
     }
 
@@ -84,6 +85,7 @@ class AthleteNameVariantRepositoryTest {
         otherAthlete.setDiscipline(Discipline.MAG);
         otherAthlete.setSurname("Nedoroscik");
         otherAthlete.setGivenName("Stephen");
+        otherAthlete.setBirthYear((short) 2000);
         otherAthlete = athleteRepository.save(otherAthlete);
 
         saveVariant(testAthlete, "Biles-Owens", "Simone");

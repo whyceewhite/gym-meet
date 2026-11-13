@@ -120,6 +120,14 @@ class SessionServiceTest {
         assertThrows(ConflictException.class, () -> sessionService.createSession(sessionOf(Round.QUAL, Apparatus.FX, null)));
     }
 
+    @Test
+    void testCreateSession_AllApparatusSessionAlongsidePerApparatusSession_BothSucceed() {
+        Session fx = sessionService.createSession(sessionOf(Round.QUAL, Apparatus.FX, null));
+        Session allApparatus = sessionService.createSession(sessionOf(Round.QUAL, null, null));
+
+        assertNotEquals(fx.getId(), allApparatus.getId());
+    }
+
     private Session sessionOf(Round round, Apparatus apparatus, Integer part) {
         Session session = new Session();
         session.setEvent(testEvent);

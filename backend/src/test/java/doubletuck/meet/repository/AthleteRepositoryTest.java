@@ -2,10 +2,12 @@ package doubletuck.meet.repository;
 
 import doubletuck.meet.domain.Athlete;
 import doubletuck.meet.domain.Discipline;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
@@ -30,7 +32,8 @@ class AthleteRepositoryTest {
         testAthlete.setDiscipline(Discipline.WAG);
         testAthlete.setSurname("Biles");
         testAthlete.setGivenName("Simone");
-        testAthlete.setCountry("USA");
+        testAthlete.setBirthplace("Columbus, Ohio");
+        testAthlete.setBirthYear((short) 1997);
         testAthlete.setBirthDate(LocalDate.of(1997, 3, 14));
         testAthlete = athleteRepository.save(testAthlete);
     }
@@ -44,9 +47,9 @@ class AthleteRepositoryTest {
         assertEquals(Discipline.WAG, found.get().getDiscipline());
         assertEquals("Biles", found.get().getSurname());
         assertEquals("Simone", found.get().getGivenName());
-        assertEquals("USA", found.get().getCountry());
+        assertEquals("Columbus, Ohio", found.get().getBirthplace());
+        assertEquals((short) 1997, found.get().getBirthYear());
         assertEquals(LocalDate.of(1997, 3, 14), found.get().getBirthDate());
-        assertNull(found.get().getBirthYear());
         assertNotNull(found.get().getCreationTimestamp());
         assertNotNull(found.get().getLastUpdateTimestamp());
     }
@@ -114,6 +117,7 @@ class AthleteRepositoryTest {
         otherDiscipline.setDiscipline(Discipline.MAG);
         otherDiscipline.setSurname("Biles");
         otherDiscipline.setGivenName("Simone");
+        otherDiscipline.setBirthYear((short) 1997);
         athleteRepository.save(otherDiscipline);
 
         List<Athlete> wagMatches = athleteRepository.findBySurnameIgnoreCaseAndGivenNameIgnoreCaseAndDiscipline(
@@ -124,5 +128,35 @@ class AthleteRepositoryTest {
         assertEquals(1, wagMatches.size());
         assertEquals(1, magMatches.size());
         assertNotEquals(wagMatches.get(0).getId(), magMatches.get(0).getId());
+    }
+
+    @Test
+    void testCreate_FailsBecauseDuplicateNameAndDiscipline() {
+        Athlete duplicate = athlete("Biles", "Simone", Discipline.WAG, (short) 2005);
+
+        assertThrows(DataIntegrityViolationException.class, () -> athleteRepository.saveAndFlush(duplicate));
+    }
+
+    @Test
+    void testSave_WithoutBirthYear() {
+        Athlete noBirthYear = athleteRepository.saveAndFlush(athlete("Nedoroscik", "Stephen", Discipline.MAG, null));
+
+        assertNull(athleteRepository.findById(noBirthYear.getId()).orElseThrow().getBirthYear());
+    }
+
+    @Test
+    void testCreate_FailsBecauseSurnameBlank() {
+        Athlete noSurname = athlete(" ", "Stephen", Discipline.MAG, (short) 1998);
+
+        assertThrows(ConstraintViolationException.class, () -> athleteRepository.saveAndFlush(noSurname));
+    }
+
+    private Athlete athlete(String surname, String givenName, Discipline discipline, Short birthYear) {
+        Athlete athlete = new Athlete();
+        athlete.setSurname(surname);
+        athlete.setGivenName(givenName);
+        athlete.setDiscipline(discipline);
+        athlete.setBirthYear(birthYear);
+        return athlete;
     }
 }

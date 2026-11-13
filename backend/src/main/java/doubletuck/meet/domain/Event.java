@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,7 +24,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "event")
+@Table(name = "event", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_event", columnNames = { "title", "start_date" })
+}, indexes = {
+        @Index(name = "ix_event_fig_event_number", columnList = "fig_event_number")
+})
 public class Event extends BaseEntity {
 
     @Size(max = 20, message = "FIG event number must have 20 or fewer characters")

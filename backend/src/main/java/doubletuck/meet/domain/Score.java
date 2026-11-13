@@ -8,6 +8,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -28,6 +29,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "score", uniqueConstraints = {
         @UniqueConstraint(name = "uk_score", columnNames = { "participant_id", "session_id", "apparatus_code" })
+}, indexes = {
+        @Index(name = "ix_score_session", columnList = "session_id")
 })
 public class Score extends BaseEntity {
 

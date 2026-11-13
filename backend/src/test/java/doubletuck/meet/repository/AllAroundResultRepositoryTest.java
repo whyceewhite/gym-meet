@@ -68,6 +68,7 @@ class AllAroundResultRepositoryTest {
         athlete.setDiscipline(Discipline.WAG);
         athlete.setSurname("Biles");
         athlete.setGivenName("Simone");
+        athlete.setBirthYear((short) 2000);
         athlete = athleteRepository.save(athlete);
 
         testParticipant = new Participant();
@@ -126,6 +127,7 @@ class AllAroundResultRepositoryTest {
         secondAthlete.setDiscipline(Discipline.WAG);
         secondAthlete.setSurname("Lee");
         secondAthlete.setGivenName("Sunisa");
+        secondAthlete.setBirthYear((short) 2000);
         secondAthlete = athleteRepository.save(secondAthlete);
 
         Participant secondParticipant = new Participant();
