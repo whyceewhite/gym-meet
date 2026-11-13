@@ -10,7 +10,6 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "athlete", uniqueConstraints = {
@@ -59,4 +57,13 @@ public class Athlete extends BaseEntity {
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    // Names are stored in one form whatever capitalisation the source printed; see PersonName
+    public void setSurname(String surname) {
+        this.surname = PersonName.normalize(surname);
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = PersonName.normalize(givenName);
+    }
 }

@@ -127,7 +127,7 @@ one file per discipline+age.
 
 | Column | Description | Entity Mapping |
 |---|---|---|
-| Round | The round of competition the judge is evaluating: [Round](../src/main/java/doubletuck/meet/domain/Round.java) | `Judge.round`  |
+| Round | The round of competition the judge is evaluating: [Round](../src/main/java/doubletuck/meet/domain/Round.java) | `Judge.session` (with `Apparatus`, identifies the session) |
 | Apparatus | The apparatus the judge is evaluating: [Apparatus](../src/main/java/doubletuck/meet/domain/Apparatus.java) | `Judge.apparatus` |
 | Function | The function the judge is in when evaluating: [JudgeFunction](../src/main/java/doubletuck/meet/domain/JudgeFunction.java). Superior Jury roles are written as printed (`President`, `Vice-President`, `Member`) and resolve through `JudgeFunction.find`; reserve judges are `R` (single, unnumbered) or `R1`…`R6`; World Cup panels print `DS1` (Difficulty Supervisor) and, on beam, `pen5` — written as `T2` (mapping table: `instructions-results-parsing.md` §4.7) | `Judge.function` |
 | Name | Combined name of judge as printed | |
@@ -256,7 +256,7 @@ publishes no per-part placement.
 | Bib | Identifies the athlete. **All-Around summary only** | |
 | Name | Athlete name as printed. **All-Around summary only** | |
 | NOC Code | Country/federation the row represents | `TeamResult.noc` |
-| `<APP> Total` (one column per apparatus) | Already the sum/drop-lowest total printed by the source, not recomputed. Apparatus set and column order is discipline-specific: `FX, PH, SR, VT, PB, HB` for MAG, `FX, BB, UB, VT` for WAG | |
+| `<APP> Total` (one column per apparatus) | Already the sum/drop-lowest total printed by the source, not recomputed. Apparatus set and column order is discipline-specific: `FX, PH, SR, VT, PB, HB` for MAG, `FX, BB, UB, VT` for WAG | *(not stored — on a team summary, used to work out `Score.countsTowardTeamResult`)* |
 | SJ Penalty | Superior Jury penalty applied to the row as a whole, distinct from an individual routine's `Penalty` | |
 | Total | Grand total | `TeamResult.totalScore` / `AllAroundResult.totalScore` |
 | Qualification | [QualificationResult](../src/main/java/doubletuck/meet/domain/QualificationResult.java). Omitted entirely from a `FINAL` summary — no further round to qualify into. The 2026 Worlds All-Around qualification also uses `R4` | `TeamResult.qualificationResult` / `AllAroundResult.qualificationResult` |

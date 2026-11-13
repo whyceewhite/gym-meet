@@ -169,8 +169,8 @@ them out ("Line Judge 1", "Time Judge", "Floor Exercise Supervisor").
 | id | Long | No | Generated primary key. |
 | licenseNumber | String | Yes | FIG license number assigned registered to athletes. |
 | discipline | Discipline | No | The type of gymnastics program this athlete competes in. |
-| surname | String | No | Athlete's family name. |
-| givenName | String | No | Athlete's given name. |
+| surname | String | No | Athlete's family name, in written form ("Blakely", "McDonald", "van Pol") whatever capitalisation the source printed — FIG's capitalised surnames are converted by `PersonName`. |
+| givenName | String | No | Athlete's given name, in the same written form. |
 | birthplace | String | Yes | Where the athlete was born, when the source publishes it (rarely). A further way to tell apart athletes with the same name. |
 | birthYear | Short | Yes | Birth year of the athlete — taken from `birthDate` when the source publishes a full date, otherwise from the year the source prints. Null when the source publishes neither (e.g. US Championships). |
 | birthDate | Date | Yes | Birth date of the athlete, when the source publishes a full date. |
@@ -192,7 +192,7 @@ Additional names by which the athlete has had.
 |---|---|---|---|
 | id | Long | No | Generated primary key. |
 | athleteId | Long, FK → `Athlete` | No | The athlete this alternate name belongs to. |
-| surname | String | No | Family name, as published by the source. |
+| surname | String | No | Family name, as published by the source, in the same written form as `Athlete.surname`. |
 | givenName | String | No | Given name, as published by the source. |
 
 Unique key: `(athlete_id, surname, given_name)`.
@@ -256,7 +256,7 @@ own. Its `date` is the first part's date, since it covers several days.
 | apparatus | Apparatus | Yes | Which apparatus this judge is assigned to within the session. Null for a session-wide role (e.g. Superior Jury `PRESIDENT`/`MEMBER`) rather than a per-apparatus panel seat. |
 | function | JudgeFunction | No | The judge's role on the panel. |
 | givenName | String | No | Judge's given name, as published by the source. |
-| surname | String | No | Judge's family name, as published by the source. |
+| surname | String | No | Judge's family name, in the same written form as `Athlete.surname`. |
 | nocCode | String | Yes | The federation/NOC this judge is credited to. Not always a 3-letter IOC code — a continental union appointing a Superior Jury (e.g. `EG` for European Gymnastics) or a neutral code (`AIN1`) is credited here too, so no fixed length is enforced. Null when the source credits the official to no federation (e.g. the 2026 Worlds Superior Jury). |
 
 Unique key: `(session_id, apparatus, function, surname, givenName)`. Not
@@ -312,7 +312,7 @@ the fields directly on `Score` describe the result and its rankings.
 | rank | Integer | Yes | Published placement on this apparatus within this `Session`, ranked on `routine.score` — for vault in qualification, the single-vault list ranking the whole field. In an apparatus final, the final's own placement. Where a session's only published vault ranking is a two-vault list (US Championships' Day 1 vault event; World Cup vault qualification, where every vaulter performs two vaults and there is no all-around), it's that ranking, on `totalScore`, and null for single-vault entrants. Null where the source publishes no per-session placement (US Championships Day 2). Copied as published, including tie-breaks, never recomputed. |
 | qualificationRank | Integer | Yes | Published placement in the ranking that decides qualification to the apparatus final. Set on every `QUAL` row: for vault it's the double-vault list rank (null for single-vault entrants); for every other apparatus — and for World Cup vault, which has only the two-vault ranking — it equals `rank`. Null outside `QUAL`. |
 | qualificationResult | QualificationResult | Yes | Outcome of qualifying to the apparatus final, read against `qualificationRank` (not `rank`). The two-per-country rule shows up here as `NR`, never as a changed rank. Only set on `QUAL` `Session`s. |
-| countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§5.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§5.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. |
+| countsTowardTeamResult | Boolean | No | Whether this score counts toward its team's `TeamResult` total (§5.1). Only meaningful for a score earned in a `TEAM` (or team-qualification) `Session` — has no bearing on `AllAroundResult` (§5.2), which always uses every one of a participant's apparatus scores regardless of this flag. Defaults to `true`; set to `false` for the score(s) a drop-lowest rule excludes. The results files don't mark those, so the importer works them out from the published team apparatus totals ([import-process.md](import-process.md#checks)). |
 
 Unique key: `(participant_id, session_id, apparatus)`.
 

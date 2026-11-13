@@ -13,7 +13,6 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +21,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 /**
  * A judge is not necessarily unique within a session by {@code apparatus}
@@ -50,7 +48,7 @@ public class Judge extends BaseEntity {
     private Apparatus apparatus;
 
     @NotNull(message = "Function is required")
-    @Column(name = "function_code", nullable = false, length = 10)
+    @Column(name = "function_code", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private JudgeFunction function;
 
@@ -68,4 +66,13 @@ public class Judge extends BaseEntity {
     @Size(max = 10, message = "NOC code must have 10 or fewer characters")
     @Column(name = "noc_code", length = 10)
     private String nocCode;
+
+    // Names are stored in one form whatever capitalisation the source printed; see PersonName
+    public void setSurname(String surname) {
+        this.surname = PersonName.normalize(surname);
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = PersonName.normalize(givenName);
+    }
 }

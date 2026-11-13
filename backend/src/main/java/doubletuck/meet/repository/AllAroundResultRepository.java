@@ -17,4 +17,8 @@ public interface AllAroundResultRepository extends JpaRepository<AllAroundResult
     List<AllAroundResult> findBySession(Session session);
 
     List<AllAroundResult> findByParticipant(Participant participant);
+
+    boolean existsByParticipant(Participant participant);
+
+    void deleteBySession(Session session);
 }

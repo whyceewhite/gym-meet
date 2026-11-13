@@ -34,4 +34,7 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     List<Session> findByEvent(Event event);
 
     List<Session> findByEventId(Long eventId);
+
+    List<Session> findByEventAndDisciplineAndAgeCategory(Event event, Discipline discipline,
+            AgeCategory ageCategory);
 }

@@ -1,0 +1,43 @@
+{
+    "event": {
+        "title": "54th Artistic Gymnastics World Championships",
+        "disciplines": "WAG",
+        "ageCategory": "SR",
+        "level": "WORLD_CHAMPIONSHIPS",
+        "startDate": "2026-10-17",
+        "endDate": "2026-10-25",
+        "city": "Rotterdam",
+        "country": "NED",
+        "figEventNumber": "17247",
+        "venue": "Rotterdam Ahoy",
+        "apparatusSuppliers": "Spieth"
+    },
+    "participants": [
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-PARTICIPANTS.csv"
+    ],
+    "judges": [
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-JUDGES.csv"
+    ],
+    "scores": [
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-AA-BB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-AA-FX.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-AA-UB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-AA-VT.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-EVENT-BB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-EVENT-UB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-QUAL-BB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-QUAL-FX.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-QUAL-UB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-QUAL-VT.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-TEAM-BB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-TEAM-FX.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-TEAM-UB.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SCORES-TEAM-VT.csv"
+    ],
+    "summaries": [
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-AA.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SUMMARY-FINAL-TEAM.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SUMMARY-QUAL-AA.csv",
+        "2026-WORLD-CHAMPIONSHIPS-WAG-SR-SUMMARY-QUAL-TEAM.csv"
+    ]
+}

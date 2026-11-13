@@ -1,0 +1,4 @@
+spring:
+  main:
+    # A command-line run: import, then exit rather than serve requests
+    web-application-type: none

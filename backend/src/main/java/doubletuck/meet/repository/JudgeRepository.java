@@ -13,4 +13,6 @@ public interface JudgeRepository extends JpaRepository<Judge, Long> {
     List<Judge> findBySession(Session session);
 
     List<Judge> findBySessionId(Long sessionId);
+
+    void deleteBySession(Session session);
 }

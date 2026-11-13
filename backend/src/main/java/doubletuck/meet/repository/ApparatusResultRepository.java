@@ -19,4 +19,8 @@ public interface ApparatusResultRepository extends JpaRepository<ApparatusResult
     List<ApparatusResult> findBySessionAndApparatus(Session session, Apparatus apparatus);
 
     List<ApparatusResult> findByParticipant(Participant participant);
+
+    boolean existsByParticipant(Participant participant);
+
+    void deleteBySession(Session session);
 }

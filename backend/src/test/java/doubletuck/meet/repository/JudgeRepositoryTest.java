@@ -76,7 +76,8 @@ class JudgeRepositoryTest {
         assertEquals(Apparatus.VT, found.get().getApparatus());
         assertEquals(JudgeFunction.D1, found.get().getFunction());
         assertEquals("Anca", found.get().getGivenName());
-        assertEquals("MIHAILESCU GRIGORAS", found.get().getSurname());
+        // Saved as printed in FIG capitals, stored in written form
+        assertEquals("Mihailescu Grigoras", found.get().getSurname());
         assertEquals("ROU", found.get().getNocCode());
     }
 

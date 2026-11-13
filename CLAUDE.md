@@ -26,7 +26,7 @@ Tests are found in `backend/src/test/java/`. Run them with `mvn -q test` from `b
 
 ## Competition results data
 
-Results PDFs are parsed into import CSVs under `backend/data/<year>/<event>/`. Use the `parse-results` skill (`.claude/skills/parse-results/`) for any new results document. Parsers live in `backend/tools/results-parsing/` (one per meet, sharing `common.py`).
+Results PDFs are parsed into import CSVs under `backend/data/<year>/<event>/`, which the importer (`doubletuck.meet.importer`, see `backend/docs/import-process.md`) loads into the database. Use the `parse-results` skill (`.claude/skills/parse-results/`) for any new results document. Parsers live in `backend/tools/results-parsing/` (one per meet, sharing `common.py`).
 
 ## Documentation
 
@@ -36,6 +36,7 @@ If changes to the code changes, then any documentation that refers to the change
 | --- | --- |
 | backend/docs/data-model.md | The class structures that form and contain the data. |
 | backend/docs/import-file-model.md | The columns and descriptions of the CSV files (SCORES, JUDGES, PARTICIPANTS, SUMMARY, EVENT) used to import competition data. |
+| backend/docs/import-process.md | How the importer loads those CSV files into the database: running it, session and athlete matching rules, and the checks it reports. |
 | backend/docs/instructions-results-parsing.md | How results PDFs are turned into those CSV files: techniques, required checks, conventions, and notes per source format. |
 | backend/docs/development-setup.md | Setting up the local development environment. |
 

@@ -16,4 +16,6 @@ public interface TeamResultRepository extends JpaRepository<TeamResult, Long> {
     List<TeamResult> findBySession(Session session);
 
     List<TeamResult> findBySessionId(Long sessionId);
+
+    void deleteBySession(Session session);
 }

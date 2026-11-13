@@ -11,7 +11,6 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +19,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "athlete_name_variant", uniqueConstraints = {
@@ -42,4 +40,13 @@ public class AthleteNameVariant extends BaseEntity {
     @Size(max = 60, message = "Given name must have 60 or fewer characters")
     @Column(name = "given_name", nullable = false, length = 60)
     private String givenName;
+
+    // Names are stored in one form whatever capitalisation the source printed; see PersonName
+    public void setSurname(String surname) {
+        this.surname = PersonName.normalize(surname);
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = PersonName.normalize(givenName);
+    }
 }

@@ -21,4 +21,8 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<Score> findBySessionId(Long sessionId);
 
     List<Score> findByParticipant(Participant participant);
+
+    boolean existsByParticipant(Participant participant);
+
+    void deleteBySession(Session session);
 }

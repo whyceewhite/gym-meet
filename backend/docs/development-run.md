@@ -7,6 +7,7 @@ This document provides steps for setting up a development environment for develo
 * [Configuring](#configuring)
 * [Building](#building)
 * [Running](#running)
+* [Importing results](#importing-results)
 
 ## Prerequisites
 
@@ -90,3 +91,10 @@ curl -u user:<generated password> http://localhost:8080/actuator
 ```
 
 To stop the server, issue a Control-C command in the shell where the service is running.
+
+## Importing results
+Competition results are loaded from the files under `data/` by running the app with the `import` profile:
+```shell
+mvn spring-boot:run -Dspring-boot.run.profiles=local,import -Dspring-boot.run.arguments="--import.path=data/2026/2026-WORLD-CHAMPIONSHIPS"
+```
+See [import-process.md](import-process.md) for the arguments and what an import does.
